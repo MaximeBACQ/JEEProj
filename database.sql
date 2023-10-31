@@ -11,6 +11,6 @@ CREATE TABLE IF NOT EXISTS users (
     birthdate DATE,
     gender VARCHAR(10),
     password VARCHAR(100),
-    isAdmin boolean,
-    isModerator boolean
+    isAdmin BIT,
+    isModerator BIT
     );

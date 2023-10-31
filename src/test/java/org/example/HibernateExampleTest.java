@@ -47,17 +47,14 @@ public class HibernateExampleTest {
 
     @Test
     void save_my_first_object_in_db(){
-        SiteUser user = new SiteUser("Walter", LocalDate.now());
-        //try(Session session = HibernateUtil.getSessionFactory().openSession()){ //we call our unique instance of SessionFactory and open the session related to it
-        //try(Session session = HibernateUtil.getCurrentSessionFromJPA().openSession()){ //we call our unique instance of SessionFactory and open the session related to it
+        SiteUser user = new SiteUser("Walter","WHITE","W.W","sussybaka@gmail.com",LocalDate.now(),"mechanic","waltpass",false,false);
         try(Session session = sessionFactory.openSession()){
 
             //security
             session.beginTransaction();
-
             session.persist(user);
-
             session.getTransaction().commit();
+            session.close();
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.projetjee.Hibernate;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
 import java.time.LocalDate;
 
@@ -35,9 +36,16 @@ public class SiteUser {
 
     }
 
-    public SiteUser(String name, LocalDate birthDate){          //our needed constructor
+    public SiteUser(String name, String surname, String username, String email, LocalDate birthDate, String gender,
+                    String password, boolean isAdmin, boolean isModerator){          //our needed constructor
         this.name = name;
+        this.surname = surname;
+        this.email=email;
         this.birthDate = birthDate;
+        this.gender = gender;
+        this.password = password;
+        this.isAdmin = isAdmin;
+        this.isModerator = isModerator;
     }
 
     public Long getUserId() {
@@ -104,19 +112,19 @@ public class SiteUser {
         this.password = password;
     }
 
-    public Boolean getAdmin() {
+    public boolean getIsAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setIsAdmin(boolean admin) {
         isAdmin = admin;
     }
 
-    public Boolean getModerator() {
+    public boolean getIsModerator() {
         return isModerator;
     }
 
-    public void setModerator(Boolean moderator) {
+    public void setIsModerator(boolean moderator) {
         isModerator = moderator;
     }
 }
