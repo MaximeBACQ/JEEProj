@@ -15,6 +15,7 @@
 
         <!-- Mapping des classes -->
         <mapping class="com.example.projetjee.Hibernate.SiteUser"/>
+        <mapping resource="SiteUser.hbm.xml" />
 
         <!-- D'autres configurations Hibernate -->
     </session-factory>

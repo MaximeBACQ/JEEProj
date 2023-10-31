@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="USERS")
+@Table(name="users")
 public class SiteUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,9 +25,11 @@ public class SiteUser {
     @Column(name="password")
     private String password;
     @Column(name="isAdmin")
-    private Boolean isAdmin;
+    private boolean isAdmin;
     @Column(name="isModerator")
-    private Boolean isModerator;
+    private boolean isModerator;
+
+
 
     public SiteUser(){          //hibernate needs an empty constructor
 

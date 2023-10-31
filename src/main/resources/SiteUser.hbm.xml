@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <!--<class name="com.example.projetjee.Hibernate.SiteUser" table="USERS"
+           catalog="database1">
+        <id name="userId" type="java.lang.Integer">
+            <column name="userId"></column>
+            <generator class="assigned"></generator>
+        </id>
+
+        <property name="name" type="java.lang.String">
+            <column name="name" length="50"></column>
+        </property>
+
+        <property name="surname" type="java.lang.String">
+            <column name="surname" length="60"></column>
+        </property>
+
+        <property name="customerPhone" type="java.lang.Long">
+            <column name="customerPhone" length="15"></column>
+        </property>
+
+    </class>-->
+    <class name="com.example.projetjee.Hibernate.SiteUser" table="users">
+
+        <id name="userId" column="userId">
+            <generator class="identity"/>
+        </id>
+
+        <property name="name" column="name" />
+        <property name="surname" column="surname" />
+        <property name="username" column="username" />
+        <property name="email" column="email" />
+        <property name="birthDate" column="birthdate" />
+        <property name="gender" column="gender" />
+        <property name="password" column="password" />
+        <property name="isAdmin" column="isAdmin" type="boolean"/>
+        <property name="isModerator" column="isModerator" type="boolean" />
+
+    </class>
+</hibernate-mapping>
