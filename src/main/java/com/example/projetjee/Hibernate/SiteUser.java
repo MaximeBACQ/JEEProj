@@ -127,4 +127,20 @@ public class SiteUser {
     public void setIsModerator(boolean moderator) {
         isModerator = moderator;
     }
+
+    @Override
+    public String toString() {
+        return "SiteUser{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender='" + gender + '\'' +
+                ", password='" + password + '\'' +
+                ", isAdmin=" + isAdmin +
+                ", isModerator=" + isModerator +
+                '}';
+    }
 }
