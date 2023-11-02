@@ -16,13 +16,12 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public void addUser(SiteUser user) {
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
-
             //security
             session.beginTransaction();
             session.persist(user);
             session.getTransaction().commit();
         }catch(Exception e){
-            System.out.println("Failed to insert user : " + e);
+            e.printStackTrace();
         }
     }
 
@@ -30,7 +29,7 @@ public class UserDAOImpl implements UserDAO{
     public SiteUser getUserById(int id) {
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
-            SiteUser user = (SiteUser) session.createQuery("select SiteUser from SiteUser where SiteUser.id = id",SiteUser.class);
+            SiteUser user = (SiteUser) session.createQuery("SELECT SiteUser FROM SiteUser WHERE SiteUser.id = :id",SiteUser.class);
             //if we want to call a specific field use the beans field, not database's fields
             session.getTransaction().commit();
             System.out.println(user.toString());
@@ -45,7 +44,7 @@ public class UserDAOImpl implements UserDAO{
     public List<SiteUser> getAllUsers() {
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
-            List<SiteUser> users = session.createQuery("select u from SiteUser u",SiteUser.class).list();
+            List<SiteUser> users = session.createQuery("SELECT u FROM SiteUser u",SiteUser.class).list();
             //if we want to call a specific field use the beans field, not database's fields
             for(SiteUser s : users){
                 System.out.println(s.toString());
