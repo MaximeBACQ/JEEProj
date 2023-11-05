@@ -1,30 +1,33 @@
-package com.example.projetjee.Hibernate;
+package com.example.projetjee;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 
 import java.io.File;
 
 public class HibernateUtil{
     private static  SessionFactory sessionFactory;
 
-    private static SessionFactory buildSessionFactory() {
-        File configFile = new File("src/main/resources/hibernate.cfg.xml");
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure(configFile)
-                .build();
+    private static SessionFactory buildSessionFactory(){
+//        File configFile = new File("webapp/WEB-INF/classes/hibernate.cfg.xml");
+//        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+//                .configure(configFile)
+//                .build();
         try {
-            sessionFactory = new MetadataSources(registry)
-                    .addAnnotatedClass(SiteUser.class)
-                    .buildMetadata()
+//            sessionFactory = new MetadataSources(registry)
+//                    .addAnnotatedClass(SiteUser.class)
+//                    .buildMetadata()
+//                    .buildSessionFactory();
+            sessionFactory = new Configuration().configure()
                     .buildSessionFactory();
             return sessionFactory;
         } catch (Exception e) {
             System.err.println("Initialisation de la SessionFactory a échoué : " + e);
-            StandardServiceRegistryBuilder.destroy(registry);
+            //StandardServiceRegistryBuilder.destroy(registry);
 
             throw new ExceptionInInitializerError(e);
         }

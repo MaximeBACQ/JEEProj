@@ -40,6 +40,7 @@ public class SiteUser {
                     String password, boolean isAdmin, boolean isModerator){          //our needed constructor
         this.name = name;
         this.surname = surname;
+        this.username = username;
         this.email=email;
         this.birthDate = birthDate;
         this.gender = gender;

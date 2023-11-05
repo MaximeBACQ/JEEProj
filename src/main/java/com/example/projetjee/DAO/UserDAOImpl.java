@@ -1,12 +1,8 @@
 package com.example.projetjee.DAO;
 
-import com.example.projetjee.Hibernate.HibernateUtil;
+import com.example.projetjee.HibernateUtil;
 import com.example.projetjee.Hibernate.SiteUser;
-import com.example.projetjee.Hibernate.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.grammars.hql.HqlLexer;
-import org.hibernate.query.hql.HqlInterpretationException;
 
 
 import java.util.List;

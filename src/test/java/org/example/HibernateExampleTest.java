@@ -1,48 +1,41 @@
 package org.example;
 
-import com.example.projetjee.Hibernate.HibernateUtil;
+import com.example.projetjee.HibernateUtil;
 import com.example.projetjee.Hibernate.SiteUser;
-import jdk.jfr.Event;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import com.example.projetjee.HibernateUtil;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class HibernateExampleTest {
 
-    private static SessionFactory sessionFactory;
+    //private static SessionFactory sessionFactory;
 
-    @BeforeEach
-
-
-    protected void setUp() {
-        // A SessionFactory is set up once for an application!
-        final StandardServiceRegistry registry =
-                new StandardServiceRegistryBuilder()
-                        .configure("hibernate.cfg.xml")
-                        .build();
-        try {
-            sessionFactory =
-                    new MetadataSources(registry)
-                            .addAnnotatedClass(SiteUser.class)
-                            .buildMetadata()
-                            .buildSessionFactory();
-        }
-        catch (Exception e) {
-            // The registry would be destroyed by the SessionFactory, but we
-            // had trouble building the SessionFactory so destroy it manually.
-            System.err.println("Initialisation de la SessionFactory a échoué : " + e);
-            StandardServiceRegistryBuilder.destroy(registry);
-
-            throw new ExceptionInInitializerError(e);
-        }
-    }
+//    @BeforeEach
+//    protected void setUp() {
+//        // A SessionFactory is set up once for an application!
+//        final StandardServiceRegistry registry =
+//                new StandardServiceRegistryBuilder()
+//                        .configure("WEB-INF/classes/hibernate.cfg.xml")
+//                        .build();
+//        try {
+//            sessionFactory =
+//                    new MetadataSources(registry)
+//                            .addAnnotatedClass(SiteUser.class)
+//                            .buildMetadata()
+//                            .buildSessionFactory();
+//        }
+//        catch (Exception e) {
+//            // The registry would be destroyed by the SessionFactory, but we
+//            // had trouble building the SessionFactory so destroy it manually.
+//            System.err.println("Initialisation de la SessionFactory a échoué : " + e);
+//            StandardServiceRegistryBuilder.destroy(registry);
+//
+//            throw new ExceptionInInitializerError(e);
+//        }
+//    }
 
 //
 

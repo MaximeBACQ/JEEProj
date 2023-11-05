@@ -3,4 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
+    <filter>
+        <filter-name>FilterClass</filter-name>
+        <filter-class>com.example.projetjee.Hibernate.FilterClass</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterClass</filter-name>
+        <url-pattern>/RegisterServlet</url-pattern> <!-- Spécifiez l'URL ou le pattern de servlets auxquels s'applique le filtre -->
+    </filter-mapping>
 </web-app>
