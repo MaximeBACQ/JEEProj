@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name="users")
+@NamedQuery(name="SiteUser.byEmailAndPass", query="SELECT u FROM SiteUser u WHERE u.email = ?1 and u.password = ?2")
 public class SiteUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
