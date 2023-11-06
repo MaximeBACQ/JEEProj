@@ -34,8 +34,17 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         if(userFetched != null) {
+            HttpSession session = request.getSession();
             out.println(userFetched);
-            request.setAttribute("result", userFetched);
+            if(userFetched.getIsAdmin()) {
+                session.setAttribute("adminUser", userFetched);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("adminPage.jsp");
+                dispatcher.forward(request, response);
+            }else{
+                session.setAttribute("user", userFetched);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+                dispatcher.forward(request, response);
+            }
         }else{
             out.println("Your credentials did not match anything in our database");
         }
