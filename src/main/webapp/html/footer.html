@@ -1,0 +1,38 @@
+<div class="footer-container">
+  <div class="colonne">
+    <h3>Plan du site</h3>
+    <ul>
+      <?php
+		$resultat = $db->prepare("SELECT cat FROM products GROUP BY cat");
+      $resultat->execute();
+      $produits = $resultat->fetchAll();
+
+      //on affiche tous les produits de la catégorie
+      foreach($produits as $produit)
+      {
+      echo "<li><a href='produits.php?cat=".$produit['cat']."'>".$produit['cat']."</a></li>";
+      }
+      ?>
+    </ul>
+  </div>
+
+  <div class="colonne">
+    <h3>Mentions légales</h3>
+    <ul>
+      <li><a href="#">Politique de confidentialité</a></li>
+      <li><a href="#">Hébergeur du site</a></li>
+      <li><a href="#">Concepteur du site</a></li>
+    </ul>
+  </div>
+
+  <div class="colonne">
+    <h3>Nous contacter</h3>
+    <ul>
+      <li><a href="#">Concepteur</a></li>
+      <li><a href="#">Société</a></li>
+      <li><a href="#">Tenor</a></li>
+    </ul>
+  </div>
+</div>
+
+<p id="copyright">TENOR © 2022</p>

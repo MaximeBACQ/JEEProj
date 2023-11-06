@@ -1,0 +1,224 @@
+.header-banniere {
+    display: flex;
+    background-color: black;
+    align-items: center;
+
+}
+
+
+#header-banniere-logo {
+    float: left;
+    width: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 70px;
+}
+
+
+#header-banniere-titre {
+    color: orange;
+    font-size: 35px;
+    padding-left: 39%;
+    padding-right: 25%;
+    letter-spacing: 2.5px;
+    text-shadow: 0 0 0.15em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
+}
+
+
+
+.header-banniere img {
+    width: 20px;
+    margin-right: 5px;
+}
+
+
+.header-banniere li  {
+    color: white;
+    list-style: none;
+    margin-right: 10px;
+}
+
+
+
+
+
+
+
+.header-banniere .compte-client .dessous{
+    color: white;
+    font-size: 10px;
+    margin-left:5px;
+}
+
+.header-banniere li a {
+    text-decoration: none;
+    color: white;
+}
+
+
+header {
+    width: 100%;
+    text-transform : uppercase;
+    display: block;
+    font-weight: 600;
+    font-family: 'Trade Gothic LT Std', sans-serif;
+    transition: 0.5s ease;
+    position: fixed;
+    z-index: 10;
+}
+
+
+@media (max-width: 768px) {
+    .header-banniere {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+    }
+
+    .header-banniere #header-banniere-logo {
+        display: none;
+    }
+
+    .header-menu {
+        padding: 10px;
+    }
+
+    .header-menu ul li a {
+        font-size: 14px;
+    }
+
+    .header-menu ul li a .fa {
+        font-size: 14px;
+    }
+
+    .header-menu {
+        display: none;
+    }
+}
+
+
+.header-menu {
+
+    background-color: #404040;
+    text-align: center;
+
+}
+
+
+.header-menu ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+}
+
+
+.header-menu ul li {
+    background: #404040;
+    margin-right: 5px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
+
+
+.header-menu ul li a{
+    color: white;
+    font-size: 17px;
+    text-decoration: none;
+}
+
+.header-menu ul li, .header-menu ul li a  {
+    transition: 0.15s;
+}
+
+.header-menu ul li a:hover {
+    color: orange;
+
+}
+
+
+
+.header-menu ul ul li a {
+    color: white;
+}
+
+
+
+
+.header-menu .fa {
+    margin-right: 15px;
+}
+
+
+.header-sous-menu-1, .header-sous-menu-bag {
+    display: none;
+}
+
+
+
+
+
+
+.header-menu ul li:hover .header-sous-menu-1 {
+    background: #000000;
+
+    display: block;
+    position: absolute;
+    z-index: 2;
+    margin-top: 10px;
+    margin-left: -25px;
+    border-radius: 5px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.header-menu ul li:hover .header-sous-menu-bag ul {
+    background: black;
+    color: white;
+    display: block;
+    margin: 10px;
+}
+
+
+.header-menu ul li:hover .header-sous-menu-bag ul li {
+    background: black;
+    text-align: left;
+    padding: 10px;
+}
+
+
+.header-menu ul li:hover .header-sous-menu-bag {
+    background: black;
+    display: block;
+    position: absolute;
+    z-index: 2;
+    margin-top: 15px;
+    margin-left: 15px;
+    border-radius: 5px;
+}
+
+
+.header-menu ul li:hover .header-sous-menu-1 ul {
+    background: black;
+    display: block;
+    margin: 10px;
+}
+
+
+.header-menu ul li:hover .header-sous-menu-1 ul li {
+    background: black;
+    text-align: left;
+    width: 150px;
+    padding: 10px;
+    border-bottom: 1px dotted orange;
+}
+
+
+.header-menu ul li:hover .header-sous-menu-1 ul li:last-child {
+    border-bottom: 0px;
+}
+
+
+.header-menu ul li:hover .header-sous-menu-1 ul li a:hover {
+    color: orange;
+}
