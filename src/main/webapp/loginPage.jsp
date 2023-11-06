@@ -9,8 +9,17 @@
 <html>
 <head>
     <title>Login</title>
+    <% String logFail = (String) session.getAttribute("refused");
+        session.removeAttribute("refused");
+    %>
 </head>
 <body>
+    <%
+        if(logFail != null){
+        %>
+        <h1>You have entered credentials that don't match any user in our database, your home will be bombed soon inshallah</h1>
+        <%
+        }%>
     <form action="LoginServlet" method="post">
         <input type="email" name="email" placeholder="Your Email" required /><br/>
         <input type="password" name="password" placeholder="Your Password" required /><br/>

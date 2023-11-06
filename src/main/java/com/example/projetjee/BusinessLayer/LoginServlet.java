@@ -28,13 +28,12 @@ public class LoginServlet extends HttpServlet {
         userByMailAndPass.setParameter(1,email);
         userByMailAndPass.setParameter(2,password);
 
-        List<SiteUser> resultList = userByMailAndPass.getResultList();
-        SiteUser userFetched = resultList.get(0);
-
         PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
 
-        if(userFetched != null) {
-            HttpSession session = request.getSession();
+        List<SiteUser> resultList = userByMailAndPass.getResultList();
+        if(!resultList.isEmpty()){
+            SiteUser userFetched = resultList.get(0);
             out.println(userFetched);
             if(userFetched.getIsAdmin()) {
                 session.setAttribute("adminUser", userFetched);
@@ -46,8 +45,15 @@ public class LoginServlet extends HttpServlet {
                 dispatcher.forward(request, response);
             }
         }else{
-            out.println("Your credentials did not match anything in our database");
+            session.setAttribute("refused","true");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("loginPage.jsp");
+            dispatcher.forward(request, response);
         }
+
+        entityManager.getTransaction().commit();
+
+        entityManager.close();
+        entityManagerFactory.close();
 
         /*RequestDispatcher dispatcher = request.getRequestDispatcher("votre_page.jsp");
         dispatcher.forward(request, response);*/
