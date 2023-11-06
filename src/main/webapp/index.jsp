@@ -5,8 +5,14 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
+<h1>
+
+
 </h1>
+<%@ include file="html/header.html" %>
+<%@ include file="html/accueil.html" %>
+<%@ include file="html/footer.html" %>
+
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 <a href="loginPage.jsp">Login Page</a>
