@@ -1,20 +1,16 @@
 package com.example.projetjee.DAO;
 
-import com.example.projetjee.Hibernate.HibernateUtil;
-import com.example.projetjee.Hibernate.SiteUser;
-import com.example.projetjee.Hibernate.HibernateUtil;
+import com.example.projetjee.Model.SiteUser;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.grammars.hql.HqlLexer;
-import org.hibernate.query.hql.HqlInterpretationException;
 
 
 import java.util.List;
 
-
+/*
 public class UserDAOImpl implements UserDAO{
     @Override
     public void addUser(SiteUser user) {
+        /*
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             //security
             session.beginTransaction();
@@ -27,6 +23,7 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public SiteUser getUserById(int id) {
+        /*
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
             SiteUser user = (SiteUser) session.createQuery("SELECT SiteUser FROM SiteUser WHERE SiteUser.id = :id",SiteUser.class);
@@ -42,6 +39,7 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public List<SiteUser> getAllUsers() {
+        /*
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
             List<SiteUser> users = session.createQuery("SELECT u FROM SiteUser u",SiteUser.class).list();
@@ -67,3 +65,4 @@ public class UserDAOImpl implements UserDAO{
 
     }
 }
+*/

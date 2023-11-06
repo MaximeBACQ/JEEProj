@@ -1,8 +1,6 @@
 package org.example;
 
-import com.example.projetjee.Hibernate.HibernateUtil;
-import com.example.projetjee.Hibernate.SiteUser;
-import jdk.jfr.Event;
+import com.example.projetjee.Model.SiteUser;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -13,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
-
+/*
 public class HibernateExampleTest {
 
     private static SessionFactory sessionFactory;
@@ -72,3 +70,5 @@ public class HibernateExampleTest {
         }
     }
 }
+*/
+

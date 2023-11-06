@@ -3,8 +3,10 @@ package com.example.projetjee.BusinessLayer;
 import java.io.*;
 import java.time.LocalDate;
 
-import com.example.projetjee.DAO.UserDAOImpl;
-import com.example.projetjee.Hibernate.SiteUser;
+import com.example.projetjee.Model.SiteUser;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
@@ -27,15 +29,24 @@ public class RegisterServlet extends HttpServlet {
         // Manipulation des données reçues
         SiteUser newUser = new SiteUser(name,surname,username,email,birthDate,gender,password,basicUser,basicUser);
 
-        System.out.println(newUser.toString());
+        /*
         UserDAOImpl userDao = new UserDAOImpl();
-        userDao.addUser(newUser);
+        userDao.addUser(newUser); */
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        entityManager.getTransaction().begin();
+        entityManager.merge(newUser);
+        entityManager.getTransaction().commit();
+
+        entityManager.close();
+        entityManagerFactory.close();
 
         // Exemple de réponse renvoyée au client
         response.getWriter().println("<html><body>");
         response.getWriter().println("<h2>Informations reçues :</h2>");
-        response.getWriter().println("<p>Nom : " + name + "</p>");
-        response.getWriter().println("<p>Prénom : " + surname + "</p>");
+        response.getWriter().println("<p>data : " + newUser + "</p>");
         response.getWriter().println("</body></html>");
 
     }

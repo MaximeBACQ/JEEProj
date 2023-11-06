@@ -1,7 +1,6 @@
-package com.example.projetjee.Hibernate;
+package com.example.projetjee.Model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Type;
 
 import java.time.LocalDate;
 
@@ -9,7 +8,7 @@ import java.time.LocalDate;
 @Table(name="users")
 public class SiteUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     @Column(name="name")
     private String name;
@@ -38,6 +37,7 @@ public class SiteUser {
 
     public SiteUser(String name, String surname, String username, String email, LocalDate birthDate, String gender,
                     String password, boolean isAdmin, boolean isModerator){          //our needed constructor
+        this.username = username;
         this.name = name;
         this.surname = surname;
         this.email=email;
