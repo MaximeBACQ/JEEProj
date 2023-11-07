@@ -1,19 +1,8 @@
 <div class="footer-container">
   <div class="colonne">
     <h3>Plan du site</h3>
-    <ul>
-      <?php
-		$resultat = $db->prepare("SELECT cat FROM products GROUP BY cat");
-      $resultat->execute();
-      $produits = $resultat->fetchAll();
 
-      //on affiche tous les produits de la catégorie
-      foreach($produits as $produit)
-      {
-      echo "<li><a href='produits.php?cat=".$produit['cat']."'>".$produit['cat']."</a></li>";
-      }
-      ?>
-    </ul>
+
   </div>
 
   <div class="colonne">

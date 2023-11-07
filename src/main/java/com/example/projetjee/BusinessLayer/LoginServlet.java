@@ -1,10 +1,7 @@
 package com.example.projetjee.BusinessLayer;
 
 import com.example.projetjee.Model.SiteUser;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -18,46 +15,49 @@ import java.util.List;
 public class LoginServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
 
-        TypedQuery<SiteUser> userByMailAndPass = entityManager.createNamedQuery("SiteUser.byEmailAndPass", SiteUser.class);
-        userByMailAndPass.setParameter(1,email);
-        userByMailAndPass.setParameter(2,password);
+        try {
+            transaction.begin();
 
-        PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
 
-        List<SiteUser> resultList = userByMailAndPass.getResultList();
-        if(!resultList.isEmpty()){
-            SiteUser userFetched = resultList.get(0);
-            out.println(userFetched);
-            if(userFetched.getIsAdmin()) {
-                session.setAttribute("adminUser", userFetched);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("adminPage.jsp");
-                dispatcher.forward(request, response);
-            }else{
-                session.setAttribute("user", userFetched);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-                dispatcher.forward(request, response);
+            TypedQuery<SiteUser> userByMailAndPass = entityManager.createNamedQuery("SiteUser.byEmailAndPass", SiteUser.class);
+            userByMailAndPass.setParameter(1,email);
+            userByMailAndPass.setParameter(2,password);
+
+            List<SiteUser> resultList = userByMailAndPass.getResultList();
+
+            HttpSession session = request.getSession();
+
+            if(!resultList.isEmpty()) {
+                SiteUser userFetched = resultList.get(0);
+                if (userFetched.getIsAdmin()) {
+                    session.setAttribute("adminUser", userFetched);
+                    response.sendRedirect("adminPage.jsp");
+                } else {
+                    session.setAttribute("user", userFetched);
+                    response.sendRedirect("index.jsp");
+                }
+            } else {
+                session.setAttribute("refused","true");
+                response.sendRedirect("loginPage.jsp");
             }
-        }else{
-            session.setAttribute("refused","true");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("loginPage.jsp");
-            dispatcher.forward(request, response);
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
         }
-
-        entityManager.getTransaction().commit();
-
-        entityManager.close();
-        entityManagerFactory.close();
-
-        /*RequestDispatcher dispatcher = request.getRequestDispatcher("votre_page.jsp");
-        dispatcher.forward(request, response);*/
     }
-    public void destroy(){
+
+    public void destroy() {
     }
 }

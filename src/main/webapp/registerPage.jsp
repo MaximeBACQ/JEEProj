@@ -24,5 +24,13 @@
         <input type="password" name="password" placeholder="Your Password" required /><br/>
         <input type="submit" value="Register !"/>
     </form>
+
+    <% String registrationMessage = request.getParameter("registrationMessage");
+        if (registrationMessage != null) {
+    %>
+    <p><%= registrationMessage %></p>
+    <%
+        }
+    %>
 </body>
 </html>

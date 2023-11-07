@@ -1,10 +1,7 @@
 package com.example.projetjee.AdminActions;
 
 import com.example.projetjee.Model.SiteUser;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -22,34 +19,25 @@ public class AdminServlet extends HttpServlet {
 
         entityManager.getTransaction().begin();
 
-        TypedQuery<SiteUser> query = entityManager.createQuery("DELETE FROM SiteUser u WHERE u.username > :username", SiteUser.class);
-        query.setParameter("username", request.getParameter("username"));
+        Query query = entityManager.createQuery("DELETE FROM SiteUser u WHERE u.email = :email");
+        query.setParameter("email", request.getParameter("email"));
 
-        List<SiteUser> resultList = query.getResultList();
+        int rowsDeleted = query.executeUpdate();
 
-        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
 
-        if(!resultList.isEmpty()){
-            SiteUser userFetched = resultList.get(0);
-            out.println(userFetched);
-
-            session.setAttribute("refused", "false");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("adminPage.jsp");
-            dispatcher.forward(request, response);
-
-        }else{
-            session.setAttribute("refused","true");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("adminPage.jsp");
-            dispatcher.forward(request, response);
+        if (rowsDeleted > 0) {
+            session.setAttribute("deleted", "true");
+        } else {
+            session.setAttribute("deleted", "false");
         }
-
 
         entityManager.getTransaction().commit();
         entityManager.close();
         entityManagerFactory.close();
-    }
 
+        response.sendRedirect("adminPage.jsp");
+    }
     public void destroy(){
 
     }
