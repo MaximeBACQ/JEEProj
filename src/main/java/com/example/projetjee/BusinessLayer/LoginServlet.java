@@ -1,5 +1,6 @@
 package com.example.projetjee.BusinessLayer;
 
+import com.example.projetjee.DAO.UserDAOImpl;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.*;
 import jakarta.servlet.RequestDispatcher;
