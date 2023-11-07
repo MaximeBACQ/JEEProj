@@ -6,7 +6,7 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 public class JPAUtil {
-    private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("VotrePersistenceUnit");
+    private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
     private static EntityManager entityManager;
 
     private JPAUtil() {
@@ -29,31 +29,3 @@ public class JPAUtil {
         }
     }
 }
-
-
-//
-//    private EntityManager entityManager;
-//    private static JPAUtil JPAUtilInstance;
-//    private JPAUtil(){
-//        entityManager = createEM();
-//    }
-//    public EntityManager createEM(){
-//        try (EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence")) {
-//            return entityManagerFactory.createEntityManager();
-//        }catch(Exception e){
-//            throw new ExceptionInInitializerError("There was an error with some informations, please try reloading the page");
-//        }
-//    }
-//
-//    public static JPAUtil getJPAUtilInstance(){
-//        if(JPAUtilInstance == null){
-//            JPAUtilInstance = new JPAUtil();
-//        }
-//        return JPAUtilInstance;
-//    }
-//
-//    public static EntityManager getEntityManager(){
-//        JPAUtil.getJPAUtilInstance();
-//        return getJPAUtilInstance().entityManager;
-//    }*/
-//}

@@ -65,7 +65,7 @@
         }%>
     <form action="AdminServlet" method="post">
         <label for="UserToSelect">
-            <input type="text" placeholder="User's e-mail" id="UserToSelect" name="id">
+            <input type="text" placeholder="User's id" id="UserToSelect" name="id">
         </label>
         <input type="submit" value="Select User">
     </form>
