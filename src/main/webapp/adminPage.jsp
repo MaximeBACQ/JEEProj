@@ -9,9 +9,21 @@
     <html>
     <head>
         <title>Admin Interface</title>
-        <% String deleted = (String) session.getAttribute("deleted");
-        session.removeAttribute("refused");
+        <%
+            String deleted = null;
+            String selected = null;
         %>
+        <c:if test="${sessionScope.deleted != null}">
+            <%  deleted = (String) session.getAttribute("deleted");
+                session.removeAttribute("deleted");
+            %>
+        </c:if>
+        <c:if test="${sessionScope.selected != null}">
+            <%  selected = (String) session.getAttribute("selected");
+                session.removeAttribute("selected");
+            %>
+        </c:if>
+
     </head>
     <body>
     <h1>Admin Interface</h1>
@@ -36,5 +48,26 @@
             </label>
             <input type="submit" value="Delete User">
         </form>
+
+    <h1>Enter the ID of the user you would like to select</h1>
+    <%
+        if(selected != null)
+        {
+            if(selected.equals("true")){
+    %>
+    <h2>The user has been selected : TODO !! SHOW USER INFORMATIONS OR REDIRECT TO A PAGE WITH THOSE INFOS</h2>
+    <%
+    }else{
+    %>
+    <h2> You've entered an id that doesn't exist in our database, try again.</h2>
+    <%
+            }
+        }%>
+    <form action="AdminServlet" method="post">
+        <label for="UserToSelect">
+            <input type="text" placeholder="User's e-mail" id="UserToSelect" name="id">
+        </label>
+        <input type="submit" value="Select User">
+    </form>
     </body>
     </html>
