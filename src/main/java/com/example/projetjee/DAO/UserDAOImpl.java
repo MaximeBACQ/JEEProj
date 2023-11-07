@@ -1,58 +1,77 @@
 package com.example.projetjee.DAO;
 
 import com.example.projetjee.Model.SiteUser;
+import jakarta.persistence.*;
 import org.hibernate.Session;
+import com.example.projetjee.Model.SiteUser;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
 
 
 import java.util.List;
 
-/*
+
 public class UserDAOImpl implements UserDAO{
+    public static UserDAOImpl userDaoImpl = new UserDAOImpl();
     @Override
     public void addUser(SiteUser user) {
-        /*
-        try(Session session = HibernateUtil.getSessionFactory().openSession()){
-            //security
-            session.beginTransaction();
-            session.persist(user);
-            session.getTransaction().commit();
-        }catch(Exception e){
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        try{
+            entityManager.persist(user);
+            transaction.commit();
+        }
+        catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
+    }
+        finally {
+            entityManager.close();
         }
     }
 
     @Override
     public SiteUser getUserById(int id) {
-        /*
-        try(Session session = HibernateUtil.getSessionFactory().openSession()){
-            session.beginTransaction();
-            SiteUser user = (SiteUser) session.createQuery("SELECT SiteUser FROM SiteUser WHERE SiteUser.id = :id",SiteUser.class);
-            //if we want to call a specific field use the beans field, not database's fields
-            session.getTransaction().commit();
-            System.out.println(user.toString());
-            return user;
-        }catch(Exception e){
-            System.out.println("Couldn't fetch users : " + e);
-            return null;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        SiteUser user = null;
+        try {
+            user = entityManager.find(SiteUser.class, id);
+            if (user != null) {
+                user = entityManager.find(SiteUser.class, id);
+            }
+        } catch (Exception e) {
+                    if (transaction.isActive()) {
+                        transaction.rollback();
+                    }
+                    e.printStackTrace();
+        } finally {
+            entityManager.close();
         }
+        return user;
     }
 
     @Override
     public List<SiteUser> getAllUsers() {
-        /*
-        try(Session session = HibernateUtil.getSessionFactory().openSession()){
-            session.beginTransaction();
-            List<SiteUser> users = session.createQuery("SELECT u FROM SiteUser u",SiteUser.class).list();
-            //if we want to call a specific field use the beans field, not database's fields
-            for(SiteUser s : users){
-                System.out.println(s.toString());
-            }
-            session.getTransaction().commit();
-            return users;
-        }catch(Exception e){
-            System.out.println("Couldn't fetch users : " + e);
-            return null;
+        // not functional
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        List<SiteUser> listUsers = null;
+        try {
+            TypedQuery<SiteUser> query = entityManager.createQuery("SELECT u FROM users u", SiteUser.class);
+            listUsers = query.getResultList();
+        } finally {
+            entityManager.close();
         }
+        return listUsers;
     }
 
     @Override
@@ -62,7 +81,51 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public void deleteUser(int id) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        try {
+            SiteUser user = entityManager.find(SiteUser.class, id);
 
+            if (user != null) {
+                entityManager.remove(user);
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
     }
+
+    @Override
+    public void deleteUser(String username) {
+        //Not functional
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        try {
+            SiteUser user = entityManager.find(SiteUser.class, username);
+
+            if (user != null) {
+                entityManager.remove(user);
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+
 }
-*/
+

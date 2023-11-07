@@ -6,7 +6,8 @@ import java.util.List;
 public interface UserDAO {
     void addUser(SiteUser user);
     SiteUser getUserById(int id);
-    List<SiteUser> getAllUsers();
+    List<SiteUser> getAllUsers(); //not functional
     void updateUser(SiteUser userInfos);
     void deleteUser(int id); //we'll implement some logic so that we can fetch the user to delete by its id
+    void deleteUser(String username0); //not functional
 }
