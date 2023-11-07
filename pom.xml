@@ -51,8 +51,21 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
-        </dependency>  </dependencies>
+        </dependency>
+        <!-- JavaMail API -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.6.2</version> <!-- Assurez-vous d'utiliser la dernière version disponible -->
+        </dependency>
 
+        <!-- Implémentation de JavaMail (pour le transport et les classes Mime) -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version> <!-- Assurez-vous d'utiliser la même version que javax.mail-api -->
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
