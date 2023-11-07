@@ -1,7 +1,6 @@
 package com.example.projetjee.BusinessLayer;
 
 import com.example.projetjee.DAO.UserDAOImpl;
-import com.example.projetjee.MailSender;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.*;
 import jakarta.servlet.RequestDispatcher;
@@ -24,7 +23,6 @@ public class LoginServlet extends HttpServlet {
         try {
             transaction.begin();
 
-            MailSender.sendEmail("lucasrigot@gmail.com","subject","body");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
 
