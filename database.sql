@@ -21,6 +21,7 @@ VALUES ('Admin', 'Admin', 'AdminUser', 'admin@example.com', '1980-05-15', 'Male'
 CREATE TABLE IF NOT EXISTS Company(
 	companyId INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
+    userId INT,
     FOREIGN KEY (userId) REFERENCES users(userId)
 );
 
@@ -30,6 +31,7 @@ CREATE TABLE IF NOT EXISTS Product(
     price INT,
 	stock INT,
     description VARCHAR(100),
+    companyId INT,
 	FOREIGN KEY (companyId) REFERENCES Company(companyId)
 );
 
@@ -37,5 +39,6 @@ CREATE TABLE IF NOT EXISTS ProductOrder(
 	orderId INT AUTO_INCREMENT PRIMARY KEY,
 	orderDate DATE,
 	orderPrice INT,
+    userId INT,
     FOREIGN KEY (userId) REFERENCES users(userId)
 );
