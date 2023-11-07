@@ -21,10 +21,18 @@ public class ProductEntity {
     @Basic
     @Column(name = "description")
     private String description;
-    @Basic
-    @Column(name = "companyId")
-    private Integer companyId;
+    @ManyToOne
+    @JoinColumn(name = "companyId")
+    private CompanyEntity company;
 
+    public ProductEntity(){}
+
+//    public ProductEntity(String label, int price, int stock, String description){
+//        this.label = label;
+//        this.price = price;
+//        this.stock = stock;
+//        this.description = description;
+//    }
     public Long getProductId() {
         return productId;
     }
@@ -65,12 +73,12 @@ public class ProductEntity {
         this.description = description;
     }
 
-    public Integer getCompanyId() {
-        return companyId;
+    public CompanyEntity getCompanyId() {
+        return company;
     }
 
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
+    public void setCompanyId(CompanyEntity company) {
+        this.company = company;
     }
 
 }

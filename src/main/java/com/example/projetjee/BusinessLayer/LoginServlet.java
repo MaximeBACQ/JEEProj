@@ -39,7 +39,9 @@ public class LoginServlet extends HttpServlet {
                 if (userFetched.getIsAdmin()) {
                     session.setAttribute("adminUser", userFetched);
                     response.sendRedirect("adminPage.jsp");
-                } else {
+                }//else if(!userFetched.getIsAdmin() && userFetched.getIsModerator()){
+//}
+                else {
                     session.setAttribute("user", userFetched);
                     response.sendRedirect("index.jsp");
                 }

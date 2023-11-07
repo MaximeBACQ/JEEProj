@@ -7,6 +7,7 @@
         <description>Hibernate Entity Manager Example</description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.example.projetjee.Model.ProductEntity</class>
+        <class>com.example.projetjee.Model.CompanyEntity</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
@@ -17,7 +18,6 @@
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/database_jee"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
             <property name="hibernate.connection.username" value="root"/>
-            <property name="hibernate.connection.password" value="root"/>
         </properties>
     </persistence-unit>
 </persistence>
