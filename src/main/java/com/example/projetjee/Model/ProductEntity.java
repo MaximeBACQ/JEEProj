@@ -22,7 +22,7 @@ public class ProductEntity {
     @Column(name = "description")
     private String description;
     @ManyToOne
-    @JoinColumn(name = "companyId")
+    @JoinColumn(name = "companyId", nullable = false)
     private CompanyEntity company;
 
     public ProductEntity(){}
