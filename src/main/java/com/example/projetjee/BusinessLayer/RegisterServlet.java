@@ -4,10 +4,12 @@ import java.io.*;
 import java.time.LocalDate;
 
 import com.example.projetjee.DAO.UserDAOImpl;
+import com.example.projetjee.DAO.UserExistsException;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
@@ -16,7 +18,7 @@ public class RegisterServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        // Récupération des paramètres du formulaire
+
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String username = request.getParameter("username");
@@ -27,30 +29,26 @@ public class RegisterServlet extends HttpServlet {
 
         boolean basicUser = false;
 
-        // Manipulation des données reçues
-        SiteUser newUser = new SiteUser(name,surname,username,email,birthDate,gender,password,basicUser,basicUser);
+        SiteUser newUser = new SiteUser(name, surname, username, email, birthDate, gender, password, basicUser, basicUser);
 
         UserDAOImpl userDao = new UserDAOImpl();
-        userDao.addUser(newUser);
 
-//        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
-//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            userDao.addUser(newUser);
+            response.sendRedirect("index.jsp");
+        } catch (UserExistsException e) {
+            String errorMessage = "Erreur : cette adresse e-mail existe déjà.";
+            request.setAttribute("registrationMessage", errorMessage);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("registerPage.jsp");
+            try {
+                dispatcher.forward(request, response);
+            } catch (jakarta.servlet.ServletException g) {
+                g.printStackTrace();
+            }
 
-//        entityManager.getTransaction().begin();
-//        entityManager.merge(newUser);
-//        entityManager.getTransaction().commit();
-//
-//        entityManager.close();
-//        entityManagerFactory.close();
-
-        // Exemple de réponse renvoyée au client
-        response.getWriter().println("<html><body>");
-        response.getWriter().println("<h2>Informations reçues :</h2>");
-        response.getWriter().println("<p>data : " + newUser + "</p>");
-        response.getWriter().println("</body></html>");
-
+        }
     }
 
-    public void destroy() {
+        public void destroy () {
+        }
     }
-}

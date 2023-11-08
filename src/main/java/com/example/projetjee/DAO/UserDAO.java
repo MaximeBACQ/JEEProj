@@ -4,7 +4,7 @@ import com.example.projetjee.Model.SiteUser;
 
 import java.util.List;
 public interface UserDAO {
-    void addUser(SiteUser user);
+    void addUser(SiteUser user) throws UserExistsException;
     SiteUser getUserById(int id);
     List<SiteUser> getAllUsers(); //not functional
     void updateUser(SiteUser userInfos);

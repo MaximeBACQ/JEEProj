@@ -1,6 +1,6 @@
 .header-banniere {
     display: flex;
-    background-color: black;
+    background-color: #C3B1E1;
     align-items: center;
 
 }
@@ -16,12 +16,11 @@
 
 
 #header-banniere-titre {
-    color: orange;
-    font-size: 35px;
-    padding-left: 39%;
+    color: #FFC300;
+    font-size: 30px;
+    padding-left: 35%;
     padding-right: 25%;
     letter-spacing: 2.5px;
-    text-shadow: 0 0 0.15em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
 }
 
 
@@ -133,7 +132,7 @@ header {
 }
 
 .header-menu ul li a:hover {
-    color: orange;
+    color: #C3B1E1;
 
 }
 
@@ -173,7 +172,7 @@ header {
 }
 
 .header-menu ul li:hover .header-sous-menu-bag ul {
-    background: black;
+    background: #C3B1E1;
     color: white;
     display: block;
     margin: 10px;
@@ -181,14 +180,14 @@ header {
 
 
 .header-menu ul li:hover .header-sous-menu-bag ul li {
-    background: black;
+    background: #C3B1E1;
     text-align: left;
     padding: 10px;
 }
 
 
 .header-menu ul li:hover .header-sous-menu-bag {
-    background: black;
+    background: #C3B1E1;
     display: block;
     position: absolute;
     z-index: 2;
@@ -199,18 +198,18 @@ header {
 
 
 .header-menu ul li:hover .header-sous-menu-1 ul {
-    background: black;
+    background: #C3B1E1;
     display: block;
     margin: 10px;
 }
 
 
 .header-menu ul li:hover .header-sous-menu-1 ul li {
-    background: black;
+    background: #C3B1E1;
     text-align: left;
     width: 150px;
     padding: 10px;
-    border-bottom: 1px dotted orange;
+        border-bottom: 1px dotted #C3B1E1;
 }
 
 
@@ -220,5 +219,5 @@ header {
 
 
 .header-menu ul li:hover .header-sous-menu-1 ul li a:hover {
-    color: orange;
+    color: #C3B1E1;
 }

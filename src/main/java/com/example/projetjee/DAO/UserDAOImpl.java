@@ -8,6 +8,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import com.example.projetjee.DAO.UserExistsException;
 
 
 import java.util.List;
@@ -16,25 +17,36 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO{
     private JPAUtil jpaUtil;
     //public static UserDAOImpl userDaoImpl = new UserDAOImpl();
-    @Override
-    public void addUser(SiteUser user) {
-          EntityManager entityManager = JPAUtil.getEntityManager();
 
-        try{
-            EntityTransaction transaction = entityManager.getTransaction();
+    @Override
+    public void addUser(SiteUser user) throws UserExistsException {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = null;
+
+        try {
+            transaction = entityManager.getTransaction();
             transaction.begin();
-            entityManager.persist(user);
-            transaction.commit();
-        }
-        catch (Exception e) {
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+
+            TypedQuery<SiteUser> query = entityManager.createQuery("SELECT u FROM SiteUser u WHERE u.email = :email", SiteUser.class);
+            query.setParameter("email", user.getEmail());
+            List<SiteUser> existingUsers = query.getResultList();
+
+            if (existingUsers.isEmpty()) {
+                entityManager.persist(user);
+                transaction.commit();
+            } else {
+                throw new UserExistsException("User with this email already exists");
+            }
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
             }
             e.printStackTrace();
-    }
-        finally {
-            entityManager.close();
-            entityManager.getTransaction().commit();
+            throw new UserExistsException("Error occurred while adding user");
+        } finally {
+            if (entityManager != null && entityManager.isOpen()) {
+                entityManager.close();
+            }
         }
     }
 

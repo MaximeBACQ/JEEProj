@@ -34,19 +34,17 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = request.getSession();
 
-            if(!resultList.isEmpty()) {
+            if (!resultList.isEmpty()) {
                 SiteUser userFetched = resultList.get(0);
                 if (userFetched.getIsAdmin()) {
                     session.setAttribute("adminUser", userFetched);
                     response.sendRedirect("adminPage.jsp");
-                }//else if(!userFetched.getIsAdmin() && userFetched.getIsModerator()){
-//}
-                else {
-                    session.setAttribute("user", userFetched);
+                } else {
+                    session.setAttribute("connectedUser", userFetched);
                     response.sendRedirect("index.jsp");
                 }
             } else {
-                session.setAttribute("refused","true");
+                session.setAttribute("refused", "true");
                 response.sendRedirect("loginPage.jsp");
             }
 

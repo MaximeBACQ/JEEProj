@@ -3,7 +3,7 @@
     display: flex;
     background-color: #404040;
     color: white;
-    border-top: 1px solid orange;
+    border-top: 1px solid #FFC300;
     padding-top: 25px;
     padding-bottom: 10px;
     position: relative;
@@ -38,7 +38,7 @@
 
 #copyright {
     background-color: black;
-    color: orange;
+    color: #FFC300;
     text-align: center;
     padding-top: 14px;
     padding-bottom: 10px;
@@ -88,6 +88,6 @@ footer .footer-container h3::before {
     bottom: 0;
     height: 1px;
     width: 50px;
-    background: linear-gradient(135deg, #dee2e6, orange);
+    background: linear-gradient(135deg, #dee2e6, #FFC300);
 }
 

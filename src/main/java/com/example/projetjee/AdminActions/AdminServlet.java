@@ -19,28 +19,38 @@ public class AdminServlet extends HttpServlet {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        if(request.getParameter("email")!=null) {
-            //  entityManager.getTransaction().begin();
+        if (request.getParameter("email") != null) {
+            EntityTransaction transaction = null;
 
-            Query query = entityManager.createQuery("DELETE FROM SiteUser u WHERE u.email = :email");
-            query.setParameter("email", request.getParameter("email"));
+            try {
+                transaction = entityManager.getTransaction();
+                transaction.begin();
 
-            int rowsDeleted = query.executeUpdate();
+                Query query = entityManager.createQuery("DELETE FROM SiteUser u WHERE u.email = :email");
+                query.setParameter("email", request.getParameter("email"));
 
-            HttpSession session = request.getSession();
+                int rowsDeleted = query.executeUpdate();
 
-            if (rowsDeleted > 0) {
-                session.setAttribute("deleted", "true");
-            } else {
-                session.setAttribute("deleted", "false");
+                if (rowsDeleted > 0) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("deleted", "true");
+                } else {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("deleted", "false");
+                }
+
+                transaction.commit();
+                response.sendRedirect("adminPage.jsp");
+            } catch (Exception e) {
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+                e.printStackTrace();
+            } finally {
+                entityManager.close();
             }
-
-            entityManager.getTransaction().commit();
-            entityManager.close();
-            entityManagerFactory.close();
-
-            response.sendRedirect("adminPage.jsp");
         }
+
         if(request.getParameter("id")!=null){ // if an id was entered
             //entityManager.getTransaction().begin();
             HttpSession session = request.getSession();
