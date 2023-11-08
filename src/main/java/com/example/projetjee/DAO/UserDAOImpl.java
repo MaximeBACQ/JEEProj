@@ -18,6 +18,7 @@ public class UserDAOImpl implements UserDAO{
     private JPAUtil jpaUtil;
     //public static UserDAOImpl userDaoImpl = new UserDAOImpl();
 
+
     @Override
     public void addUser(SiteUser user) throws UserExistsException {
         EntityManager entityManager = JPAUtil.getEntityManager();
@@ -50,6 +51,8 @@ public class UserDAOImpl implements UserDAO{
         }
     }
 
+
+
     @Override
     public SiteUser getUserById(int id) {
         EntityManager entityManager = JPAUtil.getEntityManager();
@@ -68,52 +71,17 @@ public class UserDAOImpl implements UserDAO{
             } else {
                 return null;
             }
-
-//            for (SiteUser user : resultList) {
-//                System.out.println(user.getName());
-//            }
-        } catch (Exception e) {
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
-            }
+        }catch(Exception e){
+                if (entityManager.getTransaction().isActive()) {
+                    entityManager.getTransaction().rollback();
+                    entityManager.getTransaction().rollback();
+                }
             e.printStackTrace();
-        } finally {
-            entityManager.close();
+        }finally {
+        entityManager.close();
         }
-//        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
-//        EntityManager entityManager = entityManagerFactory.createEntityManager();
-//        EntityTransaction transaction = entityManager.getTransaction();
-//        transaction.begin();
-//        SiteUser user = null;
-//        try {
-//            Query query = entityManager.createQuery("SELECT u FROM SiteUser u WHERE u.userId = :id");
-//            query.setParameter("id", id);
-//
-//            int rowsSelected = query.executeUpdate();
-//
-//            if (rowsSelected == 1) {
-//                List<SiteUser> result = query.getResultList();
-//                return result.get(0);
-//            }else{
-//                return null;
-//            }
-//
-////            user = entityManager.find(SiteUser.class, id);
-////            if (user != null) {
-////                user = entityManager.find(SiteUser.class, id);
-////            }
-//        } catch (Exception e) {
-//                    if (transaction.isActive()) {
-//                        transaction.rollback();
-//                    }
-//                    e.printStackTrace();
-//        } finally {
-//            entityManager.close();
-//            transaction.commit();
-//        }
-//        return null;
         return null;
-    }
+}
     @Override
     public List<SiteUser> getAllUsers() {
         // not functional
@@ -149,8 +117,7 @@ public class UserDAOImpl implements UserDAO{
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         List<SiteUser> listUsers = null;
         try {
-            TypedQuery<SiteUser> query = entityManager.createQuery("SELECT u FROM SiteUser u", SiteUser.class);
-            listUsers = query.getResultList();
+@@ -87,7 +142,8 @@ public List<SiteUser> getAllUsers() {
         } finally {
             entityManager.close();
         }
@@ -208,6 +175,11 @@ public class UserDAOImpl implements UserDAO{
         } finally {
             entityManager.close();
         }
+    }
+
+    @Override
+    public void promoteUser(String username){
+
     }
 
 

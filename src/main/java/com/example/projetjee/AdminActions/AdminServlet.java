@@ -65,6 +65,20 @@ public class AdminServlet extends HttpServlet {
 
             }
         }
+        if(request.getParameter("username")!=null){ // if an id was entered
+            //entityManager.getTransaction().begin();
+            HttpSession session = request.getSession();
+            if(userDAOImpl.getUserById(Integer.parseInt(request.getParameter("id"))) != null){//if associated to user
+                SiteUser selectedUser = userDAOImpl.getUserById(Integer.parseInt(request.getParameter("id")));
+                session.setAttribute("selected","true");
+                response.sendRedirect("adminPage.jsp");
+
+            }else{
+                session.setAttribute("selected", "false");
+                response.sendRedirect("adminPage.jsp");
+
+            }
+        }
     }
     public void destroy(){
 

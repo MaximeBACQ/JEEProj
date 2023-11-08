@@ -10,13 +10,14 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 @WebServlet(name = "RegisterServlet", value = "/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ServletException {
         response.setContentType("text/html");
 
         String name = request.getParameter("name");
@@ -30,6 +31,7 @@ public class RegisterServlet extends HttpServlet {
         boolean basicUser = false;
 
         SiteUser newUser = new SiteUser(name, surname, username, email, birthDate, gender, password, basicUser, basicUser);
+        newUser.setCompanyId(null);
 
         UserDAOImpl userDao = new UserDAOImpl();
 
@@ -40,12 +42,7 @@ public class RegisterServlet extends HttpServlet {
             String errorMessage = "Erreur : cette adresse e-mail existe déjà.";
             request.setAttribute("registrationMessage", errorMessage);
             RequestDispatcher dispatcher = request.getRequestDispatcher("registerPage.jsp");
-            try {
-                dispatcher.forward(request, response);
-            } catch (jakarta.servlet.ServletException g) {
-                g.printStackTrace();
-            }
-
+            dispatcher.forward(request, response); // Utilisation de forward pour envoyer le message à la page
         }
     }
 
