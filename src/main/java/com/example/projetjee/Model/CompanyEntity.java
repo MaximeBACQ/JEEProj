@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "company", schema = "database_jee", catalog = "")
+@Table(name = "company", schema = "database_jee")
 public class CompanyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -14,10 +14,10 @@ public class CompanyEntity {
     @Basic
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "ProductEntity")
+    @OneToMany(mappedBy = "company")
     private List<ProductEntity> products;
 
-    @OneToMany(mappedBy = "UserEntity")
+    @OneToMany(mappedBy = "company")
     private List<SiteUser> workers;
 
     public int getCompanyId() {

@@ -29,6 +29,9 @@ public class SiteUser {
     private boolean isAdmin;
     @Column(name="isModerator")
     private boolean isModerator;
+    @ManyToOne
+    @JoinColumn(name = "companyId")
+    private CompanyEntity company;
 
 
 
@@ -127,6 +130,14 @@ public class SiteUser {
 
     public void setIsModerator(boolean moderator) {
         isModerator = moderator;
+    }
+
+    public CompanyEntity getCompanyId() {
+        return company;
+    }
+
+    public void setCompanyId(CompanyEntity company) {
+        this.company = company;
     }
 
     @Override
