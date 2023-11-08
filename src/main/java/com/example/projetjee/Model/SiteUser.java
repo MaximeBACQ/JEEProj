@@ -50,6 +50,8 @@ public class SiteUser {
         this.password = password;
         this.isAdmin = isAdmin;
         this.isModerator = isModerator;
+        CompanyEntity cpEntity = new CompanyEntity("Placeholder");
+        this.company = cpEntity;
     }
 
     public Long getUserId() {

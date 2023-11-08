@@ -69,5 +69,12 @@
         </label>
         <input type="submit" value="Select User">
     </form>
+
+    <form action="AdminServlet" method="post">
+        <label for="UserToPromote">
+            <input type="text" placeholder="User's username" id="UserToPromote" name="username">
+        </label>
+        <input type="submit" value="Promote">
+    </form>
     </body>
     </html>

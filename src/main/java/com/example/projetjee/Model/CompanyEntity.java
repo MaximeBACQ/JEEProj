@@ -20,6 +20,13 @@ public class CompanyEntity {
     @OneToMany(mappedBy = "company")
     private List<SiteUser> workers;
 
+    public CompanyEntity(){}
+    public CompanyEntity(String name){
+        this.name = name;
+        this.products = null;
+        this.workers = null;
+    }
+
     public int getCompanyId() {
         return companyId;
     }
