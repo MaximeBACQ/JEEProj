@@ -46,14 +46,17 @@ public class UserDAO implements GenericDAO<SiteUser>{
         }
     }
 
-    public SiteUser getUserById(int id) {
+    public SiteUser getUserById(int id) throws UserExistsException {
         EntityManager entityManager = JPAUtil.getEntityManager();
 
         try {
             EntityTransaction transaction = entityManager.getTransaction();
             transaction.begin();
 
-            TypedQuery<SiteUser> query = entityManager.createQuery("SELECT u FROM SiteUser u", SiteUser.class);
+            TypedQuery<SiteUser> query = entityManager
+                    .createQuery("SELECT u FROM SiteUser u WHERE id=:id", SiteUser.class);
+
+            query.setParameter("id", id);
             List<SiteUser> resultList = query.getResultList();
 
             if (!resultList.isEmpty()) {
@@ -61,7 +64,7 @@ public class UserDAO implements GenericDAO<SiteUser>{
 
                 return resultList.get(0);
             } else {
-                return null;
+                throw new UserExistsException("No user matching this ID found");
             }
         }catch(Exception e){
                 if (entityManager.getTransaction().isActive()) {

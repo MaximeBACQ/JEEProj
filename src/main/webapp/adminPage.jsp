@@ -65,7 +65,7 @@
         }%>
     <form action="AdminServlet" method="post">
         <label for="UserToSelect">
-            <input type="text" placeholder="User's id" id="UserToSelect" name="id">
+            <input type="text" placeholder="User's id" id="UserToSelect" name="idForSelection">
         </label>
         <input type="submit" value="Select User">
     </form>
@@ -76,5 +76,21 @@
         </label>
         <input type="submit" value="Promote">
     </form>
+
+    <form action="AdminServlet" method="post">
+        <label for="AddUserToCompany">
+            <input type="number" placeholder="User's id" id="AddUserToCompany" name="userForCompany">
+        </label>
+        <input type="number" placeholder="Company's id" id="CompanyId" name="CompanyId">
+        <input type="submit" value="Add to company">
+    </form>
+    <% String userIdMessage = (String) request.getAttribute("finalMsg");
+        if (userIdMessage != null) {
+    %>
+    <p><%= userIdMessage %></p>
+    <%
+        }
+    %>
+
     </body>
     </html>

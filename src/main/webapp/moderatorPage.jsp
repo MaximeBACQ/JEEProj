@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: CYTech Student
@@ -9,14 +10,22 @@
 <html>
 <head>
     <title>Moderator Page</title>
+
 </head>
 <body>
-    <form action="ModeratorServlet" method="post">
-        <input type="text" name="label" placeholder="Name of your product">
-        <input type="number" name="price" placeholder="It's price">
-        <input type="number" name="stock" placeholder="How many ?">
-        <input type="text" name="description" placeholder="Describe your product">
-        <input type="submit" value="Add a product !" name="submit">
-    </form>
+<c:choose>
+    <c:when test="${sessionScope.adminUser != null or sessionScope.moderator != null}">
+        <form action="ModeratorServlet" method="post">
+            <input type="text" name="label" placeholder="Name of your product">
+            <input type="number" name="price" placeholder="It's price">
+            <input type="number" name="stock" placeholder="How many ?">
+            <input type="text" name="description" placeholder="Describe your product">
+            <input type="submit" value="Add a product !" name="submit">
+        </form>
+    </c:when>
+    <c:otherwise>
+        <p>You're not a moderator; you do not have access to this page.</p>
+    </c:otherwise>
+</c:choose>
 </body>
 </html>

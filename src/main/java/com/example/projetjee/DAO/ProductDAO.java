@@ -1,6 +1,7 @@
 package com.example.projetjee.DAO;
 
 import com.example.projetjee.Model.ProductEntity;
+import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
@@ -8,7 +9,7 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 public class ProductDAO implements GenericDAO<ProductEntity>{
-    public void addProduct(ProductEntity product){
+    public void addProduct(ProductEntity product, SiteUser u){
         EntityManager entityManager = JPAUtil.getEntityManager();
 
         try{
