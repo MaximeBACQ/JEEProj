@@ -1,6 +1,7 @@
 CREATE DATABASE IF NOT EXISTS database_JEE;
 
 USE database_JEE;
+DROP TABLE USERS;
 CREATE TABLE IF NOT EXISTS users (
                                      userId INT AUTO_INCREMENT PRIMARY KEY,
                                      name VARCHAR(50),
@@ -18,14 +19,19 @@ CREATE TABLE IF NOT EXISTS users (
 
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator)
 VALUES ('Admin', 'Admin', 'AdminUser', 'admin@example.com', '1980-05-15', 'Male', 'admin', 1, 1);
+INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator)
+VALUES ('Moderator', 'Moderator', 'ModUser', 'mod@example.com', '1980-05-15', 'Male', 'moderator', 0, 1);
 
-
+DROP TABLE Company;
 CREATE TABLE IF NOT EXISTS Company(
                                       companyId INT AUTO_INCREMENT PRIMARY KEY,
                                       name VARCHAR(100)
 );
 
+INSERT INTO Company (name)
+VALUES ('Cramptoux');
 
+DROP TABLE Product;
 CREATE TABLE IF NOT EXISTS Product(
                                       productId INT AUTO_INCREMENT PRIMARY KEY,
                                       label VARCHAR(100),
@@ -36,7 +42,7 @@ CREATE TABLE IF NOT EXISTS Product(
                                       FOREIGN KEY (companyId) REFERENCES Company(companyId)
 );
 
-
+DROP TABLE ProductOrder;
 CREATE TABLE IF NOT EXISTS ProductOrder(
                                            orderId INT AUTO_INCREMENT PRIMARY KEY,
                                            orderDate DATE,

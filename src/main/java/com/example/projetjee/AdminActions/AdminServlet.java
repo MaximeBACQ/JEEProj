@@ -1,6 +1,8 @@
 package com.example.projetjee.AdminActions;
 
-import com.example.projetjee.DAO.*;
+import com.example.projetjee.DAO.CompanyDao;
+import com.example.projetjee.DAO.UserDAO;
+import com.example.projetjee.DAO.UserExistsException;
 import com.example.projetjee.Model.CompanyEntity;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.*;
@@ -10,94 +12,104 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "AdminServlet", value = "/AdminServlet")
 public class AdminServlet extends HttpServlet {
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        UserDAO userDAO = new UserDAO();
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        HttpSession session = request.getSession();
-
-
-        if (request.getParameter("email") != null) {
-            EntityTransaction transaction = null;
+        public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+            UserDAO userDAO = new UserDAO();
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            HttpSession session = request.getSession();
 
             try {
-                transaction = entityManager.getTransaction();
-                transaction.begin();
+                if (request.getParameter("email") != null) {
+                    EntityTransaction transaction = null;
 
-                Query query = entityManager.createQuery("DELETE FROM SiteUser u WHERE u.email = :email");
-                query.setParameter("email", request.getParameter("email"));
+                    try {
+                        transaction = entityManager.getTransaction();
+                        transaction.begin();
 
-                int rowsDeleted = query.executeUpdate();
+                        Query query = entityManager.createQuery("DELETE FROM SiteUser u WHERE u.email = :email");
+                        query.setParameter("email", request.getParameter("email"));
 
-                if (rowsDeleted > 0) {
-                    session.setAttribute("deleted", "true");
-                } else {
-                    session.setAttribute("deleted", "false");
+                        int rowsDeleted = query.executeUpdate();
+
+                        if (rowsDeleted > 0) {
+                            session.setAttribute("deleted", "true");
+                        } else {
+                            session.setAttribute("deleted", "false");
+                        }
+
+                        transaction.commit();
+                    } catch (Exception e) {
+                        if (transaction != null) {
+                            transaction.rollback();
+                        }
+                        e.printStackTrace();
+                    } finally {
+                        entityManager.close();
+                    }
                 }
 
-                transaction.commit();
-                response.sendRedirect("adminPage.jsp");
-            } catch (Exception e) {
-                if (transaction != null) {
-                    transaction.rollback();
-                }
-                e.printStackTrace();
+
+                    if (request.getParameter("userForCompany") != null) {
+                        String finalMsg = "";
+
+                        try {
+                            int userId = Integer.parseInt(request.getParameter("userForCompany"));
+                            SiteUser selectedUser = userDAO.getUserById(userId);
+
+                            if (selectedUser != null && !selectedUser.getIsModerator()) {
+                                finalMsg = "User is not a vendor";
+                                session.setAttribute("finalMsg", finalMsg);
+                            } else {
+                                CompanyDao cpDAO = new CompanyDao();
+                                long companyId = Long.parseLong(request.getParameter("CompanyId"));
+                                CompanyEntity userCompany = cpDAO.findById(companyId);
+
+                                if (userCompany != null) {
+                                    EntityTransaction transaction = entityManager.getTransaction();
+                                    try {
+                                        transaction.begin();
+
+                                        Query query = entityManager.createQuery("UPDATE SiteUser SET companyId = :company WHERE id = :userId");
+                                        query.setParameter("company", userCompany);
+                                        query.setParameter("userId", userId);
+
+                                        int rowsUpdated = query.executeUpdate();
+
+                                        transaction.commit();
+
+                                        if (rowsUpdated > 0) {
+                                            finalMsg = "Added " + selectedUser.getUsername() + " to " + userCompany.getName();
+                                            session.setAttribute("finalMsg", finalMsg);
+                                        } else {
+                                            finalMsg = "Failed to update user's company";
+                                            session.setAttribute("finalMsg", finalMsg);
+                                        }
+                                    } catch (Exception e) {
+                                        if (transaction != null && transaction.isActive()) {
+                                            transaction.rollback();
+                                        }
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    finalMsg = "Company not found for id: " + companyId;
+                                    session.setAttribute("finalMsg", finalMsg);
+                                }
+                            }
+                        } catch (UserExistsException e) {
+                            finalMsg = "No user found for this id";
+                            session.setAttribute("finalMsg", finalMsg);
+                        }
+                    }
             } finally {
-                entityManager.close();
+                response.sendRedirect("adminPage.jsp");
             }
         }
 
-        if(request.getParameter("idForSelection")!=null){ // if an id was entered
-            //entityManager.getTransaction().begin();
-            try {
-                if(userDAO.findUserById(Integer.parseInt(request.getParameter("idForSelection"))) != null){//if associated to user
-                    SiteUser selectedUser = userDAO.findUserById(Integer.parseInt(request.getParameter("idForSelection")));
-                    session.setAttribute("selected","true");
-                    response.sendRedirect("adminPage.jsp");
 
-                }else{
-                    session.setAttribute("selected", "false");
-                    response.sendRedirect("adminPage.jsp");
-
-                }
-            } catch (UserExistsException e) {
-                String errorMsg = "No user found for this id";
-                session.setAttribute("noUserForId",errorMsg);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("AdminPage.jsp");
-                dispatcher.forward(request, response); // Utilisation de forward pour envoyer le message à la page
-            }
-        }
-        if(request.getParameter("username")!=null){
-
-        }
-        if(request.getParameter("userForCompany")!=null){
-            String finalMsg ="";
-
-            UserDAO UserDAO = new UserDAO();
-            CompanyDAO cpDAO = new CompanyDAO();
-
-            SiteUser selectedUser = UserDAO.findById(Integer.parseInt(request.getParameter("userForCompany")));
-            CompanyEntity userCompany = cpDAO.findById(Integer.parseInt(request.getParameter("CompanyId")));
-
-            selectedUser.setCompany(userCompany);
-            UserDAO.updateUser(selectedUser);
-
-            session.setAttribute("selectedUser",selectedUser);
-            session.setAttribute("companySelected",userCompany);
-
-
-            finalMsg = "Added "+selectedUser.getUsername()+"to"+userCompany.getName();
-            session.setAttribute("finalMsg",finalMsg);
-            //RequestDispatcher dispatcher = request.getRequestDispatcher("adminPage.jsp");
-            //dispatcher.forward(request, response); // Utilisation de forward pour envoyer le message à la page
-            response.sendRedirect("adminPage.jsp"); // Utilisation de forward pour envoyer le message à la page
-
-
-        }
-    }
     public void destroy(){
 
     }
