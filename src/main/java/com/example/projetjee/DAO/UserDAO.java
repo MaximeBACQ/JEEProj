@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+import static com.example.projetjee.DAO.JPAUtil.getEntityManager;
+
 
 public class UserDAO implements GenericDAO<SiteUser>{
     private JPAUtil jpaUtil;
@@ -16,7 +18,7 @@ public class UserDAO implements GenericDAO<SiteUser>{
     }
 
     public void addUser(SiteUser user) throws UserExistsException {
-        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityManager entityManager = getEntityManager();
         EntityTransaction transaction = null;
 
         try {
@@ -47,7 +49,7 @@ public class UserDAO implements GenericDAO<SiteUser>{
     }
 
     public SiteUser getUserById(int id) throws UserExistsException {
-        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityManager entityManager = getEntityManager();
 
         try {
             EntityTransaction transaction = entityManager.getTransaction();
@@ -79,7 +81,7 @@ public class UserDAO implements GenericDAO<SiteUser>{
 }
     public List<SiteUser> getAllUsers() {
         // not functional
-        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityManager entityManager = getEntityManager();
 
         try {
             EntityTransaction transaction = entityManager.getTransaction();
@@ -172,6 +174,14 @@ public class UserDAO implements GenericDAO<SiteUser>{
 
     }
 
+    public SiteUser getUserById(Long userId) {
+        EntityManager entityManager = getEntityManager();
+        try {
+            return entityManager.find(SiteUser.class, userId);
+        } finally {
+            entityManager.close();
+        }
+    }
 
     @Override
     public SiteUser findById(Long id) {
