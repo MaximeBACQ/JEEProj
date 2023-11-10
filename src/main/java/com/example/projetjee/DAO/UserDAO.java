@@ -7,11 +7,11 @@ import jakarta.persistence.*;
 import java.util.List;
 
 
-public class UserDAOImpl implements GenericDAO<SiteUser>{
+public class UserDAO implements GenericDAO<SiteUser>{
     private JPAUtil jpaUtil;
     //public static UserDAOImpl userDaoImpl = new UserDAOImpl();
 
-    public UserDAOImpl() {
+    public UserDAO() {
         super();
     }
 

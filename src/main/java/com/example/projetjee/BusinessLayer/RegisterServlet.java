@@ -3,12 +3,9 @@ package com.example.projetjee.BusinessLayer;
 import java.io.*;
 import java.time.LocalDate;
 
-import com.example.projetjee.DAO.UserDAOImpl;
+import com.example.projetjee.DAO.UserDAO;
 import com.example.projetjee.DAO.UserExistsException;
 import com.example.projetjee.Model.SiteUser;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -33,7 +30,7 @@ public class RegisterServlet extends HttpServlet {
         SiteUser newUser = new SiteUser(name, surname, username, email, birthDate, gender, password, basicUser, basicUser);
         newUser.setCompanyId(null);
 
-        UserDAOImpl userDao = new UserDAOImpl();
+        UserDAO userDao = new UserDAO();
 
         try {
             userDao.addUser(newUser);

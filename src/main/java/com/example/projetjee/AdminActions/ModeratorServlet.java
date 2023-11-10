@@ -1,24 +1,19 @@
 package com.example.projetjee.AdminActions;
 
 import com.example.projetjee.DAO.JPAUtil;
-import com.example.projetjee.DAO.ProductDAOImpl;
-import com.example.projetjee.DAO.UserDAOImpl;
+import com.example.projetjee.DAO.ProductDAO;
 import com.example.projetjee.Model.ProductEntity;
-import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.*;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 @WebServlet(name = "ModeratorServlet", value = "/ModeratorServlet")
 public class ModeratorServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        ProductDAOImpl productDAOImpl = new ProductDAOImpl();
+        ProductDAO productDAOImpl = new ProductDAO();
 
         if(request.getParameter("submit")!=null) {
             //  entityManager.getTransaction().begin();

@@ -1,15 +1,12 @@
 package com.example.projetjee.BusinessLayer;
 
-import com.example.projetjee.DAO.UserDAOImpl;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.*;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")

@@ -1,21 +1,18 @@
 package com.example.projetjee.AdminActions;
 
-import com.example.projetjee.DAO.UserDAOImpl;
+import com.example.projetjee.DAO.UserDAO;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.*;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 @WebServlet(name = "AdminServlet", value = "/AdminServlet")
 public class AdminServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        UserDAOImpl userDAOImpl = new UserDAOImpl();
+        UserDAO userDAOImpl = new UserDAO();
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
