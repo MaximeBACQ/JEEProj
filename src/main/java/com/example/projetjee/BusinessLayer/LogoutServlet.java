@@ -14,12 +14,20 @@ import jakarta.servlet.annotation.*;
 @WebServlet(name = "LogoutServlet", value = "/LogoutServlet")
 public class LogoutServlet extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ServletException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        performLogout(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        performLogout(request, response);
+    }
+
+    private void performLogout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
 
         HttpSession session = request.getSession();
 
-        if(session.getAttribute("connectedUser")!=null){
+        if (session.getAttribute("connectedUser") != null) {
             session.removeAttribute("connectedUser");
         }
 
