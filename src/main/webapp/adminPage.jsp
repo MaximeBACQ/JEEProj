@@ -1,4 +1,4 @@
-    <%--
+<%@ page import="com.example.projetjee.Model.SiteUser" %>    <%--
       Created by IntelliJ IDEA.
       User: CYTech Student
       Date: 06/11/2023
@@ -26,6 +26,14 @@
 
     </head>
     <body>
+    <%
+        // Récupération de la variable de session
+        SiteUser adminUser = (SiteUser) session.getAttribute("connectedUser");
+
+        // Vérification si la variable de session est définie
+        if( adminUser != null){
+            if (adminUser.getIsAdmin()) {
+    %>
     <h1>Admin Interface</h1>
         <%
             if(deleted != null)
@@ -91,6 +99,14 @@
     <%
         }
     %>
-
+<%}else{%>
+    <h2>You're not an admin, you cannot access that page.</h2>
+    <a href="index.jsp"> Back to index </a>
+    <%}
+    }else{
+            %>
+    <h2>You're not connected, please connect as an admin to see that page.</h2>
+            <%
+    }%>
     </body>
     </html>

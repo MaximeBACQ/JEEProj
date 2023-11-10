@@ -13,7 +13,7 @@
 
             if (connectedUser != null) {
         %>
-        <p>Bienvenue, <%= connectedUser.getUsername() %>! (<a href="logoutServlet">Déconnexion</a>)</p>
+        <p>Bienvenue, <%= connectedUser.getUsername() %>! (<a href="LogoutServlet">Déconnexion</a>)</p>
         <% } else { %>
         <p>Vous n'êtes pas connecté. (<a href="loginPage.jsp">Connexion</a>)</p>
         <% } %>

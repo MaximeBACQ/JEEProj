@@ -12,6 +12,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "AdminServlet", value = "/AdminServlet")
 public class AdminServlet extends HttpServlet {
@@ -79,6 +80,7 @@ public class AdminServlet extends HttpServlet {
             String finalMsg ="";
             try {
                     SiteUser selectedUser = userDAO.getUserById(Integer.parseInt(request.getParameter("userForCompany")));
+                    System.out.println(selectedUser);
                     session.setAttribute("selectedUser",selectedUser);
                     if(!selectedUser.getIsModerator()){
                         finalMsg = "User is not a vendor";
@@ -89,6 +91,10 @@ public class AdminServlet extends HttpServlet {
 
                     CompanyEntity userCompany = cpDAO.findById(Long.parseLong(request.getParameter("CompanyId")));
                     session.setAttribute("companySelected",userCompany);
+                    Query query = entityManager
+                            .createQuery("UPDATE SiteUser SET company =:company WHERE userId = :id");
+                    query.setParameter("company",userCompany);
+                    query.setParameter("id", selectedUser.getUserId());
                     selectedUser.setCompanyId(userCompany);
                     finalMsg = "Added "+selectedUser.getUsername()+"to"+userCompany.getName();
                     session.setAttribute("finalMsg",finalMsg);

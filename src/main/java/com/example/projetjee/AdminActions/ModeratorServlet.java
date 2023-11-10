@@ -17,7 +17,7 @@ public class ModeratorServlet extends HttpServlet {
         ProductDAO productDAOImpl = new ProductDAO();
         HttpSession session = request.getSession();
         boolean isModConnected = session.getAttribute("moderator") != null;
-        SiteUser connectedPerson = (SiteUser) session.getAttribute("moderator");
+        SiteUser connectedPerson = (SiteUser) session.getAttribute("connectedUser");
         if(isModConnected){
             if (request.getParameter("submit") != null) {
                 //  entityManager.getTransaction().begin();

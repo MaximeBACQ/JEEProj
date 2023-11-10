@@ -33,16 +33,8 @@ public class LoginServlet extends HttpServlet {
 
             if (!resultList.isEmpty()) {
                 SiteUser userFetched = resultList.get(0);
-                if(userFetched.getIsAdmin()){
-                    session.setAttribute("adminUser", userFetched);
-                    response.sendRedirect("adminPage.jsp");
-                }else if(userFetched.getIsModerator() && !userFetched.getIsAdmin()){
-                    session.setAttribute("moderator",userFetched);
-                    response.sendRedirect("index.jsp");
-                }else{
-                    session.setAttribute("connectedUser", userFetched);
-                    response.sendRedirect("index.jsp");
-                }
+                session.setAttribute("connectedUser", userFetched);
+                response.sendRedirect("index.jsp");
             } else {
                 session.setAttribute("refused", "true");
                 response.sendRedirect("loginPage.jsp");
