@@ -28,12 +28,12 @@ public class RegisterServlet extends HttpServlet {
         boolean basicUser = false;
 
         SiteUser newUser = new SiteUser(name, surname, username, email, birthDate, gender, password, basicUser, basicUser);
-        newUser.setCompanyId(null);
+        newUser.setCompany(null);
 
         UserDAO userDao = new UserDAO();
 
         try {
-            userDao.addUser(newUser);
+            userDao.createUser(newUser);
             response.sendRedirect("index.jsp");
         } catch (UserExistsException e) {
             String errorMessage = "Erreur : cette adresse e-mail existe déjà.";

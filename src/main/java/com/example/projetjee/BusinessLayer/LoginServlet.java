@@ -1,54 +1,33 @@
 package com.example.projetjee.BusinessLayer;
 
+import com.example.projetjee.DAO.UserDAO;
 import com.example.projetjee.Model.SiteUser;
-import jakarta.persistence.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
-        try {
-            transaction.begin();
+        UserDAO userDAO = new UserDAO();
+        SiteUser authenticatedUser = userDAO.authenticateUser(email, password);
 
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
+        HttpSession session = request.getSession();
 
-            TypedQuery<SiteUser> userByMailAndPass = entityManager.createNamedQuery("SiteUser.byEmailAndPass", SiteUser.class);
-            userByMailAndPass.setParameter(1,email);
-            userByMailAndPass.setParameter(2,password);
-
-            List<SiteUser> resultList = userByMailAndPass.getResultList();
-
-            HttpSession session = request.getSession();
-
-            if (!resultList.isEmpty()) {
-                SiteUser userFetched = resultList.get(0);
-                session.setAttribute("connectedUser", userFetched);
-                response.sendRedirect("index.jsp");
-            } else {
-                session.setAttribute("refused", "true");
-                response.sendRedirect("loginPage.jsp");
-            }
-
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-        } finally {
-            entityManager.close();
-            entityManagerFactory.close();
+        if (authenticatedUser != null) {
+            session.setAttribute("connectedUser", authenticatedUser);
+            response.sendRedirect("index.jsp");
+        } else {
+            session.setAttribute("refused", "true");
+            response.sendRedirect("loginPage.jsp");
         }
+
     }
 
     public void destroy() {

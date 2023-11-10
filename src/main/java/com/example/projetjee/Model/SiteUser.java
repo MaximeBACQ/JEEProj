@@ -133,11 +133,11 @@ public class SiteUser {
         isModerator = moderator;
     }
 
-    public CompanyEntity getCompanyId() {
+    public CompanyEntity getCompany() {
         return company;
     }
 
-    public void setCompanyId(CompanyEntity company) {
+    public void setCompany(CompanyEntity company) {
         this.company = company;
     }
 

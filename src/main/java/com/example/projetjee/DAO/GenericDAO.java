@@ -1,16 +1,45 @@
 package com.example.projetjee.DAO;
 
-import com.example.projetjee.Model.SiteUser;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.EntityManager;
 
 import java.util.List;
+public class GenericDAO<Entity> {
 
-public interface GenericDAO<Entity> {
-    Entity findById(Long id);
-    List<Entity> findAll();
-    void create();
+    protected EntityManager entityManager = JPAUtil.getEntityManager();
 
-    void save(Entity entity);
+    protected final Class<Entity> entityClass;
 
-    void update(Entity entity);
-    void delete(Long id);
+    protected final EntityTransaction transaction = entityManager.getTransaction();
+
+    public GenericDAO(Class<Entity> entityClass) {
+        this.entityClass = entityClass;
+    }
+
+    public void create(Entity entity) {
+
+        transaction.begin();
+        entityManager.persist(entity);
+        transaction.commit();
+    }
+
+    public void update(Entity entity) {
+        transaction.begin();
+        entityManager.merge(entity);
+        transaction.commit();
+    }
+
+    public void delete(Entity entity) {
+        transaction.begin();
+        entityManager.remove(entity);
+        transaction.commit();
+    }
+
+    public Entity findById(int id) {
+        return entityManager.find(entityClass, id);
+    }
+
+    public List<Entity> findAll() {
+        return entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e", entityClass).getResultList();
+    }
 }

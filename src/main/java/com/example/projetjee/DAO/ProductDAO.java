@@ -8,86 +8,28 @@ import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
-public class ProductDAO implements GenericDAO<ProductEntity>{
-    public void addProduct(ProductEntity product, SiteUser u){
-        EntityManager entityManager = JPAUtil.getEntityManager();
-
-        try{
-            EntityTransaction transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.persist(product);
-            transaction.commit();
-        }
-        catch (Exception e) {
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        }
-        finally {
-            entityManager.close();
-            entityManager.getTransaction().commit();
-        }
+public class ProductDAO extends GenericDAO<ProductEntity>{
+    public ProductDAO(){
+        super(ProductEntity.class);
     }
 
-    public ProductEntity getProductById(int id){
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        try {
-            EntityTransaction transaction = entityManager.getTransaction();
-            transaction.begin();
-
-            TypedQuery<ProductEntity> query = entityManager.createQuery("SELECT u FROM ProductEntity u", ProductEntity.class);
-            List<ProductEntity> resultList = query.getResultList();
-
-            if (!resultList.isEmpty()) {
-                transaction.commit();
-
-                return resultList.get(0);
-            } else {
-                return null;
-            }
-
-//            for (SiteUser user : resultList) {
-//                System.out.println(user.getName());
-//            }
-        } catch (Exception e) {
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
-        return null;
+    public void createProduct(ProductEntity product) {
+        create(product);
     }
 
-    @Override
-    public ProductEntity findById(Long id) {
-        return null;
+    public ProductEntity findProductById(int id) {
+        return findById(id);
     }
 
-    @Override
-    public List<ProductEntity> findAll() {
-        return null;
+    public void updateProduct(ProductEntity product) {
+        update(product);
     }
 
-    @Override
-    public void create() {
-
+    public void deleteProduct(ProductEntity product) {
+        delete(product);
     }
 
-    @Override
-    public void save(ProductEntity productEntity) {
-
-    }
-
-    @Override
-    public void update(ProductEntity productEntity) {
-
-    }
-
-    @Override
-    public void delete(Long id) {
-
+    public List<ProductEntity> findAllProducts() {
+        return findAll();
     }
 }

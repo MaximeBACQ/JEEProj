@@ -27,12 +27,14 @@ public class ProductEntity {
 
     public ProductEntity(){}
 
-//    public ProductEntity(String label, int price, int stock, String description){
-//        this.label = label;
-//        this.price = price;
-//        this.stock = stock;
-//        this.description = description;
-//    }
+
+    public ProductEntity(String label, int price, int stock, String description, CompanyEntity company){
+       this.label = label;
+       this.price = price;
+       this.stock = stock;
+       this.description = description;
+       this.company = company;
+    }
     public Long getProductId() {
         return productId;
     }

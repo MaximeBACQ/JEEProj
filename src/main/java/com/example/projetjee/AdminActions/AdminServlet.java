@@ -1,8 +1,6 @@
 package com.example.projetjee.AdminActions;
 
-import com.example.projetjee.DAO.CompanyDao;
-import com.example.projetjee.DAO.UserDAO;
-import com.example.projetjee.DAO.UserExistsException;
+import com.example.projetjee.DAO.*;
 import com.example.projetjee.Model.CompanyEntity;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.*;
@@ -12,7 +10,6 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "AdminServlet", value = "/AdminServlet")
 public class AdminServlet extends HttpServlet {
@@ -56,8 +53,8 @@ public class AdminServlet extends HttpServlet {
         if(request.getParameter("idForSelection")!=null){ // if an id was entered
             //entityManager.getTransaction().begin();
             try {
-                if(userDAO.getUserById(Integer.parseInt(request.getParameter("idForSelection"))) != null){//if associated to user
-                    SiteUser selectedUser = userDAO.getUserById(Integer.parseInt(request.getParameter("idForSelection")));
+                if(userDAO.findUserById(Integer.parseInt(request.getParameter("idForSelection"))) != null){//if associated to user
+                    SiteUser selectedUser = userDAO.findUserById(Integer.parseInt(request.getParameter("idForSelection")));
                     session.setAttribute("selected","true");
                     response.sendRedirect("adminPage.jsp");
 
@@ -78,38 +75,27 @@ public class AdminServlet extends HttpServlet {
         }
         if(request.getParameter("userForCompany")!=null){
             String finalMsg ="";
-            try {
-                    SiteUser selectedUser = userDAO.getUserById(Integer.parseInt(request.getParameter("userForCompany")));
-                    System.out.println(selectedUser);
-                    session.setAttribute("selectedUser",selectedUser);
-                    if(!selectedUser.getIsModerator()){
-                        finalMsg = "User is not a vendor";
-                        session.setAttribute("finalMsg",finalMsg);
-                        response.sendRedirect("adminPage.jsp"); // Utilisation de forward pour envoyer le message à la page
-                    }
-                    CompanyDao cpDAO = new CompanyDao();
 
-                    CompanyEntity userCompany = cpDAO.findById(Long.parseLong(request.getParameter("CompanyId")));
-                    session.setAttribute("companySelected",userCompany);
-                    Query query = entityManager
-                            .createQuery("UPDATE SiteUser SET company =:company WHERE userId = :id");
-                    query.setParameter("company",userCompany);
-                    query.setParameter("id", selectedUser.getUserId());
-                    selectedUser.setCompanyId(userCompany);
-                    finalMsg = "Added "+selectedUser.getUsername()+"to"+userCompany.getName();
-                    session.setAttribute("finalMsg",finalMsg);
-//                    RequestDispatcher dispatcher = request.getRequestDispatcher("adminPage.jsp");
-//                    dispatcher.forward(request, response); // Utilisation de forward pour envoyer le message à la page
-                    response.sendRedirect("adminPage.jsp"); // Utilisation de forward pour envoyer le message à la page
+            UserDAO UserDAO = new UserDAO();
+            CompanyDAO cpDAO = new CompanyDAO();
+
+            SiteUser selectedUser = UserDAO.findById(Integer.parseInt(request.getParameter("userForCompany")));
+            CompanyEntity userCompany = cpDAO.findById(Integer.parseInt(request.getParameter("CompanyId")));
+
+            selectedUser.setCompany(userCompany);
+            UserDAO.updateUser(selectedUser);
+
+            session.setAttribute("selectedUser",selectedUser);
+            session.setAttribute("companySelected",userCompany);
 
 
-            } catch (UserExistsException e) {
-                finalMsg = "No user found for this id";
-                session.setAttribute("finalMsg",finalMsg);
-//                RequestDispatcher dispatcher = request.getRequestDispatcher("adminPage.jsp");
-//                dispatcher.forward(request, response); // Utilisation de forward pour envoyer le message à la page
-                response.sendRedirect("adminPage.jsp"); // Utilisation de forward pour envoyer le message à la page
-            }
+            finalMsg = "Added "+selectedUser.getUsername()+"to"+userCompany.getName();
+            session.setAttribute("finalMsg",finalMsg);
+            //RequestDispatcher dispatcher = request.getRequestDispatcher("adminPage.jsp");
+            //dispatcher.forward(request, response); // Utilisation de forward pour envoyer le message à la page
+            response.sendRedirect("adminPage.jsp"); // Utilisation de forward pour envoyer le message à la page
+
+
         }
     }
     public void destroy(){
