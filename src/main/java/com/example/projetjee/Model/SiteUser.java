@@ -50,6 +50,7 @@ public class SiteUser {
         this.password = password;
         this.isAdmin = isAdmin;
         this.isModerator = isModerator;
+        this.company = null;
     }
 
     public Long getUserId() {

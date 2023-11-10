@@ -8,8 +8,7 @@ import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
-public class ProductDAOImpl implements ProductDAO{
-    @Override
+public class ProductDAOImpl implements GenericDAO<ProductEntity>{
     public void addProduct(ProductEntity product){
         EntityManager entityManager = JPAUtil.getEntityManager();
 
@@ -60,5 +59,35 @@ public class ProductDAOImpl implements ProductDAO{
             entityManager.close();
         }
         return null;
+    }
+
+    @Override
+    public ProductEntity findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<ProductEntity> findAll() {
+        return null;
+    }
+
+    @Override
+    public void create() {
+
+    }
+
+    @Override
+    public void save(ProductEntity productEntity) {
+
+    }
+
+    @Override
+    public void update(ProductEntity productEntity) {
+
+    }
+
+    @Override
+    public void delete(Long id) {
+
     }
 }

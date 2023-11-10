@@ -2,24 +2,19 @@ package com.example.projetjee.DAO;
 
 import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.*;
-import org.hibernate.Session;
-import com.example.projetjee.Model.SiteUser;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
-import com.example.projetjee.DAO.UserExistsException;
 
 
 import java.util.List;
 
 
-public class UserDAOImpl implements UserDAO{
+public class UserDAOImpl implements GenericDAO<SiteUser>{
     private JPAUtil jpaUtil;
     //public static UserDAOImpl userDaoImpl = new UserDAOImpl();
 
+    public UserDAOImpl() {
+        super();
+    }
 
-    @Override
     public void addUser(SiteUser user) throws UserExistsException {
         EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = null;
@@ -51,9 +46,6 @@ public class UserDAOImpl implements UserDAO{
         }
     }
 
-
-
-    @Override
     public SiteUser getUserById(int id) {
         EntityManager entityManager = JPAUtil.getEntityManager();
 
@@ -82,7 +74,6 @@ public class UserDAOImpl implements UserDAO{
         }
         return null;
 }
-    @Override
     public List<SiteUser> getAllUsers() {
         // not functional
         EntityManager entityManager = JPAUtil.getEntityManager();
@@ -125,12 +116,10 @@ public class UserDAOImpl implements UserDAO{
         return null;
     }
 
-    @Override
     public void updateUser(SiteUser userInfos) {
 
     }
 
-    @Override
     public void deleteUser(int id) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -153,7 +142,6 @@ public class UserDAOImpl implements UserDAO{
         }
     }
 
-    @Override
     public void deleteUser(String username) {
         //Not functional
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
@@ -177,11 +165,39 @@ public class UserDAOImpl implements UserDAO{
         }
     }
 
-    @Override
     public void promoteUser(String username){
 
     }
 
 
+    @Override
+    public SiteUser findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<SiteUser> findAll() {
+        return null;
+    }
+
+    @Override
+    public void create() {
+
+    }
+
+    @Override
+    public void save(SiteUser user) {
+
+    }
+
+    @Override
+    public void update(SiteUser siteUser) {
+
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
 }
 
