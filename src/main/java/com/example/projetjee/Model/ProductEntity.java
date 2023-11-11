@@ -83,4 +83,15 @@ public class ProductEntity {
         this.company = company;
     }
 
+    @Override
+    public String toString() {
+        return "ProductEntity{" +
+                "productId=" + productId +
+                ", label='" + label + '\'' +
+                ", price=" + price +
+                ", stock=" + stock +
+                ", description='" + description + '\'' +
+                ", company=" + company +
+                '}';
+    }
 }

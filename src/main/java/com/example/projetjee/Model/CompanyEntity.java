@@ -59,5 +59,12 @@ public class CompanyEntity {
         this.workers = users;
     }
 
-
+    @Override
+    public String toString() {
+        return "CompanyEntity{" +
+                "companyId=" + companyId +
+                ", name='" + name + '\'' +
+                ", products=" + products +
+                '}';
+    }
 }

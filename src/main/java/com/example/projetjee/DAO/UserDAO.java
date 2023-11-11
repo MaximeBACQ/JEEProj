@@ -11,11 +11,11 @@ public class UserDAO extends GenericDAO<SiteUser> {
         super(SiteUser.class);
     }
 
-    public void createUser(SiteUser user) {
+    public void createUser(SiteUser user) throws UserExistsException{
         create(user);
     }
 
-    public SiteUser findUserById(int id) {
+    public SiteUser findUserById(int id) throws UserExistsException{
         return findById(id);
     }
 
@@ -44,4 +44,18 @@ public class UserDAO extends GenericDAO<SiteUser> {
             return null; // No user found
         }
     }
+
+    public SiteUser findUserByEmail(String email) {
+        TypedQuery<SiteUser> query = entityManager.createQuery("SELECT u FROM SiteUser u WHERE u.email = :email", SiteUser.class);
+        query.setParameter("email", email);
+            SiteUser user;
+        try {
+            user = query.getSingleResult();
+        } catch (jakarta.persistence.NoResultException ignored) {
+            return null;
+        }
+        return user;
+
+    }
 }
+

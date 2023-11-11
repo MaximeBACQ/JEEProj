@@ -1,6 +1,6 @@
 package com.example.projetjee.AdminActions;
 
-import com.example.projetjee.DAO.CompanyDao;
+import com.example.projetjee.DAO.CompanyDAO;
 import com.example.projetjee.DAO.UserDAO;
 import com.example.projetjee.DAO.UserExistsException;
 import com.example.projetjee.Model.CompanyEntity;
@@ -18,70 +18,44 @@ import java.util.List;
 public class AdminServlet extends HttpServlet {
         public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
             UserDAO userDAO = new UserDAO();
-            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Persistence");
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
             HttpSession session = request.getSession();
+            String finalMsg = "";
 
             try {
                 if (request.getParameter("email") != null) {
-                    EntityTransaction transaction = null;
-
-                    try {
-                        transaction = entityManager.getTransaction();
-                        transaction.begin();
-
-                        Query query = entityManager.createQuery("DELETE FROM SiteUser u WHERE u.email = :email");
-                        query.setParameter("email", request.getParameter("email"));
-
-                        int rowsDeleted = query.executeUpdate();
-
-                        if (rowsDeleted > 0) {
-                            session.setAttribute("deleted", "true");
-                        } else {
-                            session.setAttribute("deleted", "false");
-                        }
-
-                        transaction.commit();
-                    } catch (Exception e) {
-                        if (transaction != null) {
-                            transaction.rollback();
-                        }
-                        e.printStackTrace();
-                    } finally {
-                        entityManager.close();
+                    String email = request.getParameter("email");
+                    SiteUser userToDelete = userDAO.findUserByEmail(email);
+                    if (userToDelete != null){
+                        userDAO.deleteUser(userToDelete);
                     }
+                    else{
+                        finalMsg = "No user was found matching this email";
+                    }
+
                 }
 
+                if (request.getParameter("userForCompany") != null){
 
-                    if (request.getParameter("userForCompany") != null) {
-                        String finalMsg = "";
+                    try {
 
-                        try {
-                            int userId = Integer.parseInt(request.getParameter("userForCompany"));
-                            SiteUser selectedUser = userDAO.getUserById(userId);
+                        int userId = Integer.parseInt(request.getParameter("userForCompany"));
+                        SiteUser selectedUser = userDAO.findUserById(userId);
 
-                            if (selectedUser != null && !selectedUser.getIsModerator()) {
-                                finalMsg = "User is not a vendor";
-                                session.setAttribute("finalMsg", finalMsg);
-                            } else {
-                                CompanyDao cpDAO = new CompanyDao();
-                                long companyId = Long.parseLong(request.getParameter("CompanyId"));
-                                CompanyEntity userCompany = cpDAO.findById(companyId);
+                        if (selectedUser != null && !selectedUser.getIsModerator()) {
+                            finalMsg = "User is not a vendor";
+                            session.setAttribute("finalMsg", finalMsg);
+                        } else {
+                            CompanyDAO cpDAO = new CompanyDAO();
+                            int companyId = Integer.parseInt(request.getParameter("CompanyId"));
+                            CompanyEntity userCompany = cpDAO.findById(companyId);
 
-                                if (userCompany != null) {
-                                    EntityTransaction transaction = entityManager.getTransaction();
-                                    try {
-                                        transaction.begin();
+                            if (userCompany != null) {
 
-                                        Query query = entityManager.createQuery("UPDATE SiteUser SET companyId = :company WHERE id = :userId");
-                                        query.setParameter("company", userCompany);
-                                        query.setParameter("userId", userId);
+                                //try {
+                                    selectedUser.setCompany(userCompany);
+                                    userDAO.updateUser(selectedUser);
 
-                                        int rowsUpdated = query.executeUpdate();
-
-                                        transaction.commit();
-
-                                        if (rowsUpdated > 0) {
+                                       /* if (rowsUpdated > 0) {
                                             finalMsg = "Added " + selectedUser.getUsername() + " to " + userCompany.getName();
                                             session.setAttribute("finalMsg", finalMsg);
                                         } else {
@@ -96,18 +70,19 @@ public class AdminServlet extends HttpServlet {
                                     }
                                 } else {
                                     finalMsg = "Company not found for id: " + companyId;
-                                    session.setAttribute("finalMsg", finalMsg);
+                                    session.setAttribute("finalMsg", finalMsg); */
                                 }
                             }
-                        } catch (UserExistsException e) {
-                            finalMsg = "No user found for this id";
-                            session.setAttribute("finalMsg", finalMsg);
-                        }
+                    } catch (UserExistsException e) {
+                        finalMsg = "No user found for this id";
+                        session.setAttribute("finalMsg", finalMsg);
                     }
-            } finally {
+                }
+            } finally{
                 response.sendRedirect("adminPage.jsp");
             }
         }
+
 
 
     public void destroy(){

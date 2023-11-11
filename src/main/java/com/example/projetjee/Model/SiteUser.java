@@ -154,6 +154,7 @@ public class SiteUser {
                 ", password='" + password + '\'' +
                 ", isAdmin=" + isAdmin +
                 ", isModerator=" + isModerator +
+                ", company=" + company +
                 '}';
     }
 }
