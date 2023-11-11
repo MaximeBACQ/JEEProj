@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
                                      password VARCHAR(100),
                                      isAdmin BIT,
                                      isModerator BIT,
+                                     isSeller BIT,
                                      companyId INT,
                                      FOREIGN KEY (companyId) REFERENCES Company(companyId)
 );

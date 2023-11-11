@@ -11,11 +11,11 @@ public class UserDAO extends GenericDAO<SiteUser> {
         super(SiteUser.class);
     }
 
-    public void createUser(SiteUser user) throws UserExistsException{
+    public void createUser(SiteUser user) throws UserExistenceException {
         create(user);
     }
 
-    public SiteUser findUserById(int id) throws UserExistsException{
+    public SiteUser findUserById(int id) throws UserExistenceException {
         return findById(id);
     }
 

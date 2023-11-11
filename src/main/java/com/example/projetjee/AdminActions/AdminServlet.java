@@ -2,17 +2,15 @@ package com.example.projetjee.AdminActions;
 
 import com.example.projetjee.DAO.CompanyDAO;
 import com.example.projetjee.DAO.UserDAO;
-import com.example.projetjee.DAO.UserExistsException;
+import com.example.projetjee.DAO.UserExistenceException;
 import com.example.projetjee.Model.CompanyEntity;
 import com.example.projetjee.Model.SiteUser;
-import jakarta.persistence.*;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.hibernate.query.Query;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "AdminServlet", value = "/AdminServlet")
 public class AdminServlet extends HttpServlet {
@@ -25,22 +23,20 @@ public class AdminServlet extends HttpServlet {
                 if (request.getParameter("email") != null) {
                     String email = request.getParameter("email");
                     SiteUser userToDelete = userDAO.findUserByEmail(email);
-                    if (userToDelete != null){
+                    if (userToDelete != null) {
                         userDAO.deleteUser(userToDelete);
-                    }
-                    else{
+                    } else {
                         finalMsg = "No user was found matching this email";
                     }
 
                 }
 
-                if (request.getParameter("userForCompany") != null){
+                if (request.getParameter("submitCompany") != null) {
 
                     try {
-
                         int userId = Integer.parseInt(request.getParameter("userForCompany"));
                         SiteUser selectedUser = userDAO.findUserById(userId);
-                        session.setAttribute("selectedUser",selectedUser);
+                        session.setAttribute("selectedUser", selectedUser);
 
                         if (selectedUser != null && !selectedUser.getIsModerator()) {
                             finalMsg = "User is not a vendor";
@@ -53,8 +49,8 @@ public class AdminServlet extends HttpServlet {
                             if (userCompany != null) {
 
                                 //try {
-                                    selectedUser.setCompany(userCompany);
-                                    userDAO.updateUser(selectedUser);
+                                selectedUser.setCompany(userCompany);
+                                userDAO.updateUser(selectedUser);
 
                                        /* if (rowsUpdated > 0) {
                                             finalMsg = "Added " + selectedUser.getUsername() + " to " + userCompany.getName();
@@ -72,17 +68,41 @@ public class AdminServlet extends HttpServlet {
                                 } else {
                                     finalMsg = "Company not found for id: " + companyId;
                                     session.setAttribute("finalMsg", finalMsg); */
-                                }
                             }
-                    } catch (UserExistsException e) {
+                        }
+                    } catch (UserExistenceException e) {
                         finalMsg = "No user found for this id";
                         session.setAttribute("finalMsg", finalMsg);
                     }
                 }
-            } finally{
+            } finally {
                 response.sendRedirect("adminPage.jsp");
             }
+
+            if (request.getParameter("userToMakeSeller") != null) {
+
+                try {
+                    int userId = Integer.parseInt(request.getParameter("userForCompany"));
+                    SiteUser selectedUser = userDAO.findUserById(userId);
+                    session.setAttribute("selectedUser", selectedUser);
+
+                    if (selectedUser != null && (!selectedUser.getIsModerator()||!selectedUser.getIsAdmin())){
+                        finalMsg = "User is not a moderator";
+                        session.setAttribute("finalMsgSeller", finalMsg);
+                    }else if(selectedUser.getIsSeller()){
+                        finalMsg="User is already a seller";
+                        session.setAttribute("finalMsgSeller",finalMsg);
+                    }else{
+                        selectedUser.setIsSeller(true);
+                        userDAO.updateUser(selectedUser);
+                    }
+                } catch (UserExistenceException e) {
+                    finalMsg = "No user found for this id";
+                    session.setAttribute("finalMsgSeller",finalMsg)
+                }
+            }
         }
+
 
 
 

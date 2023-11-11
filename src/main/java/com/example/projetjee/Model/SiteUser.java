@@ -29,6 +29,8 @@ public class SiteUser {
     private boolean isAdmin;
     @Column(name="isModerator")
     private boolean isModerator;
+    @Column(name="isSeller")
+    private boolean isSeller;
     @ManyToOne
     @JoinColumn(name = "companyId")
     private CompanyEntity company;
@@ -40,7 +42,7 @@ public class SiteUser {
     }
 
     public SiteUser(String name, String surname, String username, String email, LocalDate birthDate, String gender,
-                    String password, boolean isAdmin, boolean isModerator){          //our needed constructor
+                    String password, boolean isAdmin, boolean isModerator,boolean isSeller){          //our needed constructor
         this.username = username;
         this.name = name;
         this.surname = surname;
@@ -50,6 +52,7 @@ public class SiteUser {
         this.password = password;
         this.isAdmin = isAdmin;
         this.isModerator = isModerator;
+        this.isSeller=isSeller;
         this.company = null;
     }
 
@@ -132,6 +135,9 @@ public class SiteUser {
     public void setIsModerator(boolean moderator) {
         isModerator = moderator;
     }
+
+    public boolean getIsSeller(){return isSeller;}
+    public void setIsSeller(boolean seller){isSeller = seller;}
 
     public CompanyEntity getCompany() {
         return company;

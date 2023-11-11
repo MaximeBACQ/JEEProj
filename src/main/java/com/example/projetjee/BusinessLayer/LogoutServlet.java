@@ -1,12 +1,7 @@
 package com.example.projetjee.BusinessLayer;
 
 import java.io.*;
-import java.time.LocalDate;
 
-import com.example.projetjee.DAO.UserDAO;
-import com.example.projetjee.DAO.UserExistsException;
-import com.example.projetjee.Model.SiteUser;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;

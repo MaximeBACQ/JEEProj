@@ -34,7 +34,7 @@
         if( adminUser != null){
             if (adminUser.getIsAdmin()) {
     %>
-    <h1>Admin Interface</h1>
+    <h1>Admin Interface, users/moderators actions</h1>
         <%
             if(deleted != null)
             {
@@ -90,12 +90,28 @@
             <input type="number" placeholder="User's id" id="AddUserToCompany" name="userForCompany">
         </label>
         <input type="number" placeholder="Company's id" id="CompanyId" name="CompanyId">
-        <input type="submit" value="Add to company">
+        <input type="submit" value="Add to company" name="submitCompany">
     </form>
     <% String userIdMessage = (String) request.getAttribute("finalMsg");
         if (userIdMessage != null) {
     %>
     <p><%= userIdMessage %></p>
+
+    <form action="AdminServlet" method="post">
+        <label for="UserToMakeSeller">
+            <input type="text" placeholder="User's id" id="UserToMakeSeller" name="userToMakeSeller">
+        </label>
+        <input type="submit" value="Make Seller">
+    </form>
+    <% String userIdMessageSeller = (String) request.getAttribute("finalMsgSeller");
+        if (userIdMessageSeller != null) {
+    %>
+    <p><%= userIdMessageSeller %></p>
+
+    <h1>Products actions</h1>
+    <h2> To add a product, you must head to the moderator page where sellers can sell products.</h2>
+
+    <button
     <%
         }
     %>

@@ -4,7 +4,7 @@ import java.io.*;
 import java.time.LocalDate;
 
 import com.example.projetjee.DAO.UserDAO;
-import com.example.projetjee.DAO.UserExistsException;
+import com.example.projetjee.DAO.UserExistenceException;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -25,9 +25,7 @@ public class RegisterServlet extends HttpServlet {
         String gender = request.getParameter("gender");
         String password = request.getParameter("password");
 
-        boolean basicUser = false;
-
-        SiteUser newUser = new SiteUser(name, surname, username, email, birthDate, gender, password, basicUser, basicUser);
+        SiteUser newUser = new SiteUser(name, surname, username, email, birthDate, gender, password, false, false, false);
         newUser.setCompany(null);
 
         UserDAO userDao = new UserDAO();
@@ -35,7 +33,7 @@ public class RegisterServlet extends HttpServlet {
         try {
             userDao.createUser(newUser);
             response.sendRedirect("index.jsp");
-        } catch (UserExistsException e) {
+        } catch (UserExistenceException e) {
             String errorMessage = "Erreur : cette adresse e-mail existe déjà.";
             request.setAttribute("registrationMessage", errorMessage);
             RequestDispatcher dispatcher = request.getRequestDispatcher("registerPage.jsp");
