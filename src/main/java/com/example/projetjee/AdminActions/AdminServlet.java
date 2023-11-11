@@ -1,21 +1,23 @@
 package com.example.projetjee.AdminActions;
 
-import com.example.projetjee.DAO.CompanyDAO;
-import com.example.projetjee.DAO.UserDAO;
-import com.example.projetjee.DAO.UserExistenceException;
+import com.example.projetjee.DAO.*;
 import com.example.projetjee.Model.CompanyEntity;
+import com.example.projetjee.Model.ProductEntity;
 import com.example.projetjee.Model.SiteUser;
+import jakarta.persistence.TypedQuery;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.hibernate.query.Query;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "AdminServlet", value = "/AdminServlet")
 public class AdminServlet extends HttpServlet {
         public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
             UserDAO userDAO = new UserDAO();
+            ProductDAO productDAO = new ProductDAO();
             HttpSession session = request.getSession();
             String finalMsg = "";
 
@@ -98,7 +100,38 @@ public class AdminServlet extends HttpServlet {
                     }
                 } catch (UserExistenceException e) {
                     finalMsg = "No user found for this id";
-                    session.setAttribute("finalMsgSeller",finalMsg)
+                    session.setAttribute("finalMsgSeller",finalMsg);
+                }
+            }
+            if (request.getParameter("pToSearch") != null) {
+
+                try {
+                    TypedQuery<ProductEntity> query = JPAUtil.getEntityManager()
+                            .createQuery("SELECT p FROM ProductEntity p WHERE label=:label",ProductEntity.class);
+                    List<ProductEntity> selectedProducts =  query.getResultList();
+                    if(!selectedProducts.isEmpty()) {
+                        finalMsg="Here are the products containing the label :"+(String)request.getParameter("pToSearch");
+                        session.setAttribute("finalMsgSearchProducts",finalMsg);
+                        session.setAttribute("ProductList", selectedProducts);
+                    }
+                }catch (Exception e){
+                    finalMsg="No products found with this name";
+                    session.setAttribute("finalMsgSearchProducts",finalMsg);
+                }
+            }
+            if (request.getParameter("pToDelete") != null) {
+                try {
+                    ProductEntity selectedProduct = productDAO.findProductById(Integer.parseInt(
+                            request.getParameter("pToDelete"))
+                    );
+                    if(selectedProduct != null) {
+                        finalMsg = "Product has been deleted";
+                        session.setAttribute("finalMsgDeleteP",finalMsg);
+                        productDAO.deleteProduct(selectedProduct);
+                    }
+                }catch (Exception e){
+                    finalMsg = "No product found for this id";
+                    session.setAttribute("finalMsgDeleteP",finalMsg);
                 }
             }
         }

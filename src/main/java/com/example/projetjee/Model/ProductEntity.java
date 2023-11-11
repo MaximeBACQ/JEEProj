@@ -8,7 +8,7 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "productId")
-    private Long productId;
+    private int productId;
     @Basic
     @Column(name = "label")
     private String label;
@@ -35,11 +35,11 @@ public class ProductEntity {
        this.description = description;
        this.company = company;
     }
-    public Long getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 

@@ -1,4 +1,6 @@
-<%@ page import="com.example.projetjee.Model.SiteUser" %>    <%--
+<%@ page import="com.example.projetjee.Model.SiteUser" %>
+<%@ page import="com.example.projetjee.Model.ProductEntity" %>
+<%@ page import="java.util.List" %>    <%--
       Created by IntelliJ IDEA.
       User: CYTech Student
       Date: 06/11/2023
@@ -111,7 +113,31 @@
     <h1>Products actions</h1>
     <h2> To add a product, you must head to the moderator page where sellers can sell products.</h2>
 
-    <button
+    <form action="AdminServlet" method="post">
+        <label for="ProductToSearch">
+            <input type="text" placeholder="List Products by Name" id="ProductToSearch" name="pToSearch">
+        </label>
+        <input type="submit" value="Search Products">
+    </form>
+    <% String userIdMessageSearchProducts = (String) request.getAttribute("finalMsgSearchProducts");
+        if (userIdMessageSearchProducts != null) {
+    %>
+    <p><%= userIdMessageSearchProducts %></p>
+
+    <% if(request.getAttribute("ProductList")!=null){
+        StringBuilder url = new StringBuilder("productPage?products=");
+        for(ProductEntity p : (List<ProductEntity>) request.getAttribute("ProductList")) {
+            url.append(p.getLabel());
+        }%>
+    <h3>Your product list: <a href="<%=url%>">link</a></h3><%
+    }%>
+
+    <form action="AdminServlet" method="post">
+        <label for="ProductToDelete">
+            <input type="number" placeholder="Delete product by id" id="ProductToDelete" name="pToDelete">
+        </label>
+        <input type="submit" value="Delete Product">
+    </h3>
     <%
         }
     %>
