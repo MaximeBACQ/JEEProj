@@ -1,5 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<%--
+<%@ page import="com.example.projetjee.Model.SiteUser" %><%--
   Created by IntelliJ IDEA.
   User: CYTech Student
   Date: 07/11/2023
@@ -9,23 +8,32 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Moderator Page</title>
-
+    <title>Moderator Interface</title>
 </head>
 <body>
-<c:choose>
-    <c:when test="${sessionScope.adminUser != null or sessionScope.moderator != null}">
-        <form action="ModeratorServlet" method="post">
-            <input type="text" name="label" placeholder="Name of your product">
-            <input type="number" name="price" placeholder="It's price">
-            <input type="number" name="stock" placeholder="How many ?">
-            <input type="text" name="description" placeholder="Describe your product">
-            <input type="submit" value="Add a product !" name="submit">
-        </form>
-    </c:when>
-    <c:otherwise>
-        <p>You're not a moderator; you do not have access to this page.</p>
-    </c:otherwise>
-</c:choose>
+<%
+    // Récupération de la variable de session
+    SiteUser adminUser = (SiteUser) session.getAttribute("connectedUser");
+
+    // Vérification si la variable de session est définie
+    if( adminUser != null){
+        if (adminUser.getIsAdmin() || adminUser.getIsModerator()) {
+%>
+    <form action="ModeratorServlet" method="post">
+        <input type="text" placeholder="label" name="label">
+        <input type="number" placeholder="price" name="price">
+        <input type="number" placeholder="stock" name="stock">
+        <input type="text" placeholder="description" name="description">
+        <input type="submit" value="Add product" name="addProduct">
+    </form>
+
+            <%
+        }else{
+            %>
+<h2> You're not a moderator, you do not have access to this page</h2>
+            <%
+        }
+    }
+%>
 </body>
 </html>

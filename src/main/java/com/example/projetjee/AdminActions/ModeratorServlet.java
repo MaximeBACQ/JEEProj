@@ -16,10 +16,10 @@ public class ModeratorServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ProductDAO productDAO = new ProductDAO();
         HttpSession session = request.getSession();
-        boolean isModConnected = session.getAttribute("moderator") != null;
         SiteUser connectedPerson = (SiteUser) session.getAttribute("connectedUser");
-        if(isModConnected){
-            if (request.getParameter("submit") != null) {
+        boolean isAdmOrModConnected = connectedPerson.getIsModerator() || connectedPerson.getIsAdmin();
+        if(isAdmOrModConnected){
+            if (request.getParameter("addProduct") != null) {
 
                 String label = request.getParameter("label");
                 int price = Integer.parseInt(request.getParameter("price"));
@@ -30,18 +30,6 @@ public class ModeratorServlet extends HttpServlet {
                 productDAO.createProduct(newProduct);
 
                 response.sendRedirect("index.jsp");
-            }
-            if (request.getParameter("id") != null) { // if an id was entered
-                if (productDAO.findProductById(Integer.parseInt(request.getParameter("id"))) != null) {//if associated to user
-                    ProductEntity product = productDAO.findProductById(Integer.parseInt(request.getParameter("id")));
-                    session.setAttribute("selected", "true");
-                    response.sendRedirect("adminPage.jsp");
-
-                } else {
-                    session.setAttribute("selected", "false");
-                    response.sendRedirect("adminPage.jsp");
-
-                }
             }
         }
     }

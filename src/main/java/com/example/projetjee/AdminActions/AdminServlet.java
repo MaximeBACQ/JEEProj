@@ -40,6 +40,7 @@ public class AdminServlet extends HttpServlet {
 
                         int userId = Integer.parseInt(request.getParameter("userForCompany"));
                         SiteUser selectedUser = userDAO.findUserById(userId);
+                        session.setAttribute("selectedUser",selectedUser);
 
                         if (selectedUser != null && !selectedUser.getIsModerator()) {
                             finalMsg = "User is not a vendor";
