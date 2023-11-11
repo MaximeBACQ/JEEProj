@@ -3,7 +3,6 @@
 <html>
 <head>
     <title>Account Page</title>
-    <!-- Ajoutez vos balises head ici -->
 </head>
 <body>
 
@@ -30,7 +29,6 @@
             <td><%= user.getEmail() %></td>
             <td><%= user.getBirthDate() %></td>
             <td><%= user.getGender() %></td>
-            <!-- Ajoutez d'autres cellules pour les valeurs des autres attributs -->
         </tr>
     </table>
     <%

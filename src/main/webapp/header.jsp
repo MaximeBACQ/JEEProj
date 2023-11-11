@@ -1,12 +1,10 @@
 <%@ page import="com.example.projetjee.Model.SiteUser" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.io.*, java.util.*, javax.servlet.*" %>
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Vos balises head ici -->
+
 </head>
 <body>
 
@@ -55,17 +53,30 @@
 <div class='header-menu'>
     <ul>
         <li><a href='index.php'> <i class='fa fa-house'></i>Accueil</a></li>
+        <li class="searchbar">
+            <form id="searchForm" action="productPage.jsp" method="get">
+                <input type="text" id="productId" name="products" placeholder="ID du produit">
+                <button type="submit"><img src='img/loupe.png'></button>
+            </form>
+
+        </li>
+
         <li><a href='panier.php'> <i class='fa fa-bag-shopping'></i>Panier</a></li>
         <div class='header-sous-menu-bag'>
             <ul>
                 <li> 0 article(s) <br/> Total (TTC) : 0 €</li>
             </ul>
         </div>
-        <li>
 
-        </li>
     </ul>
 </div>
+
+<script>
+    function searchProducts() {
+
+    }
+</script>
+
 
 </body>
 </html>

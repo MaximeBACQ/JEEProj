@@ -138,9 +138,16 @@ header {
 
 
 
+.header-menu ul img{
+    width: 20px;
+    margin-left: 5px;
+}
+
+
 .header-menu ul ul li a {
     color: white;
 }
+
 
 
 
