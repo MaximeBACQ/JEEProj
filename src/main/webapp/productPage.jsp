@@ -41,6 +41,11 @@
          %>
             <%= "label: " + p.getLabel() + " ,prix: " + p.getPrice() + " ,stock: " + p.getStock() + ", description: "
             + p.getDescription()%>
+        <form action="AddToCartButtonServlet" method="post">
+            <input type="hidden" name="produitId" value="<%=p.getProductId()%>" />
+            <input type="hidden" name="label" value="<%=p.getLabel()%>"/>
+            <input type="submit" value="Ajouter au panier" />
+        </form>
         <%
          }%>
 

@@ -20,7 +20,7 @@
 <%
         if(logFail != null){
         %>
-        <h1>You have entered credentials that don't match any user in our database, your home will be bombed soon inshallah</h1>
+        <h1>You have entered credentials that don't match any user in our database</h1>
         <%
         }%>
     <h1> Connexion</h1>

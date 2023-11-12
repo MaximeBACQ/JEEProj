@@ -55,7 +55,7 @@
         <li><a href='index.jsp'> <i class='fa fa-house'></i>Accueil</a></li>
         <li class="searchbar">
             <form id="searchForm" action="productPage.jsp" method="get">
-                <input type="text" id="productId" name="products" placeholder="ID du produit">
+                <input type="text" id="productId" name="products" placeholder="Nom du produit">
                 <button type="submit"><img src='img/loupe.png'></button>
             </form>
 
