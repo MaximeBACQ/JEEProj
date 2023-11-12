@@ -6,6 +6,17 @@ DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS Company;
 
+DROP TABLE IF EXISTS bankAccount;
+
+CREATE TABLE IF NOT EXISTS bankAccount(
+									bankId INT AUTO_INCREMENT PRIMARY KEY,
+                                    bankCode INT,
+                                    bankDate VARCHAR(5),
+                                    cvv INT,
+                                    bankBalance INT
+);
+INSERT INTO bankAccount VALUES(1,1234,"04/25",123,1200);
+
 CREATE TABLE IF NOT EXISTS Company(
                                       companyId INT AUTO_INCREMENT PRIMARY KEY,
                                       name VARCHAR(100)
