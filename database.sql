@@ -45,10 +45,6 @@ CREATE TABLE IF NOT EXISTS Product(
                                       FOREIGN KEY (companyId) REFERENCES Company(companyId)
 );
 
-insert into product(label,price,stock,description,companyId)
-VALUES('Cramptes',5,100,'Crampter qui cramptent',null);
-DELETE FROM product where productId = 1;
-
 DROP TABLE ProductOrder;
 CREATE TABLE IF NOT EXISTS ProductOrder(
                                            orderId INT AUTO_INCREMENT PRIMARY KEY,

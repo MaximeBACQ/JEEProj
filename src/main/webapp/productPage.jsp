@@ -1,4 +1,7 @@
 <%@ page import="com.example.projetjee.Model.ProductEntity" %>
+<%@ page import="jakarta.persistence.TypedQuery" %>
+<%@ page import="com.example.projetjee.DAO.JPAUtil" %>
+<%@ page import="java.util.*" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -18,26 +21,49 @@
 
 <div class="container-product-details">
     <%
-        String productId = request.getParameter("products");
-        ProductEntity product = (ProductEntity) request.getAttribute("product");
+        List<ProductEntity> productList = new ArrayList<>();
+        // Récupération de tous les paramètres de l'URL
+        Map<String, String[]> parameters = request.getParameterMap();
 
-        if (product != null) {
-    %>
-    <div class="product-details">
-        <p>Nom du Produit : <%= product.getLabel() %></p>
-        <p>Prix : <%= product.getPrice() %> €</p>
-        <p>Quantité en Stock : <%= product.getStock() %></p>
-        <p>Compagnie : <%= product.getCompanyId().getName() %></p>
-    </div>
-    <%
-    } else {
-    %>
-    <p>Le produit n'est pas disponible.</p>
-    <%
-        }
-    %>
-</div>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        for(String parameter : parameters.keySet()) {
+                String[] values = parameters.get(parameter);
+                for(String v:values){
+                    TypedQuery<ProductEntity> query = JPAUtil.getEntityManager()
+                                .createQuery("SELECT p FROM ProductEntity p WHERE label LIKE :label ",ProductEntity.class);
+                    query.setParameter("label", v);
+                    List<ProductEntity> results = query.getResultList();
+
+                    productList.addAll(results);
+
+                    }
+                }
+         for(ProductEntity p : productList){
+         %>
+            <%= "label: " + p.getLabel() + " ,prix: " + p.getPrice() + " ,stock: " + p.getStock() + ", description: "
+            + p.getDescription()%>
+        <%
+         }%>
+
+<%--            <%=productList.toString() %>--%>
+
+<%--    TypedQuery<ProductEntity> query = JPAUtil.getEntityManager().createQuery("SELECT u FROM SiteUser u WHERE label LIKE %%")--%>
+<%--<%--/*        if (product != null) {&ndash;%&gt;
+&lt;%&ndash;    %>&ndash;%&gt;
+&lt;%&ndash;    <div class="product-details">&ndash;%&gt;
+&lt;%&ndash;        <p>Nom du Produit : <%= product.getLabel() %></p>&ndash;%&gt;
+&lt;%&ndash;        <p>Prix : <%= product.getPrice() %> €</p>&ndash;%&gt;
+&lt;%&ndash;        <p>Quantité en Stock : <%= product.getStock() %></p>&ndash;%&gt;
+&lt;%&ndash;        <p>Compagnie : <%= product.getCompanyId().getName() %></p>&ndash;%&gt;
+&lt;%&ndash;    </div>&ndash;%&gt;
+&lt;%&ndash;    &lt;%&ndash;dash;%&gt;
+&lt;%&ndash;    } else {&ndash;%&gt;
+&lt;%&ndash;    %>&ndash;%&gt;
+&lt;%&ndash;    <p>Le produit n'est pas disponible.</p>&ndash;%&gt;
+&lt;%&ndash;    &lt;%&ndash;dash;%&gt;
+&lt;%&ndash;        }&ndash;%&gt;
+&lt;%&ndash;    %>&ndash;%&gt;
+&lt;%&ndash;</div>&ndash;%&gt;
+&lt;%&ndash;<br><br><br><br><br><br><br><br><br><br><br><br><br><br>*/--%>
 <%@ include file="html/footer.html" %>
 
 </body>
