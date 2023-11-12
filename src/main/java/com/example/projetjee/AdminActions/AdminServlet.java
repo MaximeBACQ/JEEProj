@@ -62,6 +62,7 @@ public class AdminServlet extends HttpServlet {
                         finalMsg="User is now a moderator";
                         session.setAttribute("finalMsgModerator",finalMsg);
                         userToPromote.setIsModerator(true);
+                        userDAO.updateUser(userToPromote);
                         response.sendRedirect("adminPage.jsp");
                     }else{
                         finalMsg="User was already a moderator, nothing happened";
