@@ -57,17 +57,19 @@ public class AdminServlet extends HttpServlet {
             }
             if(request.getParameter("idToPromote")!=null){
                 try{
-                    SiteUser userToPromote = userDAO.findUserById(Integer.parseInt(request.getParameter("idToPromote")));
-                    if(!userToPromote.getIsModerator()){
-                        finalMsg="User is now a moderator";
-                        session.setAttribute("finalMsgModerator",finalMsg);
-                        userToPromote.setIsModerator(true);
-                        userDAO.updateUser(userToPromote);
-                        response.sendRedirect("adminPage.jsp");
-                    }else{
-                        finalMsg="User was already a moderator, nothing happened";
-                        session.setAttribute("finalMsgModerator",finalMsg);
-                        response.sendRedirect("adminPage.jsp");
+                    if(userDAO.findUserById(Integer.parseInt(request.getParameter("idToPromote")))!=null){
+                        SiteUser userToPromote = userDAO.findUserById(Integer.parseInt(request.getParameter("idToPromote")));
+                        if (!userToPromote.getIsModerator()) {
+                            finalMsg = "User is now a moderator";
+                            session.setAttribute("finalMsgModerator", finalMsg);
+                            userToPromote.setIsModerator(true);
+                            userDAO.updateUser(userToPromote);
+                            response.sendRedirect("adminPage.jsp");
+                        } else {
+                            finalMsg = "User was already a moderator, nothing happened";
+                            session.setAttribute("finalMsgModerator", finalMsg);
+                            response.sendRedirect("adminPage.jsp");
+                        }
                     }
                 } catch (UserExistenceException e) {
                     finalMsg = "No user found for this id";
@@ -128,16 +130,18 @@ public class AdminServlet extends HttpServlet {
 
             if (request.getParameter("userToMakeSeller") != null) {
                 try{
-                    SiteUser userToMakeSeller = userDAO.findUserById(Integer.parseInt(request.getParameter("idToPromote")));
-                    if(!userToMakeSeller.getIsSeller()){
-                        finalMsg="User is now a seller";
-                        session.setAttribute("finalMsgSeller",finalMsg);
-                        userToMakeSeller.setIsSeller(true);
-                    }else{
-                        finalMsg="User was already a seller, nothing happened";
-                        session.setAttribute("finalMsgSeller",finalMsg);
+                    if(userDAO.findUserById(Integer.parseInt(request.getParameter("idToPromote")))!=null) {
+                        SiteUser userToMakeSeller = userDAO.findUserById(Integer.parseInt(request.getParameter("idToPromote")));
+                        if (!userToMakeSeller.getIsSeller()) {
+                            finalMsg = "User is now a seller";
+                            session.setAttribute("finalMsgSeller", finalMsg);
+                            userToMakeSeller.setIsSeller(true);
+                        } else {
+                            finalMsg = "User was already a seller, nothing happened";
+                            session.setAttribute("finalMsgSeller", finalMsg);
+                        }
                     }
-                } catch (UserExistenceException e) {
+                }catch (UserExistenceException e) {
                     finalMsg = "No user found for this id";
                     session.setAttribute("finalMsgSeller",finalMsg);
                 }
@@ -162,7 +166,7 @@ public class AdminServlet extends HttpServlet {
 //                    session.setAttribute("finalMsgSeller",finalMsg);
 //                }
             }
-            if (request.getParameter("pToSearch") != null) {
+                if (request.getParameter("pToSearch") != null) {
 
                 try {
                     TypedQuery<ProductEntity> query = JPAUtil.getEntityManager()
