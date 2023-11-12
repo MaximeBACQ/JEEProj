@@ -22,6 +22,8 @@ INSERT INTO users (name, surname, username, email, birthdate, gender, password, 
 VALUES ('Admin', 'Admin', 'AdminUser', 'admin@example.com', '1980-05-15', 'Male', 'admin', 1, 1);
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator)
 VALUES ('Moderator', 'Moderator', 'ModUser', 'mod@example.com', '1980-05-15', 'Male', 'moderator', 0, 1);
+INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator)
+VALUES ('User', 'User', 'User', 'user@example.com', '1980-05-15', 'Male', 'user', 0, 0);
 
 DROP TABLE Company;
 CREATE TABLE IF NOT EXISTS Company(

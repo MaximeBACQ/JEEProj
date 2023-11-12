@@ -21,87 +21,145 @@ public class AdminServlet extends HttpServlet {
             HttpSession session = request.getSession();
             String finalMsg = "";
 
-            try {
-                if (request.getParameter("email") != null) {
-                    String email = request.getParameter("email");
-                    SiteUser userToDelete = userDAO.findUserByEmail(email);
-                    if (userToDelete != null) {
-                        userDAO.deleteUser(userToDelete);
-                    } else {
-                        finalMsg = "No user was found matching this email";
-                    }
-
+            if (request.getParameter("email") != null) {
+                String email = request.getParameter("email");
+                SiteUser userToDelete = userDAO.findUserByEmail(email);
+                if (userToDelete != null) {
+                    finalMsg = "User" + userToDelete.getUsername() + "was deleted";
+                    session.setAttribute("finalMsgDelete",finalMsg);
+                    userDAO.deleteUser(userToDelete);
+                    response.sendRedirect("adminPage.jsp");
+                } else {
+                    finalMsg = "No user was found matching this email";
+                    session.setAttribute("finalMsgDelete",finalMsg);
+                    response.sendRedirect("adminPage.jsp");
                 }
 
-                if (request.getParameter("submitCompany") != null) {
-
-                    try {
-                        int userId = Integer.parseInt(request.getParameter("userForCompany"));
-                        SiteUser selectedUser = userDAO.findUserById(userId);
-                        session.setAttribute("selectedUser", selectedUser);
-
-                        if (selectedUser != null && !selectedUser.getIsModerator()) {
-                            finalMsg = "User is not a vendor";
-                            session.setAttribute("finalMsg", finalMsg);
-                        } else {
-                            CompanyDAO cpDAO = new CompanyDAO();
-                            int companyId = Integer.parseInt(request.getParameter("CompanyId"));
-                            CompanyEntity userCompany = cpDAO.findById(companyId);
-
-                            if (userCompany != null) {
-
-                                //try {
-                                selectedUser.setCompany(userCompany);
-                                userDAO.updateUser(selectedUser);
-
-                                       /* if (rowsUpdated > 0) {
-                                            finalMsg = "Added " + selectedUser.getUsername() + " to " + userCompany.getName();
-                                            session.setAttribute("finalMsg", finalMsg);
-                                        } else {
-                                            finalMsg = "Failed to update user's company";
-                                            session.setAttribute("finalMsg", finalMsg);
-                                        }
-                                    } catch (Exception e) {
-                                        if (transaction != null && transaction.isActive()) {
-                                            transaction.rollback();
-                                        }
-                                        e.printStackTrace();
-                                    }
-                                } else {
-                                    finalMsg = "Company not found for id: " + companyId;
-                                    session.setAttribute("finalMsg", finalMsg); */
-                            }
-                        }
-                    } catch (UserExistenceException e) {
-                        finalMsg = "No user found for this id";
-                        session.setAttribute("finalMsg", finalMsg);
-                    }
-                }
-            } finally {
-                response.sendRedirect("adminPage.jsp");
             }
-
-            if (request.getParameter("userToMakeSeller") != null) {
-
+            if(request.getParameter("idForSelection")!=null) {
+                try {
+                    System.out.println("jusqu'ici c'est ok");
+                    if(userDAO.findUserById(Integer.parseInt(request.getParameter("idForSelection")))!=null){
+                        SiteUser selectedUser = userDAO.findUserById(Integer.parseInt(request.getParameter("idForSelection")));
+                        System.out.println("pseudo du boug" + selectedUser.getUsername());
+                        finalMsg="The user you are searching for is :" + selectedUser.getUsername();
+                        session.setAttribute("finalMsgSelectUser",finalMsg);
+                        response.sendRedirect("adminPage.jsp");
+                    }else{
+                        finalMsg="The id you've entered doesn't exist in our database";
+                        session.setAttribute("finalMsgSelectUser",finalMsg);
+                    }
+                } catch (UserExistenceException e) {
+                    finalMsg="The id you've entered doesn't exist in our database";
+                    session.setAttribute("finalMsgSelectUser",finalMsg);
+                    response.sendRedirect("adminPage.jsp");
+                }
+            }
+            if(request.getParameter("idToPromote")!=null){
+                try{
+                    SiteUser userToPromote = userDAO.findUserById(Integer.parseInt(request.getParameter("idToPromote")));
+                    if(!userToPromote.getIsModerator()){
+                        finalMsg="User is now a moderator";
+                        session.setAttribute("finalMsgModerator",finalMsg);
+                        userToPromote.setIsModerator(true);
+                        response.sendRedirect("adminPage.jsp");
+                    }else{
+                        finalMsg="User was already a moderator, nothing happened";
+                        session.setAttribute("finalMsgModerator",finalMsg);
+                        response.sendRedirect("adminPage.jsp");
+                    }
+                } catch (UserExistenceException e) {
+                    finalMsg = "No user found for this id";
+                    session.setAttribute("finalMsgModerator",finalMsg);
+                    response.sendRedirect("adminPage.jsp");
+                }
+            }
+            if (request.getParameter("submitCompany") != null) {
+                System.out.println("il se passe qqchose");
                 try {
                     int userId = Integer.parseInt(request.getParameter("userForCompany"));
                     SiteUser selectedUser = userDAO.findUserById(userId);
+                    System.out.println("ton user :" + selectedUser.getUsername());
                     session.setAttribute("selectedUser", selectedUser);
 
-                    if (selectedUser != null && (!selectedUser.getIsModerator()||!selectedUser.getIsAdmin())){
+                    if (selectedUser.getCompany()!=null){
+                        finalMsg = "User already works for a company";
+                        session.setAttribute("finalMsgCompany", finalMsg);
+                        response.sendRedirect("adminPage.jsp");
+                    }else if(!selectedUser.getIsModerator()){
                         finalMsg = "User is not a moderator";
-                        session.setAttribute("finalMsgSeller", finalMsg);
-                    }else if(selectedUser.getIsSeller()){
-                        finalMsg="User is already a seller";
-                        session.setAttribute("finalMsgSeller",finalMsg);
+                        session.setAttribute("finalMsgCompany", finalMsg);
+                        response.sendRedirect("adminPage.jsp");
                     }else{
-                        selectedUser.setIsSeller(true);
-                        userDAO.updateUser(selectedUser);
+                        CompanyDAO cpDAO = new CompanyDAO();
+                        int companyId = Integer.parseInt(request.getParameter("CompanyId"));
+                        CompanyEntity userCompany = cpDAO.findById(companyId);
+                        System.out.println("la company:" + userCompany.getName());
+
+                        if (userCompany != null) {
+                            //try {
+                            selectedUser.setCompany(userCompany);
+                            userDAO.updateUser(selectedUser);
+                            response.sendRedirect("adminPage.jsp");
+                                   /* if (rowsUpdated > 0) {
+                                        finalMsg = "Added " + selectedUser.getUsername() + " to " + userCompany.getName();
+                                        session.setAttribute("finalMsg", finalMsg);
+                                    } else {
+                                        finalMsg = "Failed to update user's company";
+                                        session.setAttribute("finalMsg", finalMsg);
+                                    }
+                                } catch (Exception e) {
+                                    if (transaction != null && transaction.isActive()) {
+                                        transaction.rollback();
+                                    }
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                finalMsg = "Company not found for id: " + companyId;
+                                session.setAttribute("finalMsg", finalMsg); */
+                        }
+                    }
+                } catch (UserExistenceException e) {
+                    finalMsg = "No user found for this id";
+                    session.setAttribute("finalMsgCompany", finalMsg);
+                }
+            }
+
+            if (request.getParameter("userToMakeSeller") != null) {
+                try{
+                    SiteUser userToMakeSeller = userDAO.findUserById(Integer.parseInt(request.getParameter("idToPromote")));
+                    if(!userToMakeSeller.getIsSeller()){
+                        finalMsg="User is now a seller";
+                        session.setAttribute("finalMsgSeller",finalMsg);
+                        userToMakeSeller.setIsSeller(true);
+                    }else{
+                        finalMsg="User was already a seller, nothing happened";
+                        session.setAttribute("finalMsgSeller",finalMsg);
                     }
                 } catch (UserExistenceException e) {
                     finalMsg = "No user found for this id";
                     session.setAttribute("finalMsgSeller",finalMsg);
                 }
+
+//                try {
+//                    int userId = Integer.parseInt(request.getParameter("userForCompany"));
+//                    SiteUser selectedUser = userDAO.findUserById(userId);
+//                    session.setAttribute("selectedUser", selectedUser);
+//
+//                    if (selectedUser != null && (!selectedUser.getIsModerator()||!selectedUser.getIsAdmin())){
+//                        finalMsg = "User is not a moderator";
+//                        session.setAttribute("finalMsgSeller", finalMsg);
+//                    }else if(selectedUser.getIsSeller()){
+//                        finalMsg="User is already a seller";
+//                        session.setAttribute("finalMsgSeller",finalMsg);
+//                    }else{
+//                        selectedUser.setIsSeller(true);
+//                        userDAO.updateUser(selectedUser);
+//                    }
+//                } catch (UserExistenceException e) {
+//                    finalMsg = "No user found for this id";
+//                    session.setAttribute("finalMsgSeller",finalMsg);
+//                }
             }
             if (request.getParameter("pToSearch") != null) {
 

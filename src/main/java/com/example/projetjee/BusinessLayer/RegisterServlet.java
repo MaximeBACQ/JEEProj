@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import com.example.projetjee.DAO.UserDAO;
 import com.example.projetjee.DAO.UserExistenceException;
+import com.example.projetjee.Model.CompanyEntity;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -25,7 +26,20 @@ public class RegisterServlet extends HttpServlet {
         String gender = request.getParameter("gender");
         String password = request.getParameter("password");
 
-        SiteUser newUser = new SiteUser(name, surname, username, email, birthDate, gender, password, false, false, false);
+
+        //SiteUser newUser = new SiteUser(name, surname, username, email, birthDate, gender, password, false, false, new Boolean(false));
+        SiteUser newUser = new SiteUser();
+        newUser.setName(name);
+        newUser.setSurname(surname);
+        newUser.setUsername(username);
+        newUser.setEmail(email);
+        newUser.setBirthDate(birthDate);
+        newUser.setGender(gender);
+        newUser.setPassword(password);
+        newUser.setIsAdmin(false);
+        newUser.setIsModerator(false);
+        newUser.setIsSeller(false);
+
         newUser.setCompany(null);
 
         UserDAO userDao = new UserDAO();

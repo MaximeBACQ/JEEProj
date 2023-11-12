@@ -128,13 +128,9 @@ public class SiteUser {
         isAdmin = admin;
     }
 
-    public boolean getIsModerator() {
-        return isModerator;
-    }
+    public boolean getIsModerator() {return isModerator;}
 
-    public void setIsModerator(boolean moderator) {
-        isModerator = moderator;
-    }
+    public void setIsModerator(boolean moderator) {isModerator = moderator;}
 
     public boolean getIsSeller(){return isSeller;}
     public void setIsSeller(boolean seller){isSeller = seller;}
@@ -160,6 +156,7 @@ public class SiteUser {
                 ", password='" + password + '\'' +
                 ", isAdmin=" + isAdmin +
                 ", isModerator=" + isModerator +
+                ", isSeller=" + isSeller +
                 ", company=" + company +
                 '}';
     }

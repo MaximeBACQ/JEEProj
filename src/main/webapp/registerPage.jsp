@@ -41,11 +41,18 @@
 
         <p class="champs">
             <label> Genre : </label>
+            <input class="main-connexion" type="radio" name="gender" id="male" value="male"/>
+            <label for="male">M</label>
+            <input type="radio" name="gender" id="female" value="female"/>
+            <label for="female">F</label>
+        </p>
+    <%--<p class="champs">
+            <label> Genre : </label>
         <input class=main-connexion" type="checkbox" name="gender" id="male"/>
         <label for="male">M</label><br>
         <input type="checkbox" name="gender" id="female"/>
         <label for="female">F</label><br>
-        </p>
+        </p>--%>
 
         <p class="champs">
             <label> Mot de passe : </label>

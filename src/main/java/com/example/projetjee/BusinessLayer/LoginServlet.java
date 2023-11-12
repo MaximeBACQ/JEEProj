@@ -20,6 +20,8 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
+        System.out.println(authenticatedUser.toString());
+
         if (authenticatedUser != null) {
             session.setAttribute("connectedUser", authenticatedUser);
             response.sendRedirect("index.jsp");
