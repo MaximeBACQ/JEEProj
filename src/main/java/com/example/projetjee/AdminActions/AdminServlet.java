@@ -23,18 +23,17 @@ public class AdminServlet extends HttpServlet {
 
             if (request.getParameter("email") != null) {
                 String email = request.getParameter("email");
-                SiteUser userToDelete = userDAO.findUserByEmail(email);
-                if (userToDelete != null) {
+                if(userDAO.findUserByEmail(email)!=null) {
+                    SiteUser userToDelete = userDAO.findUserByEmail(email);
                     finalMsg = "User" + userToDelete.getUsername() + "was deleted";
-                    session.setAttribute("finalMsgDelete",finalMsg);
+                    session.setAttribute("finalMsgDelete", finalMsg);
                     userDAO.deleteUser(userToDelete);
                     response.sendRedirect("adminPage.jsp");
-                } else {
+                }else{
                     finalMsg = "No user was found matching this email";
-                    session.setAttribute("finalMsgDelete",finalMsg);
+                    session.setAttribute("finalMsgDelete", finalMsg);
                     response.sendRedirect("adminPage.jsp");
                 }
-
             }
             if(request.getParameter("idForSelection")!=null) {
                 try {
@@ -81,45 +80,47 @@ public class AdminServlet extends HttpServlet {
                 System.out.println("il se passe qqchose");
                 try {
                     int userId = Integer.parseInt(request.getParameter("userForCompany"));
-                    SiteUser selectedUser = userDAO.findUserById(userId);
-                    System.out.println("ton user :" + selectedUser.getUsername());
-                    session.setAttribute("selectedUser", selectedUser);
+                    if(userDAO.findUserById(userId)!=null) {
+                        SiteUser selectedUser = userDAO.findUserById(userId);
+                        System.out.println("ton user :" + selectedUser.getUsername());
+                        session.setAttribute("selectedUser", selectedUser);
 
-                    if (selectedUser.getCompany()!=null){
-                        finalMsg = "User already works for a company";
-                        session.setAttribute("finalMsgCompany", finalMsg);
-                        response.sendRedirect("adminPage.jsp");
-                    }else if(!selectedUser.getIsModerator()){
-                        finalMsg = "User is not a moderator";
-                        session.setAttribute("finalMsgCompany", finalMsg);
-                        response.sendRedirect("adminPage.jsp");
-                    }else{
-                        CompanyDAO cpDAO = new CompanyDAO();
-                        int companyId = Integer.parseInt(request.getParameter("CompanyId"));
-                        CompanyEntity userCompany = cpDAO.findById(companyId);
-                        System.out.println("la company:" + userCompany.getName());
-
-                        if (userCompany != null) {
-                            //try {
-                            selectedUser.setCompany(userCompany);
-                            userDAO.updateUser(selectedUser);
+                        if (selectedUser.getCompany() != null) {
+                            finalMsg = "User already works for a company";
+                            session.setAttribute("finalMsgCompany", finalMsg);
                             response.sendRedirect("adminPage.jsp");
-                                   /* if (rowsUpdated > 0) {
-                                        finalMsg = "Added " + selectedUser.getUsername() + " to " + userCompany.getName();
-                                        session.setAttribute("finalMsg", finalMsg);
-                                    } else {
-                                        finalMsg = "Failed to update user's company";
-                                        session.setAttribute("finalMsg", finalMsg);
+                        } else if (!selectedUser.getIsModerator()) {
+                            finalMsg = "User is not a moderator";
+                            session.setAttribute("finalMsgCompany", finalMsg);
+                            response.sendRedirect("adminPage.jsp");
+                        } else {
+                            CompanyDAO cpDAO = new CompanyDAO();
+                            int companyId = Integer.parseInt(request.getParameter("CompanyId"));
+                            CompanyEntity userCompany = cpDAO.findById(companyId);
+                            System.out.println("la company:" + userCompany.getName());
+
+                            if (userCompany != null) {
+                                //try {
+                                selectedUser.setCompany(userCompany);
+                                userDAO.updateUser(selectedUser);
+                                response.sendRedirect("adminPage.jsp");
+                                       /* if (rowsUpdated > 0) {
+                                            finalMsg = "Added " + selectedUser.getUsername() + " to " + userCompany.getName();
+                                            session.setAttribute("finalMsg", finalMsg);
+                                        } else {
+                                            finalMsg = "Failed to update user's company";
+                                            session.setAttribute("finalMsg", finalMsg);
+                                        }
+                                    } catch (Exception e) {
+                                        if (transaction != null && transaction.isActive()) {
+                                            transaction.rollback();
+                                        }
+                                        e.printStackTrace();
                                     }
-                                } catch (Exception e) {
-                                    if (transaction != null && transaction.isActive()) {
-                                        transaction.rollback();
-                                    }
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                finalMsg = "Company not found for id: " + companyId;
-                                session.setAttribute("finalMsg", finalMsg); */
+                                } else {
+                                    finalMsg = "Company not found for id: " + companyId;
+                                    session.setAttribute("finalMsg", finalMsg); */
+                            }
                         }
                     }
                 } catch (UserExistenceException e) {

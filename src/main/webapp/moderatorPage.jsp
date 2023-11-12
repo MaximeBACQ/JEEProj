@@ -19,6 +19,7 @@
     if( adminUser != null){
         if (adminUser.getIsAdmin() || adminUser.getIsModerator()) {
 %>
+<h2>Will behave normally if you work for a company</h2>
     <form action="ModeratorServlet" method="post">
         <input type="text" placeholder="label" name="label">
         <input type="number" placeholder="price" name="price">
@@ -30,10 +31,15 @@
             <%
         }else{
             %>
-<h2> You're not a moderator, you do not have access to this page</h2>
+<h2> You're not a moderator nor an admin, you do not have access to this page</h2>
+<a href="index.jsp">back to index</a>
             <%
         }
-    }
+    }else{
+            %>
+<h2>You're not logged in, please login as a moderator or admin to access this page.</h2>
+<a href="index.jsp">back to index</a>
+    <%}
 %>
 </body>
 </html>

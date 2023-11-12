@@ -2,6 +2,7 @@ package com.example.projetjee.AdminActions;
 
 import com.example.projetjee.DAO.JPAUtil;
 import com.example.projetjee.DAO.ProductDAO;
+import com.example.projetjee.Model.CompanyEntity;
 import com.example.projetjee.Model.ProductEntity;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.*;
@@ -25,8 +26,15 @@ public class ModeratorServlet extends HttpServlet {
                 int price = Integer.parseInt(request.getParameter("price"));
                 int stock = Integer.parseInt(request.getParameter("stock"));
                 String description = request.getParameter("description");
+                final CompanyEntity connectedPersonCompany = connectedPerson.getCompany();
 
-                ProductEntity newProduct = new ProductEntity(label,price,stock,description,connectedPerson.getCompany());
+                ProductEntity newProduct = new ProductEntity();
+                newProduct.setLabel(label);
+                newProduct.setPrice(price);
+                newProduct.setStock(stock);
+                newProduct.setDescription(label);
+                newProduct.setCompanyId(connectedPersonCompany);
+
                 productDAO.createProduct(newProduct);
 
                 response.sendRedirect("index.jsp");

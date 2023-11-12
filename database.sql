@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS users (
                                      companyId INT,
                                      FOREIGN KEY (companyId) REFERENCES Company(companyId)
 );
-
+UPDATE Users SET companyId=null WHERE userId=5;
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator)
 VALUES ('Admin', 'Admin', 'AdminUser', 'admin@example.com', '1980-05-15', 'Male', 'admin', 1, 1);
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator)
@@ -44,6 +44,10 @@ CREATE TABLE IF NOT EXISTS Product(
                                       companyId INT,
                                       FOREIGN KEY (companyId) REFERENCES Company(companyId)
 );
+
+insert into product(label,price,stock,description,companyId)
+VALUES('Cramptes',5,100,'Crampter qui cramptent',null);
+DELETE FROM product where productId = 1;
 
 DROP TABLE ProductOrder;
 CREATE TABLE IF NOT EXISTS ProductOrder(
