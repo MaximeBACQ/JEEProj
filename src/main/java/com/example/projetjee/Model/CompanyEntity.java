@@ -64,7 +64,8 @@ public class CompanyEntity {
         return "CompanyEntity{" +
                 "companyId=" + companyId +
                 ", name='" + name + '\'' +
-                ", products=" + products +
+                //", products=" + products.toString() + '\'' +
+                //", products=" + workers.toString() + '\'' +
                 '}';
     }
 }

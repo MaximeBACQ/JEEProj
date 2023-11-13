@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class SiteUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private int userId;
     @Column(name="name")
     private String name;
     @Column(name="surname")
@@ -56,11 +56,11 @@ public class SiteUser {
         this.company = null;
     }
 
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -145,7 +145,8 @@ public class SiteUser {
 
     @Override
     public String toString() {
-        return "SiteUser{" +
+        String out =
+                "SiteUser{" +
                 "userId=" + userId +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
@@ -156,8 +157,13 @@ public class SiteUser {
                 ", password='" + password + '\'' +
                 ", isAdmin=" + isAdmin +
                 ", isModerator=" + isModerator +
-                ", isSeller=" + isSeller +
-                ", company=" + company +
-                '}';
+                ", isSeller=" + isSeller;
+
+        if(company == null){
+            return out + '}';
+        }else{
+            return out + ", companyId=" + company.getCompanyId() + '}';
+        }
+
     }
 }

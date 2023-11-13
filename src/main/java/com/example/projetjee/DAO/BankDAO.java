@@ -1,11 +1,12 @@
 package com.example.projetjee.DAO;
 
 import com.example.projetjee.Model.BankAccountEntity;
+import com.example.projetjee.Model.CartEntity;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
-public class BankDAO extends GenericDAO<BankAccountEntity>{
+public class BankDAO extends GenericDAO<BankAccountEntity> implements InterfaceDAO<BankAccountEntity> {
     public BankDAO() {
         super(BankAccountEntity.class);
     }

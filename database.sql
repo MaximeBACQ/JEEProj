@@ -5,15 +5,16 @@ DROP TABLE IF EXISTS ProductOrder;
 DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS Company;
+DROP TABLE IF EXISTS Cart;
 
 DROP TABLE IF EXISTS bankAccount;
 
 CREATE TABLE IF NOT EXISTS bankAccount(
-									bankId INT AUTO_INCREMENT PRIMARY KEY,
-                                    bankCode INT,
-                                    bankDate VARCHAR(5),
-                                    cvv INT,
-                                    bankBalance INT
+                                          bankId INT AUTO_INCREMENT PRIMARY KEY,
+                                          bankCode INT,
+                                          bankDate VARCHAR(5),
+                                          cvv INT,
+                                          bankBalance INT
 );
 INSERT INTO bankAccount VALUES(1,1234,"04/25",123,1200);
 
@@ -57,13 +58,13 @@ CREATE TABLE IF NOT EXISTS Product(
                                       description VARCHAR(100),
                                       companyId INT,
                                       FOREIGN KEY (companyId) REFERENCES Company(companyId)
-                                                                            
+
 );
-INSERT INTO Product VALUES ("Ibanez",400,5,"Super guitare Ibanez",1,1);
-INSERT INTO Product VALUES (2,"Yamaha",500,7,"Incroyable guitare de pro",1);
-INSERT INTO Product VALUES (3,"Fender",250,4,"Super basse Fender",1);
-INSERT INTO Product VALUES (4,"Bechstein",400,5,"Super piano",1);
-INSERT INTO Product VALUES (5,"Gretsch",1200,2,"Super batterie",1);
+INSERT INTO Product (label, price, stock, description, companyId) VALUES ("Ibanez",400,5,"Super guitare Ibanez",1);
+INSERT INTO Product (label, price, stock, description, companyId) VALUES ("Yamaha",500,7,"Incroyable guitare de pro",1);
+INSERT INTO Product (label, price, stock, description, companyId) VALUES ("Fender",250,4,"Super basse Fender",1);
+INSERT INTO Product (label, price, stock, description, companyId) VALUES ("Bechstein",400,5,"Super piano",1);
+INSERT INTO Product (label, price, stock, description, companyId) VALUES ("Gretsch",1200,2,"Super batterie",1);
 
 CREATE TABLE IF NOT EXISTS ProductOrder(
                                            orderId INT AUTO_INCREMENT PRIMARY KEY,
@@ -71,4 +72,13 @@ CREATE TABLE IF NOT EXISTS ProductOrder(
                                            orderPrice INT,
                                            userId INT,
                                            FOREIGN KEY (userId) REFERENCES users(userId)
+);
+
+CREATE TABLE IF NOT EXISTS Cart (
+                                    cart_id INT AUTO_INCREMENT PRIMARY KEY,
+                                    userId INT,
+                                    productId INT,
+                                    quantity INT,
+                                    FOREIGN KEY (userId) REFERENCES users(userId),
+                                    FOREIGN KEY (productId) REFERENCES Product(productId)
 );

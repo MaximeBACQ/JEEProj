@@ -4,7 +4,7 @@ import com.example.projetjee.Model.CompanyEntity;
 
 import java.util.List;
 
-public class CompanyDAO extends GenericDAO<CompanyEntity>{
+public class CompanyDAO extends GenericDAO<CompanyEntity> implements InterfaceDAO<CompanyEntity> {
     public CompanyDAO(){
         super(CompanyEntity.class);
     }
@@ -13,7 +13,7 @@ public class CompanyDAO extends GenericDAO<CompanyEntity>{
         create(company);
     }
 
-    public CompanyEntity findPCompanyById(int id) {
+    public CompanyEntity findCompanyById(int id) {
         return findById(id);
     }
 

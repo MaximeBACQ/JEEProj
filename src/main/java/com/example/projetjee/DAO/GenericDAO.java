@@ -4,7 +4,7 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
-public class GenericDAO<Entity> {
+public class GenericDAO<Entity> implements InterfaceDAO<Entity> {
 
     protected EntityManager entityManager = JPAUtil.getEntityManager();
 

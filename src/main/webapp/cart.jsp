@@ -1,5 +1,9 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="com.example.projetjee.Model.ProductEntity" %>
+<%@ page import="com.example.projetjee.DAO.CartDAO" %>
+<%@ page import="com.example.projetjee.Model.CartEntity" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.projetjee.DAO.ProductDAO" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -19,9 +23,15 @@
 
     <%
         int grandTotal = 0;
-        Map<ProductEntity, Integer> cart = (Map<ProductEntity, Integer>) session.getAttribute("cart");
+        //Map<ProductEntity, Integer> cart = (Map<ProductEntity, Integer>) session.getAttribute("cart");
 
-        if (cart == null || cart.isEmpty()) {
+        SiteUser user = (SiteUser) session.getAttribute("connectedUser");
+
+        CartDAO cartDAO = new CartDAO();
+        ArrayList<CartEntity> cartArrayList  =
+                new ArrayList<>(cartDAO.findCartsByUserId(user.getUserId()));
+
+        if (cartArrayList.isEmpty()) {
     %>
     <p>Votre panier est vide</p>
     <%
@@ -39,9 +49,10 @@
         </thead>
         <tbody>
         <%
-            for (Map.Entry<ProductEntity, Integer> entry : cart.entrySet()) {
-                ProductEntity product = entry.getKey();
-                int quantity = entry.getValue();
+            ProductDAO productDAO = new ProductDAO();
+            for (CartEntity cart : cartArrayList) {
+                ProductEntity product = cart.getProduct();
+                int quantity = cart.getQuantity();
                 double total = product.getPrice() * quantity;
                 grandTotal += total;
         %>

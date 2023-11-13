@@ -1,5 +1,11 @@
 package com.example.projetjee.BusinessLayer;
 
+import com.example.projetjee.DAO.CartDAO;
+import com.example.projetjee.DAO.ProductDAO;
+import com.example.projetjee.DAO.UserDAO;
+import com.example.projetjee.Model.CartEntity;
+import com.example.projetjee.Model.ProductEntity;
+import com.example.projetjee.Model.SiteUser;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,14 +25,26 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String label = request.getParameter("label");
-            String productId = request.getParameter("productId");
+
             HttpSession session = request.getSession();
+            Object obj = session.getAttribute("connectedUser");
 
-            session.setAttribute("label",label);
+            if (obj == null) {
+                response.sendRedirect("loginPage.jsp");
+            }
 
-            response.sendRedirect("productPage.jsp?products=" + label);
-            System.out.println("Implémenter ajout au panier");
+            SiteUser user = (SiteUser) obj;
+            ProductDAO productDAO = new ProductDAO();
+
+            ProductEntity product =  productDAO.findProductById(Integer.parseInt(request.getParameter("productId")));
+
+            CartEntity cart = new CartEntity(1, user, product);
+
+            CartDAO cartDAO = new CartDAO();
+            cartDAO.createCart(cart);
+
+            response.sendRedirect("cart.jsp");
+
         }catch (Exception e){
             e.printStackTrace();
         }

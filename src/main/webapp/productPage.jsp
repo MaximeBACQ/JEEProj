@@ -2,6 +2,7 @@
 <%@ page import="jakarta.persistence.TypedQuery" %>
 <%@ page import="com.example.projetjee.DAO.JPAUtil" %>
 <%@ page import="java.util.*" %>
+<%@ page import="com.example.projetjee.DAO.ProductDAO" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -21,29 +22,16 @@
 
 <div class="container-product-details">
     <%
-        List<ProductEntity> productList = new ArrayList<>();
-        // Récupération de tous les paramètres de l'URL
-        Map<String, String[]> parameters = request.getParameterMap();
+        ProductDAO productDAO = new ProductDAO();
+        String labels = request.getParameter("products");
+        ArrayList<ProductEntity> productList = new ArrayList<>(productDAO.searchProductsByLabelAndDescription(labels));
 
-        for(String parameter : parameters.keySet()) {
-                String[] values = parameters.get(parameter);
-                for(String v:values){
-                    TypedQuery<ProductEntity> query = JPAUtil.getEntityManager()
-                                .createQuery("SELECT p FROM ProductEntity p WHERE label LIKE :label ",ProductEntity.class);
-                    query.setParameter("label", v);
-                    List<ProductEntity> results = query.getResultList();
-
-                    productList.addAll(results);
-
-                    }
-                }
          for(ProductEntity p : productList){
          %>
             <%= "label: " + p.getLabel() + " ,prix: " + p.getPrice() + " ,stock: " + p.getStock() + ", description: "
             + p.getDescription()%>
         <form action="CartServlet" method="post">
-            <input type="hidden" name="produitId" value="<%=p.getProductId()%>" />
-            <input type="hidden" name="label" value="<%=p.getLabel()%>"/>
+            <input type="hidden" name="productId" value="<%=p.getProductId()%>" />
             <input type="submit" value="Ajouter au panier" />
         </form>
         <%

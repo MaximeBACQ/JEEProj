@@ -91,7 +91,7 @@ public class ProductEntity {
                 ", price=" + price +
                 ", stock=" + stock +
                 ", description='" + description + '\'' +
-                ", company=" + company +
+                ", companyId=" + company.getCompanyId() +
                 '}';
     }
 }

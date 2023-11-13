@@ -1,11 +1,12 @@
 package com.example.projetjee.DAO;
 
+import com.example.projetjee.Model.CompanyEntity;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
-public class UserDAO extends GenericDAO<SiteUser> {
+public class UserDAO extends GenericDAO<SiteUser> implements InterfaceDAO<SiteUser> {
 
     public UserDAO(){
         super(SiteUser.class);
