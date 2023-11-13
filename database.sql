@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS Product(
                                       FOREIGN KEY (companyId) REFERENCES Company(companyId)
                                                                             
 );
-INSERT INTO Product VALUES (1,"Ibanez",400,5,"Super guitare Ibanez",1);
+INSERT INTO Product VALUES ("Ibanez",400,5,"Super guitare Ibanez",1,1);
 INSERT INTO Product VALUES (2,"Yamaha",500,7,"Incroyable guitare de pro",1);
 INSERT INTO Product VALUES (3,"Fender",250,4,"Super basse Fender",1);
 INSERT INTO Product VALUES (4,"Bechstein",400,5,"Super piano",1);

@@ -61,7 +61,7 @@
 
         </li>
 
-        <li><a href='panier.php'> <i class='fa fa-bag-shopping'></i>Panier</a></li>
+        <li><a href='cart.jsp'> <i class='fa fa-bag-shopping'></i>Panier</a></li>
         <div class='header-sous-menu-bag'>
             <ul>
                 <li> 0 article(s) <br/> Total (TTC) : 0 €</li>
