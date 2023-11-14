@@ -17,7 +17,9 @@
 
     // Vérification si la variable de session est définie
     if( adminUser != null){
-        if (adminUser.getIsAdmin() || adminUser.getIsModerator()) {
+        if (adminUser.getIsAdmin() || adminUser.getIsModerator()){
+            if(adminUser.getCompany()!=null){
+                if(adminUser.getIsSeller()){
 %>
 <h2>Will behave normally if you work for a company</h2>
     <form action="ModeratorServlet" method="post">
@@ -29,6 +31,16 @@
     </form>
 
             <%
+                }else{
+                    %>
+                    <h2>You do not have the right to sell products. Please contact support.</h2>
+                    <%
+                }
+                }else {
+                    %>
+                        <h2> You do not work for a company, you do not have access to this page</h2>
+                    <%
+                }
         }else{
             %>
 <h2> You're not a moderator nor an admin, you do not have access to this page</h2>
@@ -40,6 +52,11 @@
 <h2>You're not logged in, please login as a moderator or admin to access this page.</h2>
 <a href="index.jsp">back to index</a>
     <%}
+    if(session.getAttribute("finalMsg")!=null){
+    %>
+    <h2> <%=session.getAttribute("finalMsg")%></h2>
+    <%
+    }
 %>
 </body>
 </html>

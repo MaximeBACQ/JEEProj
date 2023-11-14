@@ -131,22 +131,60 @@ public class AdminServlet extends HttpServlet {
 
             if (request.getParameter("userToMakeSeller") != null) {
                 try{
-                    if(userDAO.findUserById(Integer.parseInt(request.getParameter("idToPromote")))!=null) {
-                        SiteUser userToMakeSeller = userDAO.findUserById(Integer.parseInt(request.getParameter("idToPromote")));
-                        if (!userToMakeSeller.getIsSeller()) {
-                            finalMsg = "User is now a seller";
-                            session.setAttribute("finalMsgSeller", finalMsg);
-                            userToMakeSeller.setIsSeller(true);
-                        } else {
-                            finalMsg = "User was already a seller, nothing happened";
-                            session.setAttribute("finalMsgSeller", finalMsg);
+                    if(userDAO.findUserById(Integer.parseInt(request.getParameter("userToMakeSeller")))!=null) {
+                        System.out.println("test userToMakeSeller" + request.getParameter("userToMakeSeller"));
+                        SiteUser userToMakeSeller = userDAO.findUserById(Integer.parseInt(request.getParameter("userToMakeSeller")));
+                        if(userToMakeSeller.getIsModerator() || userToMakeSeller.getIsAdmin()) { //if not mod/admin
+                            if (!userToMakeSeller.getIsSeller()) {
+                                finalMsg = "User is now a seller";
+                                session.setAttribute("finalMsgSeller", finalMsg);
+                                userToMakeSeller.setIsSeller(true);
+                                userDAO.updateUser(userToMakeSeller);
+                                response.sendRedirect("adminPage.jsp");
+                            } else {
+                                finalMsg = "User was already a seller, nothing happened";
+                                session.setAttribute("finalMsgSeller", finalMsg);
+                                response.sendRedirect("adminPage.jsp");
+                            }
+                        }else{
+                            finalMsg = "User is not a moderator nor an administrator, nothing happened.";
+                            session.setAttribute("finalMsgRemoveSeller", finalMsg);
+                            response.sendRedirect("adminPage.jsp");
                         }
                     }
                 }catch (UserExistenceException e) {
                     finalMsg = "No user found for this id";
-                    session.setAttribute("finalMsgSeller",finalMsg);
+                    session.setAttribute("finalMsgSeller", finalMsg);
                 }
+            }
 
+                if (request.getParameter("userToRemoveSeller") != null) {
+                    try {
+                        if (userDAO.findUserById(Integer.parseInt(request.getParameter("userToRemoveSeller"))) != null) {
+                            SiteUser userToMakeSeller = userDAO.findUserById(Integer.parseInt(request.getParameter("userToRemoveSeller")));
+                            if(userToMakeSeller.getIsModerator() || userToMakeSeller.getIsAdmin()) { //if not mod/admin
+                                if (userToMakeSeller.getIsSeller()) {
+                                    finalMsg = "User is not a seller anymore.";
+                                    session.setAttribute("finalMsgRemoveSeller", finalMsg);
+                                    userToMakeSeller.setIsSeller(false);
+                                    userDAO.updateUser(userToMakeSeller);
+                                    response.sendRedirect("adminPage.jsp");
+                                } else {
+                                    finalMsg = "User was already not a seller, nothing happened.";
+                                    session.setAttribute("finalMsgRemoveSeller", finalMsg);
+                                    response.sendRedirect("adminPage.jsp");
+                                }
+                            }else{
+                                finalMsg = "User is not a moderator nor an administrator, nothing happened.";
+                                session.setAttribute("finalMsgRemoveSeller", finalMsg);
+                                response.sendRedirect("adminPage.jsp");
+                            }
+                        }
+                    } catch (UserExistenceException e) {
+                        finalMsg = "No user found for this id";
+                        session.setAttribute("finalMsgSeller", finalMsg);
+                    }
+                }
 //                try {
 //                    int userId = Integer.parseInt(request.getParameter("userForCompany"));
 //                    SiteUser selectedUser = userDAO.findUserById(userId);
@@ -166,7 +204,6 @@ public class AdminServlet extends HttpServlet {
 //                    finalMsg = "No user found for this id";
 //                    session.setAttribute("finalMsgSeller",finalMsg);
 //                }
-            }
                 if (request.getParameter("pToSearch") != null) {
 
                 try {

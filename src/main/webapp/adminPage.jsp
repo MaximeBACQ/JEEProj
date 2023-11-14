@@ -101,7 +101,7 @@
     }%>
     <form action="AdminServlet" method="post">
         <label for="UserToMakeSeller">
-            <input type="text" placeholder="User's id" id="UserToMakeSeller" name="userToMakeSeller">
+            <input type="number" placeholder="User's id" id="UserToMakeSeller" name="userToMakeSeller">
         </label>
         <input type="submit" value="Make Seller">
     </form>
@@ -111,6 +111,13 @@
     <p><%= userIdMessageSeller %></p>
     <%}else {
     }%>
+
+    <form action="AdminServlet" method="post">
+        <label for="UserToRemoveSeller">
+            <input type="number" placeholder="User's id" id="UserToRemoveSeller" name="userToRemoveSeller">
+        </label>
+        <input type="submit" value="Remove Seller">
+    </form>
     <h1>Products actions</h1>
     <h2> To add a product, you must head to the moderator page where sellers can sell products.</h2>
 

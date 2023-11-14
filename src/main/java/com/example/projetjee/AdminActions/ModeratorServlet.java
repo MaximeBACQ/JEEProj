@@ -18,26 +18,29 @@ public class ModeratorServlet extends HttpServlet {
         ProductDAO productDAO = new ProductDAO();
         HttpSession session = request.getSession();
         SiteUser connectedPerson = (SiteUser) session.getAttribute("connectedUser");
+        String finalMsg = "";
         boolean isAdmOrModConnected = connectedPerson.getIsModerator() || connectedPerson.getIsAdmin();
-        if(isAdmOrModConnected){
+        if (isAdmOrModConnected) {
             if (request.getParameter("addProduct") != null) {
+                    String label = request.getParameter("label");
+                    int price = Integer.parseInt(request.getParameter("price"));
+                    int stock = Integer.parseInt(request.getParameter("stock"));
+                    String description = request.getParameter("description");
+                    final CompanyEntity connectedPersonCompany = connectedPerson.getCompany();
 
-                String label = request.getParameter("label");
-                int price = Integer.parseInt(request.getParameter("price"));
-                int stock = Integer.parseInt(request.getParameter("stock"));
-                String description = request.getParameter("description");
-                final CompanyEntity connectedPersonCompany = connectedPerson.getCompany();
+                    ProductEntity newProduct = new ProductEntity();
+                    newProduct.setLabel(label);
+                    newProduct.setPrice(price);
+                    newProduct.setStock(stock);
+                    newProduct.setDescription(label);
+                    newProduct.setCompanyId(connectedPersonCompany);
+                    session.setAttribute("finalMsg", finalMsg);
 
-                ProductEntity newProduct = new ProductEntity();
-                newProduct.setLabel(label);
-                newProduct.setPrice(price);
-                newProduct.setStock(stock);
-                newProduct.setDescription(label);
-                newProduct.setCompanyId(connectedPersonCompany);
+                    finalMsg = "Your product has been added.";
 
-                productDAO.createProduct(newProduct);
+                    productDAO.createProduct(newProduct);
 
-                response.sendRedirect("index.jsp");
+                    response.sendRedirect("index.jsp");
             }
         }
     }
