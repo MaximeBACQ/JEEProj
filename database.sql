@@ -5,18 +5,19 @@ DROP TABLE IF EXISTS ProductOrder;
 DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS Company;
+DROP TABLE IF EXISTS Cart;
 
 DROP TABLE IF EXISTS bankAccount;
+
 CREATE TABLE IF NOT EXISTS bankAccount(
-									bankId INT AUTO_INCREMENT PRIMARY KEY,
-                                    bankCode INT,
-                                    bankDate VARCHAR(5),
-                                    cvv INT,
-                                    bankBalance INT
+                                          bankId INT AUTO_INCREMENT PRIMARY KEY,
+                                          bankCode INT,
+                                          bankDate VARCHAR(5),
+                                          cvv INT,
+                                          bankBalance INT
 );
 INSERT INTO bankAccount VALUES(1,1234,"04/25",123,1200);
 
-DROP TABLE Company;
 CREATE TABLE IF NOT EXISTS Company(
                                       companyId INT AUTO_INCREMENT PRIMARY KEY,
                                       name VARCHAR(100)
@@ -25,7 +26,6 @@ CREATE TABLE IF NOT EXISTS Company(
 INSERT INTO Company (name)
 VALUES ('Cramptoux');
 
-DROP TABLE users;
 CREATE TABLE IF NOT EXISTS users (
                                      userId INT AUTO_INCREMENT PRIMARY KEY,
                                      name VARCHAR(50),
@@ -49,7 +49,7 @@ VALUES ('Moderator', 'Moderator', 'ModUser', 'mod@example.com', '1980-05-15', 'M
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
 VALUES ('User', 'User', 'User', 'user@example.com', '1980-05-15', 'Male', 'user', 0, 0, 0);
 
-DROP TABLE Product;
+
 CREATE TABLE IF NOT EXISTS Product(
                                       productId INT AUTO_INCREMENT PRIMARY KEY,
                                       label VARCHAR(100),
@@ -58,20 +58,27 @@ CREATE TABLE IF NOT EXISTS Product(
                                       description VARCHAR(100),
                                       companyId INT,
                                       FOREIGN KEY (companyId) REFERENCES Company(companyId)
-                                                                            
-);
-INSERT INTO Product(label,price,stock,description,companyId)
-VALUES ("Ibanez",400,5,"Super guitare Ibanez",1);
-INSERT INTO Product VALUES (2,"Yamaha",500,7,"Incroyable guitare de pro",1);
-INSERT INTO Product VALUES (3,"Fender",250,4,"Super basse Fender",1);
-INSERT INTO Product VALUES (4,"Bechstein",400,5,"Super piano",1);
-INSERT INTO Product VALUES (5,"Gretsch",1200,2,"Super batterie",1);
 
-DROP TABLE ProductOrder;
+);
+INSERT INTO Product (label, price, stock, description, companyId) VALUES ("Ibanez",400,5,"Super guitare Ibanez",1);
+INSERT INTO Product (label, price, stock, description, companyId) VALUES ("Yamaha",500,7,"Incroyable guitare de pro",1);
+INSERT INTO Product (label, price, stock, description, companyId) VALUES ("Fender",250,4,"Super basse Fender",1);
+INSERT INTO Product (label, price, stock, description, companyId) VALUES ("Bechstein",400,5,"Super piano",1);
+INSERT INTO Product (label, price, stock, description, companyId) VALUES ("Gretsch",1200,2,"Super batterie",1);
+
 CREATE TABLE IF NOT EXISTS ProductOrder(
                                            orderId INT AUTO_INCREMENT PRIMARY KEY,
                                            orderDate DATE,
                                            orderPrice INT,
                                            userId INT,
                                            FOREIGN KEY (userId) REFERENCES users(userId)
+);
+
+CREATE TABLE IF NOT EXISTS Cart (
+                                    cartId INT AUTO_INCREMENT PRIMARY KEY,
+                                    quantity INT,
+                                    userId INT,
+                                    productId INT,
+                                    FOREIGN KEY (userId) REFERENCES users(userId),
+                                    FOREIGN KEY (productId) REFERENCES Product(productId)
 );
