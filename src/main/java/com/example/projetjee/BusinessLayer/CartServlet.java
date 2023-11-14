@@ -24,6 +24,8 @@ public class CartServlet extends HttpServlet {
 
             if (session.getAttribute("connectedUser") == null) {
                 response.sendRedirect("loginPage.jsp");
+            }else{
+                response.sendRedirect("cart.jsp");
             }
 
         }catch (Exception e){
