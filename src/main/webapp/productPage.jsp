@@ -28,12 +28,16 @@
 
          for(ProductEntity p : productList){
          %>
-            <%= "label: " + p.getLabel() + " ,prix: " + p.getPrice() + " ,stock: " + p.getStock() + ", description: "
-            + p.getDescription()%>
+    <div>
+        <strong><%=p.getLabel()%></strong>
+        <p>Prix : <%=p.getPrice()%></p>
+        <p>Stock : <%=p.getStock()%></p>
+            <%=p.getDescription()%><br>
         <form action="CartServlet" method="post">
             <input type="hidden" name="productId" value="<%=p.getProductId()%>" />
             <input type="submit" value="Ajouter au panier" />
         </form>
+    </div><br><br>
         <%
          }
 %>
