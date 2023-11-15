@@ -11,6 +11,40 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.cdnfonts.com/css/trade-gothic-lt-std" rel="stylesheet">
+    <script>
+        function updateQuantity(productId) {
+            var newQuantity = document.getElementById("quantity_" + productId).valueAsNumber;
+
+            console.log("Nouvelle quantité : " + newQuantity);
+
+            // Vérifier si la nouvelle quantité est un nombre valide
+            if (!isNaN(newQuantity)) {
+                console.log("Envoi de la requête au serveur...");
+                console.log("NewQuantity après la condition sur le fait que c'est un nombre"+newQuantity)
+                // Utilisez une requête AJAX pour envoyer la nouvelle quantité au serveur
+                var xhr = new XMLHttpRequest();
+                console.log("NewQuantity après l'ouverture de la variable xhr sur le fait que c'est un nombre"+newQuantity)
+                xhr.open("POST", "ChangeQuantityServlet?productId=" + productId + "&newQuantity=" + newQuantity, true);
+                xhr.send();
+                console.log("NewQuantity après l'envoi de la variable xhr sur le fait que c'est un nombre"+newQuantity)
+
+
+                // Vous pouvez gérer la réponse du serveur ici si nécessaire
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            console.log("Mise à jour réussie !");
+                        } else {
+                            console.error("Erreur lors de la mise à jour de la quantité :" + "L'url pr appeler la servlet" + "ChangeQuantityServlet?productId=" + productId + "&newQuantity=", xhr.statusText);
+                        }
+                    }
+                };
+            } else {
+                console.error("La nouvelle quantité n'est pas un nombre valide.");
+            }
+        }
+    </script>
+
 </head>
 <body>
 
@@ -58,7 +92,13 @@
             <tr>
                 <td><%= product.getLabel() %></td>
                 <td><%= product.getPrice() %> €</td>
-                <td><%= quantity %></td>
+                <%--<td><input type="number" id="quantity_<%= product.getProductId() %>" value="<%= quantity %>"
+                           onchange="updateQuantity(<%= product.getProductId() %>)"></td>--%>
+<%--                <td><%= quantity %></td>--%>
+                    <td>
+                        <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>">
+                        <button onclick="updateQuantity(<%=product.getProductId()%>)">Update</button>
+                    </td>
                 <td><%= product.getCompanyId().getName() %></td>
                 <td><%= total %> €</td>
             </tr>

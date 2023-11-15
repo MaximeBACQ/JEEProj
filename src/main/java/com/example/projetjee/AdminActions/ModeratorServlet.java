@@ -32,7 +32,7 @@ public class ModeratorServlet extends HttpServlet {
                     newProduct.setLabel(label);
                     newProduct.setPrice(price);
                     newProduct.setStock(stock);
-                    newProduct.setDescription(label);
+                    newProduct.setDescription(description);
                     newProduct.setCompanyId(connectedPersonCompany);
                     session.setAttribute("finalMsg", finalMsg);
 
