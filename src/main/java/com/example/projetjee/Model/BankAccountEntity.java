@@ -24,11 +24,6 @@ public class BankAccountEntity {
     @Column(name="bankBalance")
     private int bankBalance;
 
-    //@OneToMany(mappedBy = "bankId")
-    //@OneToOne(mappedBy = "SiteUser", cascade = CascadeType.ALL)
-    //private SiteUser user;
-
-
     public BankAccountEntity(){};
     public BankAccountEntity(long bankCode, String bankDate, int cvv, int bankBalance){
         this.bankCode = bankCode;

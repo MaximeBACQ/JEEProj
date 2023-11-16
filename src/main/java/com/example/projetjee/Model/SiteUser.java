@@ -35,13 +35,6 @@ public class SiteUser {
     @JoinColumn(name = "companyId")
     private CompanyEntity company;
 
-    //@ManyToOne
-    //@JoinColumn(name = "bankId")
-
-    //@OneToOne
-    //@JoinColumn(name = "bankId")
-    //private BankAccountEntity bank;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bankId")
     private BankAccountEntity bank;
