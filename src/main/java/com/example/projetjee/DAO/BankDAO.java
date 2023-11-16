@@ -23,15 +23,16 @@ public class BankDAO extends GenericDAO<BankAccountEntity> implements InterfaceD
     }
 
     public BankAccountEntity findBankById(int id){return findById(id);}
-    public boolean isAccountValid(long bankCode, String bankDate, int cvv){
+    public BankAccountEntity isAccountValid(long bankCode, String bankDate, int cvv){
         TypedQuery<BankAccountEntity> query = entityManager.createQuery("SELECT b FROM BankAccountEntity b WHERE" +
                 " b.bankCode = :bankCode AND b.bankDate = :bankDate AND b.cvv = :cvv"
                 , BankAccountEntity.class);
         query.setParameter("bankCode", bankCode);
         query.setParameter("bankDate", bankDate);
         query.setParameter("cvv", cvv);
-        List<BankAccountEntity> resultList = query.getResultList();
-        return !resultList.isEmpty(); // true if not empty
+        //List<BankAccountEntity> resultList = query.getResultList();
+        //return !resultList.isEmpty(); // true if not empty
+        return query.getSingleResult();
     }
 
     public void accountPay(long bankCode, int price){

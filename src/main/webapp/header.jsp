@@ -9,7 +9,7 @@
 <body>
 
 <div class="header-banniere">
-    <a href="index.php"><img id="header-banniere-logo" src="img/TENOR.png" alt="Logo Tenor"></a>
+    <a href="index.jsp"><img id="header-banniere-logo" src="img/TENOR.png" alt="Logo Tenor"></a>
     <h2 id="header-banniere-titre"> ZGLABIM </h2>
     <img src='img/france.png'><li> france </li>
     <li> | </li>
