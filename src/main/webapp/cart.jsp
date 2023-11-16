@@ -17,19 +17,16 @@
 
             console.log("Nouvelle quantité : " + newQuantity);
 
-            // Vérifier si la nouvelle quantité est un nombre valide
             if (!isNaN(newQuantity)) {
                 console.log("Envoi de la requête au serveur...");
                 console.log("NewQuantity après la condition sur le fait que c'est un nombre"+newQuantity)
-                // Utilisez une requête AJAX pour envoyer la nouvelle quantité au serveur
+
                 var xhr = new XMLHttpRequest();
                 console.log("NewQuantity après l'ouverture de la variable xhr sur le fait que c'est un nombre"+newQuantity)
                 xhr.open("POST", "ChangeQuantityServlet?productId=" + productId + "&newQuantity=" + newQuantity, true);
                 xhr.send();
                 console.log("NewQuantity après l'envoi de la variable xhr sur le fait que c'est un nombre"+newQuantity)
 
-
-                // Vous pouvez gérer la réponse du serveur ici si nécessaire
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
@@ -113,6 +110,9 @@
             </tr>
             </tfoot>
         </table>
+        <form action="checkoutPage.jsp" method="post">
+            <input type="submit" name="Checkout" value="Proceed to checkout">
+        </form>
         <%
             }
         }else {

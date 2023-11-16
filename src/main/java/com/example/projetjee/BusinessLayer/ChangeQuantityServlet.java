@@ -3,13 +3,12 @@ package com.example.projetjee.BusinessLayer;
 import com.example.projetjee.DAO.ProductDAO;
 import com.example.projetjee.Model.CartEntity;
 import com.example.projetjee.Model.SiteUser;
-import jakarta.persistence.TypedQuery;
+
 import jakarta.servlet.http.*;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
-import java.util.List;
 
 import com.example.projetjee.DAO.CartDAO;
 
