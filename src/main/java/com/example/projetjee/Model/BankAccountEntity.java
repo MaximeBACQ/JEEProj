@@ -2,6 +2,8 @@ package com.example.projetjee.Model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "bankAccount", schema = "database_jee")
 public class BankAccountEntity {
@@ -11,7 +13,7 @@ public class BankAccountEntity {
     private int bankId;
 
     @Column(name="bankCode")
-    private int bankCode;
+    private long bankCode;
 
     @Column(name="bankDate")
     private String bankDate;
@@ -22,8 +24,13 @@ public class BankAccountEntity {
     @Column(name="bankBalance")
     private int bankBalance;
 
+    //@OneToMany(mappedBy = "bankId")
+    //@OneToOne(mappedBy = "SiteUser", cascade = CascadeType.ALL)
+    //private SiteUser user;
+
+
     public BankAccountEntity(){};
-    public BankAccountEntity(int bankCode, String bankDate, int cvv, int bankBalance){
+    public BankAccountEntity(long bankCode, String bankDate, int cvv, int bankBalance){
         this.bankCode = bankCode;
         this.bankDate = bankDate;
         this.cvv = cvv;
@@ -38,11 +45,11 @@ public class BankAccountEntity {
         this.bankId = bankId;
     }
 
-    public int getBankCode() {
+    public long getBankCode() {
         return bankCode;
     }
 
-    public void setBankCode(int bankCode) {
+    public void setBankCode(long bankCode) {
         this.bankCode = bankCode;
     }
 
