@@ -1,17 +1,17 @@
 CREATE DATABASE IF NOT EXISTS database_JEE;
 
 USE database_JEE;
-DROP TABLE IF EXISTS bankAccount;
 DROP TABLE IF EXISTS ProductOrder;
 DROP TABLE IF EXISTS Cart;
 DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS Company;
+DROP TABLE IF EXISTS bankAccount;
 
 
 CREATE TABLE IF NOT EXISTS bankAccount(
                                           bankId INT AUTO_INCREMENT PRIMARY KEY,
-                                          bankCode INT,
+                                          bankCode BIGINT,
                                           bankDate VARCHAR(5),
                                           cvv INT,
                                           bankBalance INT
@@ -39,7 +39,9 @@ CREATE TABLE IF NOT EXISTS users (
                                      isModerator BIT,
                                      isSeller BIT,
                                      companyId INT,
-                                     FOREIGN KEY (companyId) REFERENCES Company(companyId)
+                                     FOREIGN KEY (companyId) REFERENCES Company(companyId),
+                                     bankId INT,
+                                     FOREIGN KEY (bankId) REFERENCES bankAccount(bankId)
 );
 UPDATE Users SET companyId=null WHERE userId=5;
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
