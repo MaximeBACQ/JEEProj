@@ -51,13 +51,13 @@ VALUES ('Moderator', 'Moderator', 'ModUser', 'mod@example.com', '1980-05-15', 'M
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
 VALUES ('User', 'User', 'User', 'user@example.com', '1980-05-15', 'Male', 'user', 0, 0, 0);
 
-
 CREATE TABLE IF NOT EXISTS Product(
                                       productId INT AUTO_INCREMENT PRIMARY KEY,
                                       label VARCHAR(100),
                                       price INT,
                                       stock INT,
                                       description VARCHAR(100),
+                                      productImage VARCHAR(MAX),
                                       companyId INT,
                                       FOREIGN KEY (companyId) REFERENCES Company(companyId)
 
