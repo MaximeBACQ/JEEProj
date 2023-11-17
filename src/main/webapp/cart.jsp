@@ -65,14 +65,14 @@
 
         if (cartArrayList.isEmpty()) {
 %>
-<div class="empty-cart">Votre panier est vide</div>
+<div class="empty-cart">Your bag is <strong>empty</strong></div>
 <%
 } else {
 %>
 
 <div class="main-cart">
     <div class="left-cart">
-        <div class="left-cart-title">Panier</div>
+        <div class="left-cart-title"><strong>Bag</strong></div>
 
         <%
             for (CartEntity cart : cartArrayList) {
@@ -83,31 +83,42 @@
         %>
 
         <div class="product-cart">
-            <div class="product-cart-img"></div>
-            <div class="product-cart-txt"><%= product.getLabel() %> et : <%= product.getPrice() %> &euro; et <br>
-                <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>"><br>
-                <button onclick="updateQuantity(<%=product.getProductId()%>)">Update</button><br>
-                <%= product.getCompanyId().getName() %>
+            <div class="product-cart-img"><img src="img/a5.jpg"/></div>
+            <div class="product-cart-txt">
+                <strong><%= product.getLabel() %></strong> <br><br>
+                <%=product.getDescription()%> <br><br>
+                Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>"><br><br>
+                <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>)">Update</button><br><br>
+                Remaining stock : <%=product.getStock()%><br><br>
+
+
+                Seller : <%= product.getCompanyId().getName() %>
             </div>
-            <div class="product-cart-price"><%= total %> &euro;</div>
+            <div class="product-cart-price"><strong><%= total %> &euro;</strong>
+
+            <br><br><br><br><img src="img/bean.png"/>
+            </div>
         </div>
         <%
             }
         %>
     </div>
     <div class="right-cart">
-        le sous total vaut <%= grandTotal %> &euro;.
+        <div class="right-cart-title"><strong>Summary</strong></div><br><br>
+        Subtotal : <%= grandTotal %> &euro;
+        <br>
+        <input class="right-cart-checkout" type='submit' value="Checkout"/>
     </div>
 
-        <%
+    <%
             }
         }else {
             response.sendRedirect("loginPage.jsp");
-            }
-        %>
-    </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <%@ include file="html/footer.html" %>
+        }
+    %>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<%@ include file="html/footer.html" %>
 
 </body>
 </html>
