@@ -1,17 +1,17 @@
 CREATE DATABASE IF NOT EXISTS database_JEE;
 
 USE database_JEE;
-DROP TABLE IF EXISTS bankAccount;
 DROP TABLE IF EXISTS ProductOrder;
 DROP TABLE IF EXISTS Cart;
 DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS Company;
+DROP TABLE IF EXISTS bankAccount;
 
 
 CREATE TABLE IF NOT EXISTS bankAccount(
                                           bankId INT AUTO_INCREMENT PRIMARY KEY,
-                                          bankCode INT,
+                                          bankCode BIGINT,
                                           bankDate VARCHAR(5),
                                           cvv INT,
                                           bankBalance INT
@@ -39,7 +39,9 @@ CREATE TABLE IF NOT EXISTS users (
                                      isModerator BIT,
                                      isSeller BIT,
                                      companyId INT,
-                                     FOREIGN KEY (companyId) REFERENCES Company(companyId)
+                                     FOREIGN KEY (companyId) REFERENCES Company(companyId),
+                                     bankId INT,
+                                     FOREIGN KEY (bankId) REFERENCES bankAccount(bankId)
 );
 UPDATE Users SET companyId=null WHERE userId=5;
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
@@ -49,13 +51,13 @@ VALUES ('Moderator', 'Moderator', 'ModUser', 'mod@example.com', '1980-05-15', 'M
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
 VALUES ('User', 'User', 'User', 'user@example.com', '1980-05-15', 'Male', 'user', 0, 0, 0);
 
-
 CREATE TABLE IF NOT EXISTS Product(
                                       productId INT AUTO_INCREMENT PRIMARY KEY,
                                       label VARCHAR(100),
                                       price INT,
                                       stock INT,
                                       description VARCHAR(100),
+                                      productImage VARCHAR(10000),
                                       companyId INT,
                                       FOREIGN KEY (companyId) REFERENCES Company(companyId)
 
@@ -74,6 +76,7 @@ CREATE TABLE IF NOT EXISTS ProductOrder(
                                            FOREIGN KEY (userId) REFERENCES users(userId)
 );
 
+DROP TABLE Cart;
 CREATE TABLE IF NOT EXISTS Cart (
                                     cartId INT AUTO_INCREMENT PRIMARY KEY,
                                     quantity INT,

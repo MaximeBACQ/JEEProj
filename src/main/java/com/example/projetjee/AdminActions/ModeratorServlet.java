@@ -26,6 +26,7 @@ public class ModeratorServlet extends HttpServlet {
                     int price = Integer.parseInt(request.getParameter("price"));
                     int stock = Integer.parseInt(request.getParameter("stock"));
                     String description = request.getParameter("description");
+                    String imageLink = request.getParameter("imageLink");
                     final CompanyEntity connectedPersonCompany = connectedPerson.getCompany();
 
                     ProductEntity newProduct = new ProductEntity();
@@ -33,6 +34,7 @@ public class ModeratorServlet extends HttpServlet {
                     newProduct.setPrice(price);
                     newProduct.setStock(stock);
                     newProduct.setDescription(description);
+                    newProduct.setProductImage(imageLink);
                     newProduct.setCompanyId(connectedPersonCompany);
                     session.setAttribute("finalMsg", finalMsg);
 

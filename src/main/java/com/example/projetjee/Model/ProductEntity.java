@@ -21,6 +21,9 @@ public class ProductEntity {
     @Basic
     @Column(name = "description")
     private String description;
+    @Basic
+    @Column(name = "productImage")
+    private String productImage;
     @ManyToOne
     @JoinColumn(name = "companyId", nullable = false)
     private CompanyEntity company;
@@ -28,12 +31,13 @@ public class ProductEntity {
     public ProductEntity(){}
 
 
-    public ProductEntity(String label, int price, int stock, String description, CompanyEntity company){
+    public ProductEntity(String label, int price, int stock, String description, String productImage, CompanyEntity company){
        this.label = label;
        this.price = price;
        this.stock = stock;
        this.description = description;
        this.company = company;
+       this.productImage = productImage;
     }
     public int getProductId() {
         return productId;
@@ -75,6 +79,10 @@ public class ProductEntity {
         this.description = description;
     }
 
+    public String getProductImage() {return productImage;}
+
+    public void setProductImage(String productImage) {this.productImage = productImage;}
+
     public CompanyEntity getCompanyId() {
         return company;
     }
@@ -91,6 +99,7 @@ public class ProductEntity {
                 ", price=" + price +
                 ", stock=" + stock +
                 ", description='" + description + '\'' +
+                ", image link" + productImage +'\'' +
                 ", companyId=" + company.getCompanyId() +
                 '}';
     }

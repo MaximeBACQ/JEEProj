@@ -35,6 +35,9 @@ public class SiteUser {
     @JoinColumn(name = "companyId")
     private CompanyEntity company;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bankId")
+    private BankAccountEntity bank;
 
 
     public SiteUser(){          //hibernate needs an empty constructor
@@ -54,6 +57,7 @@ public class SiteUser {
         this.isModerator = isModerator;
         this.isSeller=isSeller;
         this.company = null;
+        this.bank = null;
     }
 
     public int getUserId() {
@@ -143,6 +147,14 @@ public class SiteUser {
         this.company = company;
     }
 
+    public BankAccountEntity getBank() {
+        return bank;
+    }
+
+    public void setBank(BankAccountEntity bank) {
+        this.bank = bank;
+    }
+
     @Override
     public String toString() {
         String out =
@@ -159,10 +171,14 @@ public class SiteUser {
                 ", isModerator=" + isModerator +
                 ", isSeller=" + isSeller;
 
-        if(company == null){
+        if(company != null){
+            out +=  ", companyId=" + company.getCompanyId();
+        }
+
+        if(bank == null){
             return out + '}';
         }else{
-            return out + ", companyId=" + company.getCompanyId() + '}';
+            return out + ", bankId=" + bank.getBankId() + '}';
         }
 
     }
