@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS Product(
                                       price INT,
                                       stock INT,
                                       description VARCHAR(100),
-                                      productImage VARCHAR(MAX),
+                                      productImage VARCHAR(10000),
                                       companyId INT,
                                       FOREIGN KEY (companyId) REFERENCES Company(companyId)
 
@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS ProductOrder(
                                            FOREIGN KEY (userId) REFERENCES users(userId)
 );
 
+DROP TABLE Cart;
 CREATE TABLE IF NOT EXISTS Cart (
                                     cartId INT AUTO_INCREMENT PRIMARY KEY,
                                     quantity INT,
