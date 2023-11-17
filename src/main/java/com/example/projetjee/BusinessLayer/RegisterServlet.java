@@ -11,6 +11,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet(name = "RegisterServlet", value = "/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
@@ -25,6 +26,7 @@ public class RegisterServlet extends HttpServlet {
         LocalDate birthDate = LocalDate.parse(request.getParameter("birthDate"));
         String gender = request.getParameter("gender");
         String password = request.getParameter("password");
+        String passwordHashed = BCrypt.hashpw(password, BCrypt.gensalt());
 
 
         //SiteUser newUser = new SiteUser(name, surname, username, email, birthDate, gender, password, false, false, new Boolean(false));
@@ -35,7 +37,7 @@ public class RegisterServlet extends HttpServlet {
         newUser.setEmail(email);
         newUser.setBirthDate(birthDate);
         newUser.setGender(gender);
-        newUser.setPassword(password);
+        newUser.setPassword(passwordHashed);
         newUser.setIsAdmin(false);
         newUser.setIsModerator(false);
         newUser.setIsSeller(false);

@@ -3,6 +3,7 @@ package com.example.projetjee.DAO;
 import com.example.projetjee.Model.CompanyEntity;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.persistence.TypedQuery;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 
@@ -33,16 +34,16 @@ public class UserDAO extends GenericDAO<SiteUser> implements InterfaceDAO<SiteUs
     }
 
     public SiteUser authenticateUser(String email, String password) {
-        TypedQuery<SiteUser> query = entityManager.createQuery("SELECT u FROM SiteUser u WHERE u.email = :email AND u.password = :password", SiteUser.class);
+        TypedQuery<SiteUser> query = entityManager.createQuery("SELECT u FROM SiteUser u WHERE u.email = :email", SiteUser.class);
         query.setParameter("email", email);
-        query.setParameter("password", password);
 
         List<SiteUser> resultList = query.getResultList();
-
-        if (!resultList.isEmpty()) {
-            return resultList.get(0); // User found
+        System.out.println("a");
+        if (!resultList.isEmpty() & BCrypt.checkpw(password, resultList.get(0).getPassword())) {
+            System.out.println("b");
+            return resultList.get(0);
         } else {
-            return null; // No user found
+            return null;
         }
     }
 

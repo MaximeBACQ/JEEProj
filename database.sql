@@ -46,10 +46,11 @@ CREATE TABLE IF NOT EXISTS users (
 UPDATE Users SET companyId=null WHERE userId=5;
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
 VALUES ('Admin', 'Admin', 'AdminUser', 'admin@example.com', '1980-05-15', 'Male', 'admin', 1, 1, 0);
+VALUES ('Admin', 'Admin', 'AdminUser', 'admin@example.com', '1980-05-15', 'Male', '$2a$10$ZqiOG5yYC.NT4wTzctHjv.66AUBVkDjR/hPMkP4H2FiN01Pyk9ePO', 1, 1, 0);
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
-VALUES ('Moderator', 'Moderator', 'ModUser', 'mod@example.com', '1980-05-15', 'Male', 'moderator', 0, 1, 0);
+VALUES ('Moderator', 'Moderator', 'ModUser', 'mod@example.com', '1980-05-15', 'Male', '$2a$10$rxMCN/KHgEH2awQ5..87H.u8NcFkqBYMrCU.IkIri2KwAcR0kN2Vm', 0, 1, 0);
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
-VALUES ('User', 'User', 'User', 'user@example.com', '1980-05-15', 'Male', 'user', 0, 0, 0);
+VALUES ('User', 'User', 'User', 'user@example.com', '1980-05-15', 'Male', '$2a$10$zh.cQrTCZcTgt4jWtcV3UO9eqbaq1eH8/K7HHiwJyxitLXUxYIfkq', 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS Product(
                                       productId INT AUTO_INCREMENT PRIMARY KEY,
@@ -76,7 +77,6 @@ CREATE TABLE IF NOT EXISTS ProductOrder(
                                            FOREIGN KEY (userId) REFERENCES users(userId)
 );
 
-DROP TABLE Cart;
 CREATE TABLE IF NOT EXISTS Cart (
                                     cartId INT AUTO_INCREMENT PRIMARY KEY,
                                     quantity INT,
