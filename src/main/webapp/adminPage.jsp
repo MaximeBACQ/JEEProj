@@ -10,7 +10,13 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <html>
     <head>
-        <title>Admin Interface</title>
+        <meta charset="UTF-8">
+        <title>Admin interface</title>
+        <link rel="stylesheet" type="text/css" href="css/cart.css">
+        <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link href="https://fonts.cdnfonts.com/css/trade-gothic-lt-std" rel="stylesheet">
         <%
             SiteUser deleted = null;
             SiteUser selected = null;
@@ -23,6 +29,8 @@
 
     </head>
     <body>
+    <jsp:include page="header.jsp"/>
+    <br><br><br>
     <%
         // Récupération de la variable de session
         SiteUser adminUser = (SiteUser) session.getAttribute("connectedUser");
@@ -160,5 +168,7 @@
     <h2>You're not connected, please connect as an admin to see that page.</h2>
     <a href="index.jsp"> Back to index </a>
             <%}%>
+    <br><br><br><br>
     </body>
+    <%@ include file="html/footer.html" %>
     </html>

@@ -2,9 +2,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Account Page</title>
+    <link rel="stylesheet" type="text/css" href="css/cart.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.cdnfonts.com/css/trade-gothic-lt-std" rel="stylesheet">
 </head>
 <body>
+<jsp:include page="header.jsp"/>
+<br><br><br>
 
 <div>
     <%
@@ -35,6 +43,7 @@
         }
     %>
 </div>
-
+<br><br><br>
+<%@ include file="html/footer.html" %>
 </body>
 </html>

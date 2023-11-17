@@ -8,9 +8,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Moderator Interface</title>
+    <meta charset="UTF-8">
+    <title>Moderator interface</title>
+    <link rel="stylesheet" type="text/css" href="css/cart.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.cdnfonts.com/css/trade-gothic-lt-std" rel="stylesheet">
 </head>
 <body>
+<jsp:include page="header.jsp"/>
+<br><br><br>
+
 <%
     // Récupération de la variable de session
     SiteUser adminUser = (SiteUser) session.getAttribute("connectedUser");
@@ -58,5 +67,7 @@
     <%
     }
 %>
+<br><br><br>
+<%@ include file="html/footer.html" %>
 </body>
 </html>

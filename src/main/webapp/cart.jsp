@@ -50,69 +50,55 @@
 
 <%@ include file="header.jsp" %>
 <br><br><br><br>
-<div class="container-cart">
-    <h2>Votre panier</h2>
 
-    <% Object obj = session.getAttribute("connectedUser");
+<% Object obj = session.getAttribute("connectedUser");
 
-        if (obj != null) {
+    if (obj != null) {
 
-            SiteUser user = (SiteUser) obj;
+        SiteUser user = (SiteUser) obj;
 
-            int grandTotal = 0;
+        int grandTotal = 0;
 
-            CartDAO cartDAO = new CartDAO();
-            ArrayList<CartEntity> cartArrayList  =
-                    new ArrayList<>(cartDAO.findCartsByUserId(user.getUserId()));
+        CartDAO cartDAO = new CartDAO();
+        ArrayList<CartEntity> cartArrayList  =
+                new ArrayList<>(cartDAO.findCartsByUserId(user.getUserId()));
 
-            if (cartArrayList.isEmpty()) {
-        %>
-        <p>Votre panier est vide</p>
+        if (cartArrayList.isEmpty()) {
+%>
+<div class="empty-cart">Votre panier est vide</div>
+<%
+} else {
+%>
+
+<div class="main-cart">
+    <div class="left-cart">
+        <div class="left-cart-title">Panier</div>
+
         <%
-        } else {
+            for (CartEntity cart : cartArrayList) {
+                ProductEntity product = cart.getProduct();
+                int quantity = cart.getQuantity();
+                double total = product.getPrice() * quantity;
+                grandTotal += total;
         %>
-        <table class="cart-table">
-            <thead>
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Company</th>
-                <th>Total</th>
-            </tr>
-            </thead>
-            <tbody>
-            <%
-                for (CartEntity cart : cartArrayList) {
-                    ProductEntity product = cart.getProduct();
-                    int quantity = cart.getQuantity();
-                    double total = product.getPrice() * quantity;
-                    grandTotal += total;
-            %>
-            <tr>
-                <td><%= product.getLabel() %></td>
-                <td><%= product.getPrice() %> €</td>
-                <%--<td><input type="number" id="quantity_<%= product.getProductId() %>" value="<%= quantity %>"
-                           onchange="updateQuantity(<%= product.getProductId() %>)"></td>--%>
-<%--                <td><%= quantity %></td>--%>
-                    <td>
-                        <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>">
-                        <button onclick="updateQuantity(<%=product.getProductId()%>)">Update</button>
-                    </td>
-                <td><%= product.getCompanyId().getName() %></td>
-                <td><%= total %> €</td>
-            </tr>
-            <%
-                }
-            %>
-            </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="4">Grand Total</td>
-                <td><%= grandTotal %> €</td>
-            </tr>
-            </tfoot>
-        </table>
+
+        <div class="product-cart">
+            <div class="product-cart-img"></div>
+            <div class="product-cart-txt"><%= product.getLabel() %> et : <%= product.getPrice() %> &euro; et <br>
+                <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>"><br>
+                <button onclick="updateQuantity(<%=product.getProductId()%>)">Update</button><br>
+                <%= product.getCompanyId().getName() %>
+            </div>
+            <div class="product-cart-price"><%= total %> &euro;</div>
+        </div>
+        <%
+            }
+        %>
+    </div>
+    <div class="right-cart">
+        le sous total vaut <%= grandTotal %> &euro;.
+    </div>
+
         <%
             }
         }else {
