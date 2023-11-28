@@ -33,7 +33,7 @@
         <p>Prix : <%=p.getPrice()%></p>
         <p>Stock : <%=p.getStock()%></p>
             <%=p.getDescription()%><br>
-        <p> <img src="<%=p.getProductImage()%>" alt="Product Image Missing"></p>
+        <p><a href="detailledProductPage.jsp?productId= <%=p.getProductId()%>"><img src="<%=p.getProductImage()%>" alt="Product Image Missing"></a></p>
         <form action="CartServlet" method="post">
 <%--            <%p.getProductImage();%>--%>
             <input type="hidden" name="productId" value="<%=p.getProductId()%>" />

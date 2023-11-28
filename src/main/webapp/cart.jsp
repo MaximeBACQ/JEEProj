@@ -34,6 +34,7 @@
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
                             console.log("Mise à jour réussie !");
+                            location.href = "cart.jsp";
                         } else {
                             console.error("Erreur lors de la mise à jour de la quantité :" + "L'url pr appeler la servlet" + "ChangeQuantityServlet?productId=" + productId + "&newQuantity=", xhr.statusText);
                         }
@@ -88,7 +89,7 @@
                 <strong><%= product.getLabel() %></strong> <br><br>
                 <%=product.getDescription()%> <br><br>
                 Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>"><br><br>
-                <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>)">Update</button><br><br>
+                <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>) ">Update</button><br><br>
                 Remaining stock : <%=product.getStock()%><br><br>
 
 
@@ -107,7 +108,9 @@
         <div class="right-cart-title"><strong>Summary</strong></div><br><br>
         Subtotal : <%= grandTotal %> &euro;
         <br>
-        <input class="right-cart-checkout" type='submit' value="Checkout"/>
+        <form action="checkoutPage.jsp" method="post">
+            <input class="right-cart-checkout" type='submit' name="Checkout" value="Checkout"/>
+        </form>
     </div>
 
     <%
