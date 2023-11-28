@@ -94,7 +94,7 @@
 
                 Seller : <%= product.getCompanyId().getName() %>
             </div>
-            <div class="product-cart-price"><strong><%= total %> &euro;</strong>
+            <div class="product-cart-price"><strong><%= total %>&euro;</strong>
 
             <br><br><br><br><img src="img/bean.png"/>
             </div>
