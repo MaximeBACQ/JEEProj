@@ -21,7 +21,7 @@
             if (!isNaN(newQuantity)) {
                 console.log("Envoi de la requête au serveur...");
                 console.log("NewQuantity après la condition sur le fait que c'est un nombre"+newQuantity)
-                // Utilisez une requête AJAX pour envoyer la nouvelle quantité au serveur
+                // Utilise  z une requête AJAX pour envoyer la nouvelle quantité au serveur
                 var xhr = new XMLHttpRequest();
                 console.log("NewQuantity après l'ouverture de la variable xhr sur le fait que c'est un nombre"+newQuantity)
                 xhr.open("POST", "ChangeQuantityServlet?productId=" + productId + "&newQuantity=" + newQuantity, true);
@@ -89,7 +89,7 @@
 
         if (cartArrayList.isEmpty()) {
 %>
-<div class="empty-cart">Your bag is <strong>empty</strong></div>
+<div class="empty-cart">Your bag is <strong>empty</strong><br><br><a href="index.jsp" home></a><br><br><br></div>
 <%
 } else {
 %>
@@ -107,22 +107,31 @@
         %>
 
         <div class="product-cart">
-            <div class="product-cart-img"><img src="img/a5.jpg"/></div>
+            <div class="product-cart-img"><img src="<%=product.getProductImage()%>"/></div>
             <div class="product-cart-txt">
                 <strong><%= product.getLabel() %></strong> <br><br>
                 <%=product.getDescription()%> <br><br>
+<<<<<<< HEAD
                 Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>"
                             min="1"><br><br>
                 <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>) ">Update</button><br><br>
+=======
+                Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>" min="0"><br><br>
+                <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>)">Update</button><br><br>
+>>>>>>> a693948c6d8e779bac29a4b966c8ae282ecebc39
                 Remaining stock : <%=product.getStock()%><br><br>
 
 
                 Seller : <%= product.getCompanyId().getName() %>
             </div>
-            <div class="product-cart-price"><strong><%= total %> &euro;</strong>
+            <div class="product-cart-price"><strong><%= total %>&euro;</strong>
 
+<<<<<<< HEAD
             <br><br><br><br><input type="image" src="img/bean.png" onclick="deleteProduct(<%=product.getProductId()%>)"
                                    alt="Delete"/>
+=======
+            <br><br><br><br><img src="img/bin.png"/>
+>>>>>>> a693948c6d8e779bac29a4b966c8ae282ecebc39
             </div>
         </div>
         <%
