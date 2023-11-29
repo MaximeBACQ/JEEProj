@@ -21,7 +21,7 @@
             if (!isNaN(newQuantity)) {
                 console.log("Envoi de la requête au serveur...");
                 console.log("NewQuantity après la condition sur le fait que c'est un nombre"+newQuantity)
-                // Utilisez une requête AJAX pour envoyer la nouvelle quantité au serveur
+                // Utilise  z une requête AJAX pour envoyer la nouvelle quantité au serveur
                 var xhr = new XMLHttpRequest();
                 console.log("NewQuantity après l'ouverture de la variable xhr sur le fait que c'est un nombre"+newQuantity)
                 xhr.open("POST", "ChangeQuantityServlet?productId=" + productId + "&newQuantity=" + newQuantity, true);
@@ -34,6 +34,7 @@
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
                             console.log("Mise à jour réussie !");
+                            location.href = "cart.jsp";
                         } else {
                             console.error("Erreur lors de la mise à jour de la quantité :" + "L'url pr appeler la servlet" + "ChangeQuantityServlet?productId=" + productId + "&newQuantity=", xhr.statusText);
                         }
@@ -65,7 +66,7 @@
 
         if (cartArrayList.isEmpty()) {
 %>
-<div class="empty-cart">Your bag is <strong>empty</strong></div>
+<div class="empty-cart">Your bag is <strong>empty</strong><br><br><a href="index.jsp" home></a><br><br><br></div>
 <%
 } else {
 %>
@@ -83,11 +84,11 @@
         %>
 
         <div class="product-cart">
-            <div class="product-cart-img"><img src="img/a5.jpg"/></div>
+            <div class="product-cart-img"><img src="<%=product.getProductImage()%>"/></div>
             <div class="product-cart-txt">
                 <strong><%= product.getLabel() %></strong> <br><br>
                 <%=product.getDescription()%> <br><br>
-                Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>"><br><br>
+                Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>" min="0"><br><br>
                 <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>)">Update</button><br><br>
                 Remaining stock : <%=product.getStock()%><br><br>
 
@@ -96,7 +97,7 @@
             </div>
             <div class="product-cart-price"><strong><%= total %>&euro;</strong>
 
-            <br><br><br><br><img src="img/bean.png"/>
+            <br><br><br><br><img src="img/bin.png"/>
             </div>
         </div>
         <%
@@ -107,7 +108,9 @@
         <div class="right-cart-title"><strong>Summary</strong></div><br><br>
         Subtotal : <%= grandTotal %> &euro;
         <br>
-        <input class="right-cart-checkout" type='submit' value="Checkout"/>
+        <form action="checkoutPage.jsp" method="post">
+            <input class="right-cart-checkout" type='submit' name="Checkout" value="Checkout"/>
+        </form>
     </div>
 
     <%

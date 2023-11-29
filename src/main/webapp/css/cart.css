@@ -26,6 +26,11 @@
 }
 
 
+.empty-cart{
+    text-align: center;
+    font-size: 50px;
+}
+
 .product-cart-price img{
     width: 40px;
     height: 40px;
