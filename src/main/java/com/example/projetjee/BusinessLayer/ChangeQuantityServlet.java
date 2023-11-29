@@ -29,7 +29,9 @@ public class ChangeQuantityServlet extends HttpServlet {
         if(newQuantity > productDAO.findProductById(productId).getStock()) {
             //TODO : envoyer affichage dans panier : plus assez de stock, il reste actuellement n produits
             response.sendRedirect("cart.jsp");
-        }else {
+        }else if(newQuantity<0){
+            response.sendRedirect("cart.jsp");
+        } else {
             CartEntity cartWithProductForUser = cartDAO.findCartByUserAndProduct(
                     connectedPerson.getUserId(), productId
             );
