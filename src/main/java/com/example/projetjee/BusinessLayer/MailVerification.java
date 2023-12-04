@@ -2,6 +2,7 @@ package com.example.projetjee.BusinessLayer;
 
 import com.example.projetjee.DAO.UserDAO;
 import com.example.projetjee.DAO.UserExistenceException;
+import com.example.projetjee.MailSender;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -35,6 +36,8 @@ public class MailVerification extends HttpServlet {
             System.out.println(codeInput);
             if (codeInput.equals(codeExpected)){
                 userDao.createUser(newUser);
+                MailSender.sendEmail(newUser.getEmail(), "Votre compte a été créé avec succès !",
+                        "Votre compte a été créé avec succès. Retrouvez dès à présent l'ensemble de nos produits sur ZGLABIM");
                 response.sendRedirect("index.jsp");
             }else{
                 response.sendRedirect("mailVerification.jsp");
