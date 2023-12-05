@@ -89,7 +89,7 @@
 
         if (cartArrayList.isEmpty()) {
 %>
-<div class="empty-cart">Your bag is <strong>empty</strong><br><br><a href="index.jsp" home></a><br><br><br></div>
+<div class="empty-cart">Your bag is <strong>empty</strong></div>
 <%
 } else {
 %>
@@ -112,8 +112,9 @@
                 <strong><%= product.getLabel() %></strong> <br><br>
                 <%=product.getDescription()%> <br><br>
 
-                Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>" min="1"><br><br>
-                <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>)">Update</button><br><br>
+                Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>"
+                            min="1"><br><br>
+                <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>) ">Update</button><br><br>
 
                 Remaining stock : <%=product.getStock()%><br><br>
 
@@ -122,7 +123,7 @@
             </div>
             <div class="product-cart-price"><strong><%= total %>&euro;</strong>
 
-            <br><br><br><br><input type="image" src="img/bin.png" onclick="deleteProduct(<%=product.getProductId()%>)"
+            <br><br><br><br><input type="image" src="img/bean.png" onclick="deleteProduct(<%=product.getProductId()%>)"
                                    alt="Delete"/>
 
             </div>

@@ -10,13 +10,14 @@
 }
 .left-cart{
     margin-top: 25px;
+    padding-right: 20%;
     display : flex;
     flex-direction: column;
     margin-left: 200px;
 }
 
 .right-cart{
-    margin-top: 60px;
+    margin-top: 25px;
     margin-left: 20%;
     margin-right: 200px;
     padding: 20px;
@@ -26,12 +27,7 @@
 }
 
 
-.empty-cart{
-    text-align: center;
-    font-size: 50px;
-}
-
-.product-cart-price input{
+.product-cart-price img{
     width: 40px;
     height: 40px;
 }
@@ -113,8 +109,8 @@
 
 
 .product-cart-price{
+    padding-right: 20%;
     padding-left: 20%;
 }
-
 
 

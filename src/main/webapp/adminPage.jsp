@@ -16,7 +16,6 @@
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/footer.css">
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/admin.css">
         <link href="https://fonts.cdnfonts.com/css/trade-gothic-lt-std" rel="stylesheet">
         <%
             SiteUser deleted = null;
@@ -40,25 +39,21 @@
         if( adminUser != null){
             if (adminUser.getIsAdmin()) {
     %>
-    <div class="admin-main">
     <h1>Admin Interface, users/moderators actions</h1>
-    <br><br><br>
         <% String msgDelete = (String)request.getAttribute("finalMsgDelete");
                 if(msgDelete!=null){
                 %>
                 <%=msgDelete%>
     <%}%>
 
-        <div class="admin-user">
         <h2>Enter the e-mail of the user you would like to delete</h2>
-        <br>
         <form action="AdminServlet" method="post">
             <label for="UserToDelete">
                 <input type="text" placeholder="User's e-mail" id="UserToDelete" name="email">
             </label>
             <input type="submit" value="Delete User">
         </form>
-<br><br>
+
     <h2>Enter the ID of the user you would like to select</h2>
 
     <% String userSelect = (String) request.getAttribute("finalMsgSelectUser");
@@ -68,13 +63,14 @@
     <%
     }
     %>
-    <br>
+
     <form action="AdminServlet" method="post">
         <label for="UserToSelect">
             <input type="number" placeholder="User's id" id="UserToSelect" name="idForSelection">
         </label>
         <input type="submit" value="Select User">
     </form>
+
     <%
         String userModMsg = (String) request.getAttribute("finalMsgModerator");
         if(userModMsg != null)
@@ -95,8 +91,8 @@
     <p><%= userCpMsg %></p>
     <%}else{
     }%>
-<br><br>
-    <h3>Obviously only works for moderators</h3><br>
+
+    <h3>Obviously only works for moderators</h3>
     <form action="AdminServlet" method="post">
         <label for="AddUserToCompany">
             <input type="number" placeholder="User's id" id="AddUserToCompany" name="userForCompany">
@@ -129,12 +125,9 @@
             <input type="number" placeholder="User's id" id="UserToRemoveSeller" name="userToRemoveSeller">
         </label>
         <input type="submit" value="Remove Seller">
-    </form></div>
-    <br><br><br><br>
-
-    <div class="admin-product">
-    <h1>Products actions</h1><br>
-    <h2> To add a product, you must head to the moderator page where sellers can sell products.</h2><br>
+    </form>
+    <h1>Products actions</h1>
+    <h2> To add a product, you must head to the moderator page where sellers can sell products.</h2>
 
     <form action="AdminServlet" method="post">
         <label for="ProductToSearch">
@@ -163,7 +156,7 @@
             <input type="number" placeholder="Delete product by id" id="ProductToDelete" name="pToDelete">
         </label>
         <input type="submit" value="Delete Product">
-    </form></div>
+    </form>
     <%
         }else{
     %>
@@ -176,9 +169,6 @@
     <a href="index.jsp"> Back to index </a>
             <%}%>
     <br><br><br><br>
-
-    </div>
-
     </body>
     <%@ include file="html/footer.html" %>
     </html>
