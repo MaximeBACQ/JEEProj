@@ -2,11 +2,9 @@ package com.example.projetjee.BusinessLayer;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.Random;
 
 import com.example.projetjee.DAO.UserDAO;
 import com.example.projetjee.DAO.UserExistenceException;
-import com.example.projetjee.MailSender;
 import com.example.projetjee.Model.CompanyEntity;
 import com.example.projetjee.Model.SiteUser;
 import jakarta.servlet.RequestDispatcher;
@@ -48,19 +46,15 @@ public class RegisterServlet extends HttpServlet {
 
         UserDAO userDao = new UserDAO();
 
-        Random random = new Random();
-        String codeExpected = String.valueOf(100000+random.nextInt(899999));
-
-        MailSender.sendEmail(newUser.getEmail(), "Code de vérification",
-                "Voici votre code pour créer votre compte" +
-                        "\n" +
-                        "\n" +
-                        "Voici votre code de vérification pour créer votre compte ZGLABIM :\n"+codeExpected);
-        HttpSession session = request.getSession();
-        session.setAttribute("codeExpected", codeExpected);
-        System.out.println(codeExpected);
-        session.setAttribute("newUser", newUser);
-        response.sendRedirect("mailVerification.jsp");
+        try {
+            userDao.createUser(newUser);
+            response.sendRedirect("index.jsp");
+        } catch (UserExistenceException e) {
+            String errorMessage = "Erreur : cette adresse e-mail existe déjà.";
+            request.setAttribute("registrationMessage", errorMessage);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("registerPage.jsp");
+            dispatcher.forward(request, response); // Utilisation de forward pour envoyer le message à la page
+        }
     }
 
         public void destroy () {

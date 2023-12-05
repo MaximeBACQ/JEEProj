@@ -44,29 +44,6 @@
                 console.error("La nouvelle quantité n'est pas un nombre valide.");
             }
         }
-
-        function deleteProduct(productId) {
-            // Confirmez avec l'utilisateur s'il est sûr de vouloir supprimer le produit
-            if (confirm("Are you sure you want to delete this product?")) {
-                // Utilisez une requête AJAX pour envoyer la demande de suppression au serveur
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", "DeleteProductServlet?productId=" + productId, true);
-                xhr.send();
-
-                // Gérez la réponse du serveur ici si nécessaire
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        if (xhr.status === 200) {
-                            console.log("Suppression réussie !");
-                            // Rafraîchissez la page pour refléter les changements
-                            location.reload();
-                        } else {
-                            console.error("Erreur lors de la suppression du produit :", xhr.statusText);
-                        }
-                    }
-                };
-            }
-        }
     </script>
 
 </head>
@@ -89,7 +66,7 @@
 
         if (cartArrayList.isEmpty()) {
 %>
-<div class="empty-cart">Your bag is <strong>empty</strong></div>
+<div class="empty-cart">Your bag is <strong>empty</strong><br><br><a href="index.jsp" home></a><br><br><br></div>
 <%
 } else {
 %>
@@ -111,11 +88,8 @@
             <div class="product-cart-txt">
                 <strong><%= product.getLabel() %></strong> <br><br>
                 <%=product.getDescription()%> <br><br>
-
-                Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>"
-                            min="1"><br><br>
-                <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>) ">Update</button><br><br>
-
+                Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>" min="0"><br><br>
+                <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>)">Update</button><br><br>
                 Remaining stock : <%=product.getStock()%><br><br>
 
 
@@ -123,9 +97,7 @@
             </div>
             <div class="product-cart-price"><strong><%= total %>&euro;</strong>
 
-            <br><br><br><br><input type="image" src="img/bean.png" onclick="deleteProduct(<%=product.getProductId()%>)"
-                                   alt="Delete"/>
-
+            <br><br><br><br><img src="img/bin.png"/>
             </div>
         </div>
         <%

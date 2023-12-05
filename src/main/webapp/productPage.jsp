@@ -20,7 +20,8 @@
 <%@ include file="header.jsp" %>
 <br><br><br><br>
 
-<div class="container-product-details">
+<div class="search-title"><strong>Results :</strong></div><br><br>
+
     <%
         ProductDAO productDAO = new ProductDAO();
         String labels = request.getParameter("products");
@@ -28,18 +29,33 @@
 
          for(ProductEntity p : productList){
          %>
-    <div>
-        <strong><%=p.getLabel()%></strong>
-        <p>Prix : <%=p.getPrice()%></p>
-        <p>Stock : <%=p.getStock()%></p>
-            <%=p.getDescription()%><br>
-        <p><a href="detailledProductPage.jsp?productId= <%=p.getProductId()%>"><img src="<%=p.getProductImage()%>" alt="Product Image Missing"></a></p>
-        <form action="CartServlet" method="post">
-<%--            <%p.getProductImage();%>--%>
-            <input type="hidden" name="productId" value="<%=p.getProductId()%>" />
-            <input type="submit" value="Ajouter au panier" />
-        </form>
-    </div><br><br>
+
+
+
+
+        <div class="en-vedette">
+            <div class="vedette-produit">
+                <div class="vedette-texte">
+                    <div class="vedette-titre">
+                        <strong><%=p.getLabel()%></strong> <br><br>
+                    </div>
+                    <%=p.getDescription()%><br><br>
+                    Corps en aulne<br><br>
+                    Stock : <%=p.getStock()%> <br><br>
+                    <br><br>
+                    &agrave; partir de <br>
+                    <div class="vedette-prix"><strong><%=p.getPrice()%> &euro;</strong></div><br><br><br><br>
+
+                    <form action="CartServlet" method="post">
+                        <input type="hidden" name="productId" value="<%=p.getProductId()%>" />
+                        <input type="submit" value="Ajouter au panier" />
+                    </form>
+                </div>
+
+                <a href=""><img src="<%=p.getProductImage()%>" alt="Product Image Missing"></a>
+            </div>
+        </div>
+        <br><br><br>
         <%
          }
 %>
