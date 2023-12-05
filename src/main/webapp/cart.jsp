@@ -88,16 +88,22 @@
             <div class="product-cart-txt">
                 <strong><%= product.getLabel() %></strong> <br><br>
                 <%=product.getDescription()%> <br><br>
+              
                 Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>"><br><br>
                 <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>) ">Update</button><br><br>
+
                 Remaining stock : <%=product.getStock()%><br><br>
 
 
                 Seller : <%= product.getCompanyId().getName() %>
             </div>
-            <div class="product-cart-price"><strong><%= total %> &euro;</strong>
 
-            <br><br><br><br><img src="img/bean.png"/>
+            <div class="product-cart-price"><strong><%= total %>&euro;</strong>
+
+
+            <br><br><br><br><input type="image" src="img/bin.png" onclick="deleteProduct(<%=product.getProductId()%>)"
+                                   alt="Delete"/>
+
             </div>
         </div>
         <%
