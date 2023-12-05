@@ -111,14 +111,10 @@
             <div class="product-cart-txt">
                 <strong><%= product.getLabel() %></strong> <br><br>
                 <%=product.getDescription()%> <br><br>
-<<<<<<< HEAD
-                Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>"
-                            min="1"><br><br>
-                <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>) ">Update</button><br><br>
-=======
-                Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>" min="0"><br><br>
+
+                Quantity : <input type="number" id="quantity_<%=product.getProductId()%>" value="<%= quantity %>" min="1"><br><br>
                 <button class="product-cart-button" onclick="updateQuantity(<%=product.getProductId()%>)">Update</button><br><br>
->>>>>>> a693948c6d8e779bac29a4b966c8ae282ecebc39
+
                 Remaining stock : <%=product.getStock()%><br><br>
 
 
@@ -126,12 +122,9 @@
             </div>
             <div class="product-cart-price"><strong><%= total %>&euro;</strong>
 
-<<<<<<< HEAD
-            <br><br><br><br><input type="image" src="img/bean.png" onclick="deleteProduct(<%=product.getProductId()%>)"
+            <br><br><br><br><input type="image" src="img/bin.png" onclick="deleteProduct(<%=product.getProductId()%>)"
                                    alt="Delete"/>
-=======
-            <br><br><br><br><img src="img/bin.png"/>
->>>>>>> a693948c6d8e779bac29a4b966c8ae282ecebc39
+
             </div>
         </div>
         <%

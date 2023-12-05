@@ -1,6 +1,7 @@
 CREATE DATABASE IF NOT EXISTS database_JEE;
 
 USE database_JEE;
+DELETE FROM Cart WHERE cartId;
 DROP TABLE IF EXISTS ProductOrder;
 DROP TABLE IF EXISTS Cart;
 DROP TABLE IF EXISTS Product;
@@ -24,7 +25,7 @@ CREATE TABLE IF NOT EXISTS Company(
 );
 
 INSERT INTO Company (name)
-VALUES ('Cramptoux');
+VALUES ('Logitech');
 
 CREATE TABLE IF NOT EXISTS users (
                                      userId INT AUTO_INCREMENT PRIMARY KEY,
@@ -44,8 +45,9 @@ CREATE TABLE IF NOT EXISTS users (
                                      FOREIGN KEY (bankId) REFERENCES bankAccount(bankId)
 );
 UPDATE Users SET companyId=null WHERE userId=5;
-INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
-VALUES ('Admin', 'Admin', 'AdminUser', 'admin@example.com', '1980-05-15', 'Male', '$2a$10$ZqiOG5yYC.NT4wTzctHjv.66AUBVkDjR/hPMkP4H2FiN01Pyk9ePO', 1, 1, 0);
+DELETE FROM Users WHERE userId = 4;
+INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller,companyId,bankId)
+VALUES ('Admin', 'Admin', 'AdminUser', 'admin@example.com', '1980-05-15', 'Male', '$2a$10$ZqiOG5yYC.NT4wTzctHjv.66AUBVkDjR/hPMkP4H2FiN01Pyk9ePO', 1, 1, 1, 1, 1);
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
 VALUES ('Moderator', 'Moderator', 'ModUser', 'mod@example.com', '1980-05-15', 'Male', '$2a$10$rxMCN/KHgEH2awQ5..87H.u8NcFkqBYMrCU.IkIri2KwAcR0kN2Vm', 0, 1, 0);
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
