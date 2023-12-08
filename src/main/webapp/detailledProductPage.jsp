@@ -14,22 +14,32 @@
     if (request.getParameter("productId") != null && !request.getParameter("productId").isEmpty()) {
         // Conversion du productId en entier si nécessaire
         productId = Integer.parseInt(request.getParameter("productId"));
-        ProductDAO productDAO = new ProductDAO();
-        ProductEntity productSelected = productDAO.findProductById(productId);
-    }else{%>
-<title>Product not specified</title>
-<h1> You tried to access this url without precising an id, come back by clicking on a product's image to make this page
-    work </h1>
-<%
     }
-
 %>
 
 <head>
-    <% ProductDAO productDAO = new ProductDAO();%>
-    <title><% productDAO.findProductById(productId).getProduct%></title>
+    <title>Product Page</title>
 </head>
 <body>
-
+<%
+    if(request.getParameter("productId") != null && !request.getParameter("productId").isEmpty()){
+        ProductDAO productDAO = new ProductDAO();
+        if(productDAO.findProductById(productId)==null){
+            %><h1> You tried looking for a product that does not exist</h1><%
+        }else{%>
+            <h1><% ProductEntity productToPrint = productDAO.findProductById(productId);%></h1>
+            <p><span class="info-label">Name :</span> <%= productToPrint.getLabel() %></p>
+            <p><span class="info-label">Price :</span> <%= productToPrint.getPrice() %></p>
+            <p><span class="info-label">Stock :</span> <%= productToPrint.getStock() %></p>
+            <p><span class="info-label">Description :</span> <%= productToPrint.getDescription() %></p>
+            <p><span class="info-label"></span><img src="<%=productToPrint.getProductImage()%>" alt="Product Image"></p>
+            <form action="CartServlet" method="post">
+                <input type="hidden" name="productId" value="<%=productToPrint.getProductId()%>" />
+                <input type="submit" value="Ajouter au panier" />
+            </form>
+        <%
+        }
+    }
+%>
 </body>
 </html>

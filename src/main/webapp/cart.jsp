@@ -44,6 +44,28 @@
                 console.error("La nouvelle quantité n'est pas un nombre valide.");
             }
         }
+        function deleteProduct(productId) {
+            // Confirmez avec l'utilisateur s'il est sûr de vouloir supprimer le produit
+            if (confirm("Are you sure you want to delete this product from your cart?")) {
+                // Utilisez une requête AJAX pour envoyer la demande de suppression au serveur
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "DeleteProductServlet?productId=" + productId, true);
+                xhr.send();
+
+                // Gérez la réponse du serveur ici si nécessaire
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            console.log("Suppression réussie !");
+                            // Rafraîchissez la page pour refléter les changements
+                            location.reload();
+                        } else {
+                            console.error("Erreur lors de la suppression du produit :", xhr.statusText);
+                        }
+                    }
+                };
+            }
+        }
     </script>
 
 </head>
@@ -66,14 +88,14 @@
 
         if (cartArrayList.isEmpty()) {
 %>
-<div class="empty-cart">Your bag is <strong>empty</strong><br><br><a href="index.jsp" home></a><br><br><br></div>
+<div class="empty-cart">Your cart is <strong>empty</strong><br><br><a href="index.jsp" home></a><br><br><br></div>
 <%
 } else {
 %>
 
 <div class="main-cart">
     <div class="left-cart">
-        <div class="left-cart-title"><strong>Bag</strong></div>
+        <div class="left-cart-title"><strong>Cart</strong></div>
 
         <%
             for (CartEntity cart : cartArrayList) {
@@ -96,8 +118,8 @@
                 Seller : <%= product.getCompanyId().getName() %>
             </div>
             <div class="product-cart-price"><strong><%= total %>&euro;</strong>
-
-            <br><br><br><br><img src="img/bin.png"/>
+                <br><br><br><br><input type="image" src="img/bin.png" onclick="deleteProduct(<%=product.getProductId()%>)"
+                                       alt="Delete"/>
             </div>
         </div>
         <%

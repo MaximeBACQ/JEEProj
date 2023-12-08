@@ -40,8 +40,13 @@
                         <strong><%=p.getLabel()%></strong> <br><br>
                     </div>
                     <%=p.getDescription()%><br><br>
-                    Corps en aulne<br><br>
-                    Stock : <%=p.getStock()%> <br><br>
+                    Stock : <%if(p.getStock()==0){%>
+                        Out of stock
+                        <%
+                    }else{
+                        %>
+                        <%=p.getStock()%>
+                    <%}%><br><br>
                     <br><br>
                     &agrave; partir de <br>
                     <div class="vedette-prix"><strong><%=p.getPrice()%> &euro;</strong></div><br><br><br><br>
@@ -52,7 +57,7 @@
                     </form>
                 </div>
 
-                <a href=""><img src="<%=p.getProductImage()%>" alt="Product Image Missing"></a>
+                <a href="detailledProductPage.jsp?productId=<%=p.getProductId()%>"><img src="<%=p.getProductImage()%>" alt="Product Image Missing"></a>
             </div>
         </div>
         <br><br><br>

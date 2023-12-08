@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS users (
                                      isAdmin BIT,
                                      isModerator BIT,
                                      isSeller BIT,
+									loyaltyPoints INT,
                                      companyId INT,
                                      FOREIGN KEY (companyId) REFERENCES Company(companyId),
                                      bankId INT,
@@ -46,8 +47,8 @@ CREATE TABLE IF NOT EXISTS users (
 );
 UPDATE Users SET companyId=null WHERE userId=5;
 DELETE FROM Users WHERE userId = 4;
-INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller,companyId,bankId)
-VALUES ('Admin', 'Admin', 'AdminUser', 'admin@example.com', '1980-05-15', 'Male', '$2a$10$ZqiOG5yYC.NT4wTzctHjv.66AUBVkDjR/hPMkP4H2FiN01Pyk9ePO', 1, 1, 1, 1, 1);
+INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller,loyaltyPoints,companyId,bankId)
+VALUES ('Admin', 'Admin', 'AdminUser', 'admin@example.com', '1980-05-15', 'Male', '$2a$10$ZqiOG5yYC.NT4wTzctHjv.66AUBVkDjR/hPMkP4H2FiN01Pyk9ePO', 1, 1, 1, 0, 1, 1);
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
 VALUES ('Moderator', 'Moderator', 'ModUser', 'mod@example.com', '1980-05-15', 'Male', '$2a$10$rxMCN/KHgEH2awQ5..87H.u8NcFkqBYMrCU.IkIri2KwAcR0kN2Vm', 0, 1, 0);
 INSERT INTO users (name, surname, username, email, birthdate, gender, password, isAdmin, isModerator, isSeller)
