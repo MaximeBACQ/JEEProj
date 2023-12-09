@@ -16,19 +16,19 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         UserDAO userDAO = new UserDAO();
-        SiteUser authenticatedUser = userDAO.authenticateUser(email, password);
-
         HttpSession session = request.getSession();
 
         //System.out.println(authenticatedUser.toString());
 
-        if (authenticatedUser != null) {
+        try {
+            SiteUser authenticatedUser = userDAO.authenticateUser(email, password);
             session.setAttribute("connectedUser", authenticatedUser);
             response.sendRedirect("index.jsp");
-        } else {
+        } catch (com.example.projetjee.exceptions.AuthenticationException e) {
             session.setAttribute("refused", "true");
             response.sendRedirect("loginPage.jsp");
         }
+
 
     }
 

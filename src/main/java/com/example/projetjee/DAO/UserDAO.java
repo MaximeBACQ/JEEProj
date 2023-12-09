@@ -33,17 +33,15 @@ public class UserDAO extends GenericDAO<SiteUser> implements InterfaceDAO<SiteUs
         return findAll();
     }
 
-    public SiteUser authenticateUser(String email, String password) {
+    public SiteUser authenticateUser(String email, String password) throws com.example.projetjee.exceptions.AuthenticationException {
         TypedQuery<SiteUser> query = entityManager.createQuery("SELECT u FROM SiteUser u WHERE u.email = :email", SiteUser.class);
         query.setParameter("email", email);
-
         List<SiteUser> resultList = query.getResultList();
-        System.out.println("a");
-        if (!resultList.isEmpty() & BCrypt.checkpw(password, resultList.get(0).getPassword())) {
-            System.out.println("b");
+
+        if (!resultList.isEmpty() && BCrypt.checkpw(password, resultList.get(0).getPassword())) {
             return resultList.get(0);
         } else {
-            return null;
+            throw new com.example.projetjee.exceptions.AuthenticationException("Invalid credentials");
         }
     }
 
