@@ -10,7 +10,7 @@
     <form action="MailVerification" method="post">
         <p class="champs">
             <label> Code reçu : </label>
-            <input class=main-connexion" type="text" name="codeInput" placeholder="Code reçu" required /><br/>
+            <input class=main-connexion" type="text" name="codeInput" placeholder="Code reçu par mail :git " required /><br/>
         </p>
 
 

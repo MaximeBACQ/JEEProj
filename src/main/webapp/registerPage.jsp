@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
+<div class="full-wraper">
 <div class ="tout"><div class="main-text">
     <h1>Inscription</h1>
     <form action="RegisterServlet" method="post">
@@ -46,14 +47,6 @@
             <input type="radio" name="gender" id="female" value="female"/>
             <label for="female">F</label>
         </p>
-    <%--<p class="champs">
-            <label> Genre : </label>
-        <input class=main-connexion" type="checkbox" name="gender" id="male"/>
-        <label for="male">M</label><br>
-        <input type="checkbox" name="gender" id="female"/>
-        <label for="female">F</label><br>
-        </p>--%>
-
         <p class="champs">
             <label> Mot de passe : </label>
         <input type="password" name="password" placeholder="Your Password" required /><br/>
@@ -63,6 +56,11 @@
     </form>
 
 </div></div>
+<div class="login-illustration"><img src="img/login.png"></div>
+
+
+</div>
+
     <% String registrationMessage = (String) request.getAttribute("registrationMessage");
         if (registrationMessage != null) {
     %>

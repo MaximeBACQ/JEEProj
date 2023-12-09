@@ -45,6 +45,7 @@ public class CheckoutServlet extends HttpServlet{
                     }else{ // has enough money, entered right bank account -> update balance, update stocks
                         userBankAccount.setBankBalance(userBankAccount.getBankBalance() - amountDue);
                         bankDAO.updateBank(userBankAccount);
+                        connectedPerson.setLoyaltyPoints(amountDue*5); // 1 euro = 5 points
                         for(CartEntity cart : carts){
                             ProductEntity productToUpdate = productDAO.findProductById(cart.getProduct().getProductId());
                             productToUpdate.setStock(productToUpdate.getStock() - cart.getQuantity());

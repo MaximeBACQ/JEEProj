@@ -31,6 +31,8 @@ public class SiteUser {
     private boolean isModerator;
     @Column(name="isSeller")
     private boolean isSeller;
+    @Column(name="loyaltyPoints")
+    private int loyaltyPoints;
     @ManyToOne
     @JoinColumn(name = "companyId")
     private CompanyEntity company;
@@ -56,6 +58,7 @@ public class SiteUser {
         this.isAdmin = isAdmin;
         this.isModerator = isModerator;
         this.isSeller=isSeller;
+        this.loyaltyPoints = 0;
         this.company = null;
         this.bank = null;
     }
@@ -138,6 +141,14 @@ public class SiteUser {
 
     public boolean getIsSeller(){return isSeller;}
     public void setIsSeller(boolean seller){isSeller = seller;}
+
+    public int getLoyaltyPoints() {
+        return loyaltyPoints;
+    }
+
+    public void setLoyaltyPoints(int loyaltyPoints) {
+        this.loyaltyPoints = loyaltyPoints;
+    }
 
     public CompanyEntity getCompany() {
         return company;

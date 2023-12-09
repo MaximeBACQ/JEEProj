@@ -22,16 +22,18 @@
     <div class="user-info-card">
         <h2>Informations sur le Compte</h2>
         <div class="user-info">
-            <p><span class="info-label">Nom :</span> <%= user.getName() %></p>
-            <p><span class="info-label">Prénom :</span> <%= user.getSurname() %></p>
-            <p><span class="info-label">Nom d'utilisateur :</span> <%= user.getUsername() %></p>
+            <p><span class="info-label">Name :</span> <%= user.getName() %></p>
+            <p><span class="info-label">Surname :</span> <%= user.getSurname() %></p>
+            <p><span class="info-label">Username :</span> <%= user.getUsername() %></p>
             <p><span class="info-label">Email :</span> <%= user.getEmail() %></p>
-            <p><span class="info-label">Date de Naissance :</span> <%= user.getBirthDate() %></p>
-            <p><span class="info-label">Genre :</span> <%= user.getGender() %></p>
+            <p><span class="info-label">Date of birth :</span> <%= user.getBirthDate() %></p>
+            <p><span class="info-label">Gender :</span> <%= user.getGender() %></p>
+            <p><span class="info-label">Loyalty points : </span><%= user.getLoyaltyPoints() %></p>
         </div>
     </div>
-    <%  }
-    %>
+    <%  }else{
+    %> You are not connected, please connect to see your informations.
+    <%}%>
 </div>
 <br><br><br>
 <%@ include file="html/footer.html" %>

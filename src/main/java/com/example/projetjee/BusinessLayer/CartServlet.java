@@ -44,18 +44,19 @@ public class CartServlet extends HttpServlet {
             if (obj == null) {
                 response.sendRedirect("loginPage.jsp");
             }
+            else{
+                SiteUser user = (SiteUser) obj;
+                ProductDAO productDAO = new ProductDAO();
 
-            SiteUser user = (SiteUser) obj;
-            ProductDAO productDAO = new ProductDAO();
+                ProductEntity product =  productDAO.findProductById(Integer.parseInt(request.getParameter("productId")));
 
-            ProductEntity product =  productDAO.findProductById(Integer.parseInt(request.getParameter("productId")));
+                CartEntity cart = new CartEntity(1, user, product);
 
-            CartEntity cart = new CartEntity(1, user, product);
+                CartDAO cartDAO = new CartDAO();
+                cartDAO.createCart(cart);
 
-            CartDAO cartDAO = new CartDAO();
-            cartDAO.createCart(cart);
-
-            response.sendRedirect("cart.jsp");
+                response.sendRedirect("cart.jsp");
+            }
 
         }catch (Exception e){
             e.printStackTrace();

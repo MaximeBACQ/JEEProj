@@ -40,8 +40,13 @@
                         <strong><%=p.getLabel()%></strong> <br><br>
                     </div>
                     <%=p.getDescription()%><br><br>
-                    Corps en aulne<br><br>
-                    Stock : <%=p.getStock()%> <br><br>
+                    Stock : <%if(p.getStock()==0){%>
+                        Out of stock
+                        <%
+                    }else{
+                        %>
+                        <%=p.getStock()%>
+                    <%}%><br><br>
                     <br><br>
                     &agrave; partir de <br>
                     <div class="vedette-prix"><strong><%=p.getPrice()%> &euro;</strong></div><br><br><br><br>
@@ -52,7 +57,7 @@
                     </form>
                 </div>
 
-                <a href=""><img src="<%=p.getProductImage()%>" alt="Product Image Missing"></a>
+                <a href="detailledProductPage.jsp?productId=<%=p.getProductId()%>"><img src="<%=p.getProductImage()%>" alt="Product Image Missing"></a>
             </div>
         </div>
         <br><br><br>
@@ -60,26 +65,7 @@
          }
 %>
 
-<%--            <%=productList.toString() %>--%>
 
-<%--    TypedQuery<ProductEntity> query = JPAUtil.getEntityManager().createQuery("SELECT u FROM SiteUser u WHERE label LIKE %%")--%>
-<%--<%--/*        if (product != null) {&ndash;%&gt;
-&lt;%&ndash;    %>&ndash;%&gt;
-&lt;%&ndash;    <div class="product-details">&ndash;%&gt;
-&lt;%&ndash;        <p>Nom du Produit : <%= product.getLabel() %></p>&ndash;%&gt;
-&lt;%&ndash;        <p>Prix : <%= product.getPrice() %> €</p>&ndash;%&gt;
-&lt;%&ndash;        <p>Quantité en Stock : <%= product.getStock() %></p>&ndash;%&gt;
-&lt;%&ndash;        <p>Compagnie : <%= product.getCompanyId().getName() %></p>&ndash;%&gt;
-&lt;%&ndash;    </div>&ndash;%&gt;
-&lt;%&ndash;    &lt;%&ndash;dash;%&gt;
-&lt;%&ndash;    } else {&ndash;%&gt;
-&lt;%&ndash;    %>&ndash;%&gt;
-&lt;%&ndash;    <p>Le produit n'est pas disponible.</p>&ndash;%&gt;
-&lt;%&ndash;    &lt;%&ndash;dash;%&gt;
-&lt;%&ndash;        }&ndash;%&gt;
-&lt;%&ndash;    %>&ndash;%&gt;
-&lt;%&ndash;</div>&ndash;%&gt;
-&lt;%&ndash;<br><br><br><br><br><br><br><br><br><br><br><br><br><br>*/--%>
 <%@ include file="html/footer.html" %>
 
 </body>
