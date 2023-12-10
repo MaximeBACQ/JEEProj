@@ -91,3 +91,4 @@ CREATE TABLE IF NOT EXISTS Cart (
                                     FOREIGN KEY (userId) REFERENCES users(userId),
                                     FOREIGN KEY (productId) REFERENCES Product(productId)
 );
+

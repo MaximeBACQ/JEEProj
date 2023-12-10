@@ -32,7 +32,12 @@ public class BankDAO extends GenericDAO<BankAccountEntity> implements InterfaceD
         query.setParameter("cvv", cvv);
         //List<BankAccountEntity> resultList = query.getResultList();
         //return !resultList.isEmpty(); // true if not empty
-        return query.getSingleResult();
+        List<BankAccountEntity> resultList = query.getResultList();
+        if (!resultList.isEmpty()) {
+            return resultList.get(0); // Si la liste n'est pas vide, retournez le premier élément
+        } else {
+            return null; // Aucun résultat trouvé, retournez null
+        }
     }
 
     public void accountPay(long bankCode, int price){

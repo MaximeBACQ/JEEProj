@@ -48,14 +48,20 @@ public class CartServlet extends HttpServlet {
                 SiteUser user = (SiteUser) obj;
                 ProductDAO productDAO = new ProductDAO();
 
-                ProductEntity product =  productDAO.findProductById(Integer.parseInt(request.getParameter("productId")));
-
-                CartEntity cart = new CartEntity(1, user, product);
-
+                ProductEntity product =  productDAO.findProductById(
+                        Integer.parseInt(request.getParameter("productId"))
+                );
                 CartDAO cartDAO = new CartDAO();
-                cartDAO.createCart(cart);
+                if(cartDAO.findCartByUserAndProduct(user.getUserId(),product.getProductId())!=null){
+                    response.sendRedirect("cart.jsp");
+                    System.out.println("cas déjà produit");
+                }else{
+                    CartEntity cart = new CartEntity(1, user, product);
 
-                response.sendRedirect("cart.jsp");
+                    cartDAO.createCart(cart);
+
+                    response.sendRedirect("cart.jsp");
+                }
             }
 
         }catch (Exception e){

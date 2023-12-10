@@ -42,6 +42,13 @@ public class CartDAO extends GenericDAO<CartEntity> implements InterfaceDAO<Cart
         TypedQuery<CartEntity> query = entityManager.createQuery(jpql, CartEntity.class);
         query.setParameter("userId", userId);
         query.setParameter("productId", productId);
-        return query.getSingleResult();
+
+        List<CartEntity> resultList = query.getResultList();
+
+        if (!resultList.isEmpty()) {
+            return resultList.get(0); // Si la liste n'est pas vide, retournez le premier élément
+        } else {
+            return null; // Aucun résultat trouvé, retournez null
+        }
     }
 }

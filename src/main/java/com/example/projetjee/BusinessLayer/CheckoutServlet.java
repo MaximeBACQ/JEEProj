@@ -54,6 +54,10 @@ public class CheckoutServlet extends HttpServlet{
                         }
                         response.sendRedirect("cart.jsp");
                     }
+                }else{
+                    finalMsg = "You entered wrong payment credentials";
+                    request.setAttribute("finalMsgPayment", finalMsg);
+                    response.sendRedirect("cart.jsp");
                 }
             } else {
                 finalMsg = "You are trying to access the payment page from outside of your cart, please pay from your cart";
