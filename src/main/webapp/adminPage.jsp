@@ -149,6 +149,7 @@
                 }
             %>
 
+
     <form action="AdminServlet" method="post">
         <label for="UserToRemoveSeller">
             <input type="number" placeholder="User's id" id="UserToRemoveSeller" name="userToRemoveSeller">
@@ -171,9 +172,6 @@
 
         </div>
     <br><br><br><br>
-
-
-
 
 
     <div class="admin-product">
